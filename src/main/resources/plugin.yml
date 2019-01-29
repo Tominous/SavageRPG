@@ -1,0 +1,10 @@
+name: SavageEquipment
+version: ${project.version}
+main: me.kingalteriv.SavageEquipment.Main
+authors: [KingAlterIV]
+api-version: 1.13
+commands:
+  giveThing:
+    description: Give things!
+  romanToIntAndIntToRoman:
+    description: Convert roman to a integer and back!
