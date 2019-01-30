@@ -1,9 +1,8 @@
-package me.kingalteriv.pragmata.Loop;
+package net.prosavage.savageequipment.loop;
 
 import com.SirBlobman.combatlogx.utility.CombatUtil;
-import com.sun.media.jfxmedia.logging.Logger;
-import me.kingalteriv.pragmata.Builder.Armor;
-import me.kingalteriv.pragmata.Main;
+import net.prosavage.savageequipment.builder.Armor;
+import net.prosavage.savageequipment.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -11,7 +10,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.junit.experimental.max.MaxHistory;
 
 public class JoinRegenLoop implements Listener {
 
@@ -19,7 +17,7 @@ public class JoinRegenLoop implements Listener {
 
     @EventHandler
     @SuppressWarnings("Deprecated")
-    public void joinRegenListener(PlayerJoinEvent e){
+    public void joinRegenListener(final PlayerJoinEvent e){
 
         new BukkitRunnable()
         {
@@ -53,7 +51,6 @@ public class JoinRegenLoop implements Listener {
                     }
                 }
 
-                Bukkit.getLogger().info("TEST 1");
                 if (!(e.getPlayer().isOnline())){
                     this.cancel();
                     return;

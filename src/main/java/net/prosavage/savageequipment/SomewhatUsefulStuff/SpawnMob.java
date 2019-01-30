@@ -1,6 +1,6 @@
-package me.kingalteriv.pragmata.SomewhatUsefulStuff;
+package net.prosavage.savageequipment.somewhatusefulstuff;
 
-import me.kingalteriv.pragmata.Main;
+import net.prosavage.savageequipment.Main;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.scheduler.BukkitRunnable;

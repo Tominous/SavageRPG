@@ -1,4 +1,4 @@
-package me.kingalteriv.pragmata.SomewhatUsefulStuff;
+package net.prosavage.savageequipment.somewhatusefulstuff;
 
 import java.util.Random;
 

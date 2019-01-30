@@ -1,7 +1,7 @@
-package me.kingalteriv.pragmata.Listener;
+package net.prosavage.savageequipment.listener;
 
-import me.kingalteriv.pragmata.Enchant.CustomEnchant;
-import me.kingalteriv.pragmata.SomewhatUsefulStuff.Color;
+import net.prosavage.savageequipment.enchant.CustomEnchant;
+import net.prosavage.savageequipment.somewhatusefulstuff.Color;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

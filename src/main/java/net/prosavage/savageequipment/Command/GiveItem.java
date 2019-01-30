@@ -1,6 +1,6 @@
-package me.kingalteriv.pragmata.Command;
+package net.prosavage.savageequipment.command;
 
-import me.kingalteriv.pragmata.Builder.Armor;
+import net.prosavage.savageequipment.builder.Armor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -11,7 +11,6 @@ public class GiveItem implements CommandExecutor {
 
     Armor Armor = new Armor();
 
-    @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if ((sender instanceof Player))
         {

@@ -1,16 +1,15 @@
-package me.kingalteriv.pragmata.Listener;
+package net.prosavage.savageequipment.listener;
 
-import com.destroystokyo.paper.event.player.PlayerArmorChangeEvent;
-import me.kingalteriv.pragmata.SomewhatUsefulStuff.Color;
-import me.kingalteriv.pragmata.Builder.Armor;
-import me.kingalteriv.pragmata.Main;
+import com.codingforcookies.armorequip.ArmorEquipEvent;
+import net.prosavage.savageequipment.somewhatusefulstuff.Color;
+import net.prosavage.savageequipment.builder.Armor;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
+import net.prosavage.savageequipment.Main;
 
 public class ArmorChange implements Listener {
 
@@ -18,7 +17,7 @@ public class ArmorChange implements Listener {
     Armor Armor = new Armor();
 
     @EventHandler
-    public void ArmorEvent(PlayerArmorChangeEvent e){
+    public void ArmorEvent(final ArmorEquipEvent e){
         new BukkitRunnable(){
             public void run(){
 

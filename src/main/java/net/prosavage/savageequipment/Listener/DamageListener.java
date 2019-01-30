@@ -1,14 +1,13 @@
-package me.kingalteriv.pragmata.Event;
+package net.prosavage.savageequipment.listener;
 
-import me.kingalteriv.pragmata.Builder.Item;
-import me.kingalteriv.pragmata.SomewhatUsefulStuff.Color;
-import me.kingalteriv.pragmata.SomewhatUsefulStuff.SpawnMob;
+import net.prosavage.savageequipment.builder.Item;
+import net.prosavage.savageequipment.somewhatusefulstuff.Color;
+import net.prosavage.savageequipment.somewhatusefulstuff.SpawnMob;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 public class DamageListener implements Listener {
 

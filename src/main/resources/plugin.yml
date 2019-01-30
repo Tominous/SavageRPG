@@ -1,6 +1,6 @@
 name: SavageEquipment
 version: ${project.version}
-main: me.kingalteriv.SavageEquipment.Main
+main: net.prosavage.savageequipment.Main
 authors: [KingAlterIV]
 api-version: 1.13
 commands:

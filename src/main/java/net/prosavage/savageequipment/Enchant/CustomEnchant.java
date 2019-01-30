@@ -1,6 +1,6 @@
-package me.kingalteriv.pragmata.Enchant;
+package net.prosavage.savageequipment.enchant;
 
-import me.kingalteriv.pragmata.SomewhatUsefulStuff.Color;
+import net.prosavage.savageequipment.somewhatusefulstuff.Color;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -22,7 +22,7 @@ public class CustomEnchant {
 
         String line = null;
         for (String string : meta.getLore()){
-            if (string.contains(s) == true) {
+            if (string.contains(s)) {
                 String line2359 = Color.strip(string).replace(s, "");
                 line = line2359.replace(" ", "");
                 Integer romanToInt = romanToInt(line);
@@ -105,7 +105,7 @@ public class CustomEnchant {
 
         String name = null;
         for (String string : meta.getLore()) {
-            if (string.contains("Name: ") == true) {
+            if (string.contains("Name: ")) {
                 name = Color.strip(string).replace("Name: ", "");
                 return name;
 
@@ -124,7 +124,7 @@ public class CustomEnchant {
 
         Integer level = null;
         for (String string : meta.getLore()) {
-            if (string.contains("Level: ") == true) {
+            if (string.contains("Level: ")) {
                 level = Integer.valueOf(Color.strip(string).replace("Level: ", ""));
                 return level;
 
@@ -143,7 +143,7 @@ public class CustomEnchant {
 
         Double applyChance = null;
         for (String string : meta.getLore()) {
-            if (string.contains("Apply Chance: ") == true) {
+            if (string.contains("Apply Chance: ")) {
                 applyChance = Double.valueOf(Color.strip(string).replace("Apply Chance: ", ""));
                 return applyChance;
 
@@ -162,7 +162,7 @@ public class CustomEnchant {
 
         Double applyChance = null;
         for (String string : meta.getLore()) {
-            if (string.contains("Destroy Chance: ") == true) {
+            if (string.contains("Destroy Chance: ")) {
                 applyChance = Double.valueOf(Color.strip(string).replace("Destroy Chance: ", ""));
                 return applyChance;
 

@@ -1,6 +1,6 @@
-package me.kingalteriv.pragmata.Command;
+package net.prosavage.savageequipment.command;
 
-import me.kingalteriv.pragmata.Enchant.CustomEnchant;
+import net.prosavage.savageequipment.enchant.CustomEnchant;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -10,7 +10,6 @@ public class romanToIntAndIntToRoman implements CommandExecutor {
 
     CustomEnchant CE = new CustomEnchant();
 
-    @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if ((sender instanceof Player))
         {

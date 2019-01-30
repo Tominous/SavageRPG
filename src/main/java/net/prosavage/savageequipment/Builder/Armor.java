@@ -1,7 +1,7 @@
-package me.kingalteriv.pragmata.Builder;
+package net.prosavage.savageequipment.builder;
 
-import me.kingalteriv.pragmata.SomewhatUsefulStuff.Color;
-import me.kingalteriv.pragmata.SomewhatUsefulStuff.RandomNum;
+import net.prosavage.savageequipment.somewhatusefulstuff.Color;
+import net.prosavage.savageequipment.somewhatusefulstuff.RandomNum;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -47,7 +47,7 @@ public class Armor {
 
         Collections.shuffle(items);
 
-        Item = (ItemStack)items.pop();
+        Item = items.pop();
         return Item;
     }
 
@@ -64,48 +64,48 @@ public class Armor {
 
         if (item.getType().toString().contains("LEATHER"))
         {
-            hpHighest = Integer.valueOf(10);
-            prHighest = Integer.valueOf(1);
-            hpLowest = Integer.valueOf(5);
-            prLowest = Integer.valueOf(-1);
-            reHighest = Integer.valueOf(3);
-            reLowest = Integer.valueOf(0);
+            hpHighest = 10;
+            prHighest = 1;
+            hpLowest = 5;
+            prLowest = -1;
+            reHighest = 3;
+            reLowest = 0;
         }
         if (item.getType().toString().contains("GOLDEN"))
         {
-            hpHighest = Integer.valueOf(7);
-            prHighest = Integer.valueOf(2);
-            hpLowest = Integer.valueOf(3);
-            prLowest = Integer.valueOf(0);
-            reHighest = Integer.valueOf(3);
-            reLowest = Integer.valueOf(0);
+            hpHighest = 7;
+            prHighest = 2;
+            hpLowest = 3;
+            prLowest = 0;
+            reHighest = 3;
+            reLowest = 0;
         }
         if (item.getType().toString().contains("CHAINMAIL"))
         {
-            hpHighest = Integer.valueOf(5);
-            prHighest = Integer.valueOf(3);
-            hpLowest = Integer.valueOf(1);
-            prLowest = Integer.valueOf(1);
-            reHighest = Integer.valueOf(2);
-            reLowest = Integer.valueOf(0);
+            hpHighest = 5;
+            prHighest = 3;
+            hpLowest = 1;
+            prLowest = 1;
+            reHighest = 2;
+            reLowest = 0;
         }
         if (item.getType().toString().contains("IRON"))
         {
-            hpHighest = Integer.valueOf(3);
-            prHighest = Integer.valueOf(4);
-            hpLowest = Integer.valueOf(-1);
-            prLowest = Integer.valueOf(2);
-            reHighest = Integer.valueOf(2);
-            reLowest = Integer.valueOf(0);
+            hpHighest = 3;
+            prHighest = 4;
+            hpLowest = -1;
+            prLowest = 2;
+            reHighest = 2;
+            reLowest = 0;
         }
         if (item.getType().toString().contains("DIAMOND"))
         {
-            hpHighest = Integer.valueOf(1);
-            prHighest = Integer.valueOf(5);
-            hpLowest = Integer.valueOf(-3);
-            prLowest = Integer.valueOf(3);
-            reHighest = Integer.valueOf(1);
-            reLowest = Integer.valueOf(0);
+            hpHighest = 1;
+            prHighest = 5;
+            hpLowest = -3;
+            prLowest = 3;
+            reHighest = 1;
+            reLowest = 0;
         }
 
         List<String> lore = new ArrayList();
@@ -136,57 +136,57 @@ public class Armor {
     }
 
     public Double getProtection(ItemStack item){
-        if (item == null) return Double.valueOf(0);
+        if (item == null) return 0.0;
 
-        if (!item.hasItemMeta()) return Double.valueOf(0);
+        if (!item.hasItemMeta()) return 0.0;
 
         ItemMeta meta = item.getItemMeta();
-        if (!(meta).hasLore()) return Double.valueOf(0);
+        if (!(meta).hasLore()) return 0.0;
 
         String line = null;
         for (String string : meta.getLore()){
-            if (string.contains("Protection: ") == true){
+            if (string.contains("Protection: ")){
                 line = Color.strip(string).replace("Protection: ", "");
                 return Double.parseDouble(line);
             }
         }
-        return Double.valueOf(0);
+        return 0.0;
     }
 
     public Double getHealth(ItemStack item){
-        if (item == null) return Double.valueOf(0);
+        if (item == null) return 0.0;
 
-        if (!item.hasItemMeta()) return Double.valueOf(0);
+        if (!item.hasItemMeta()) return 0.0;
 
         ItemMeta meta = item.getItemMeta();
-        if (!((ItemMeta) meta).hasLore()) return Double.valueOf(0);
+        if (!((ItemMeta) meta).hasLore()) return 0.0;
 
         String line = null;
         for (String string : meta.getLore()){
-            if (string.contains("Health: ") == true){
+            if (string.contains("Health: ")){
                 line = Color.strip(string).replace("Health: ", "");
                 return Double.parseDouble(line);
             }
         }
-        return Double.valueOf(0);
+        return 0.0;
     }
 
     public Double getRegen(ItemStack item){
-        if (item == null) return Double.valueOf(0);
+        if (item == null) return 0.0;
 
-        if (!item.hasItemMeta()) return Double.valueOf(0);
+        if (!item.hasItemMeta()) return 0.0;
 
         ItemMeta meta = item.getItemMeta();
-        if (!((ItemMeta) meta).hasLore()) return Double.valueOf(0);
+        if (!((ItemMeta) meta).hasLore()) return 0.0;
 
         String line = null;
         for (String string : meta.getLore()){
-            if (string.contains("Regen: ") == true){
+            if (string.contains("Regen: ")){
                 line = Color.strip(string).replace("Regen: ", "");
                 return Double.parseDouble(line);
             }
         }
-        return Double.valueOf(0);
+        return 0.0;
     }
 
 
