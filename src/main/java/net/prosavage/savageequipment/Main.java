@@ -31,13 +31,11 @@ public final class Main extends JavaPlugin {
     public void onDisable() {
         getLogger().info(Color.ify("&cSavageEquipment have unloaded/disabled."));
     }
-
     public Main(){
         instance = this;
     }
 
     public static Main getInstance(){
-        return instance;
-    }
+        return instance; }
 
 }
