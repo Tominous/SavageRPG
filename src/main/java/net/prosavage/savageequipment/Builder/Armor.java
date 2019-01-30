@@ -59,6 +59,10 @@ public class Armor {
         Integer prLowest = 0;
         Integer reHighest = 0;
         Integer reLowest = 0;
+        Integer scHighest = 5;
+        Integer scLowest = 1;
+        Integer geHighest = 5;
+        Integer geLowest = 1;
 
         ItemMeta meta = item.getItemMeta();
 
@@ -117,12 +121,26 @@ public class Armor {
 
         String randomRegen = String.format("%.2f", Random.getDouble(Double.valueOf(reLowest), Double.valueOf(reHighest)));
 
+        Integer randomScroll = Random.getInteger(scLowest, scHighest);
+
+        Integer randomGem = Random.getInteger(geLowest, geHighest);
+
         lore.add(Color.ify("&7&m----------------"));
         lore.add(Color.ify("&7Level: &e" + randomLevel));
         lore.add(Color.ify("&7Protection: &e" + randomProtection));
         lore.add(Color.ify("&7Health: &e" + randomHealth));
         lore.add(Color.ify("&7Regen: &e" + randomRegen));
         lore.add(Color.ify("&7&m----------------"));
+
+        for(int i = 1; i < randomScroll; i++){
+            lore.add(Color.ify("&7Scroll Socket [#&7" + i + "&7]"));
+        }
+        lore.add(Color.ify("&7&m----------------"));
+
+        for(int i = 1; i < randomGem; i++){
+            lore.add(Color.ify("&7Gem Socket [#&7" + i + "&7]"));
+        }
+
         meta.setLore(lore);
 
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
