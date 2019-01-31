@@ -18,9 +18,6 @@ public class GiveItem implements CommandExecutor {
             ItemStack getItem = Armor.getNewArmor();
             ItemStack item = Armor.setInfo(getItem);
 
-            player.sendMessage(String.valueOf(item.getItemMeta()));
-            player.sendMessage(String.valueOf(getItem.getItemMeta()));
-
             player.getInventory().addItem(getItem);
         }
         return true;

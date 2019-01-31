@@ -231,7 +231,7 @@ public class CustomEnchant {
         List<String> lore = meta.getLore();
 
         for (String string : lore) {
-            if (string.contains("Scroll #")) {
+            if (string.contains("Scroll Socket #")) {
 
                 return lore.indexOf(string);
 

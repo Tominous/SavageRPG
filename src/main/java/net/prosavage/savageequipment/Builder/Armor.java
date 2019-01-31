@@ -1,11 +1,16 @@
 package net.prosavage.savageequipment.builder;
 
+import net.prosavage.savageequipment.Main;
 import net.prosavage.savageequipment.somewhatusefulstuff.Color;
 import net.prosavage.savageequipment.somewhatusefulstuff.RandomNum;
 import org.bukkit.Material;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -53,12 +58,12 @@ public class Armor {
 
     public ItemStack setInfo(ItemStack item){
 
-        Integer hpHighest = 0;
-        Integer hpLowest = 0;
-        Integer prHighest = 0;
-        Integer prLowest = 0;
-        Integer reHighest = 0;
-        Integer reLowest = 0;
+        Double hpHighest = 0.0;
+        Double hpLowest = 0.0;
+        Double prHighest = 0.0;
+        Double prLowest = 0.0;
+        Double reHighest = 0.0;
+        Double reLowest = 0.0;
         Integer scHighest = 5;
         Integer scLowest = 1;
         Integer geHighest = 5;
@@ -66,50 +71,34 @@ public class Armor {
 
         ItemMeta meta = item.getItemMeta();
 
-        if (item.getType().toString().contains("LEATHER"))
-        {
-            hpHighest = 10;
-            prHighest = 1;
-            hpLowest = 5;
-            prLowest = -1;
-            reHighest = 3;
-            reLowest = 0;
-        }
-        if (item.getType().toString().contains("GOLDEN"))
-        {
-            hpHighest = 7;
-            prHighest = 2;
-            hpLowest = 3;
-            prLowest = 0;
-            reHighest = 3;
-            reLowest = 0;
-        }
-        if (item.getType().toString().contains("CHAINMAIL"))
-        {
-            hpHighest = 5;
-            prHighest = 3;
-            hpLowest = 1;
-            prLowest = 1;
-            reHighest = 2;
-            reLowest = 0;
-        }
-        if (item.getType().toString().contains("IRON"))
-        {
-            hpHighest = 3;
-            prHighest = 4;
-            hpLowest = -1;
-            prLowest = 2;
-            reHighest = 2;
-            reLowest = 0;
-        }
-        if (item.getType().toString().contains("DIAMOND"))
-        {
-            hpHighest = 1;
-            prHighest = 5;
-            hpLowest = -3;
-            prLowest = 3;
-            reHighest = 1;
-            reLowest = 0;
+        List<String> itemlist = new ArrayList<String>();
+        itemlist.add(0, "LEATHER");
+        itemlist.add(1, "GOLDEN");
+        itemlist.add(2, "CHAINMAIL");
+        itemlist.add(3, "IRON");
+        itemlist.add(4, "DIAMOND");
+
+        FileConfiguration armorConfig = YamlConfiguration.loadConfiguration(new File(Main.getInstance().getDataFolder(), "armor.yml"));
+
+        for (String string : itemlist){
+                Main.getInstance().getLogger().info(string);
+            if (item.getType().toString().contains(string))
+            {
+                hpHighest = (Double) armorConfig.get("material." + string + ".max-health");
+                hpLowest = (Double) armorConfig.get("material." + string + ".min-health");
+
+                prHighest = (Double) armorConfig.get("material." + string + ".max-protection");
+                prLowest = (Double) armorConfig.get("material." + string + ".min-protection");
+
+                reHighest = (Double) armorConfig.get("material." + string + ".max-regen");
+                reLowest = (Double) armorConfig.get("material." + string + ".min-regen");
+
+                scHighest = (Integer) armorConfig.get("material." + string + ".max-scroll");
+                scLowest = (Integer) armorConfig.get("material." + string + ".min-scroll");
+
+                geHighest = (Integer) armorConfig.get("material." + string + ".max-gem");
+                geLowest = (Integer) armorConfig.get("material." + string + ".min-gem");
+            }
         }
 
         List<String> lore = new ArrayList();
@@ -135,10 +124,15 @@ public class Armor {
         for(int i = 1; i < randomScroll; i++){
             lore.add(Color.ify("&7Scroll Socket [#&7" + i + "&7]"));
         }
-        lore.add(Color.ify("&7&m----------------"));
+        if (randomScroll > 1) {
+            lore.add(Color.ify("&7&m----------------"));
+        }
 
         for(int i = 1; i < randomGem; i++){
             lore.add(Color.ify("&7Gem Socket [#&7" + i + "&7]"));
+        }
+        if (randomGem > 1) {
+            lore.add(Color.ify("&7&m----------------"));
         }
 
         meta.setLore(lore);
