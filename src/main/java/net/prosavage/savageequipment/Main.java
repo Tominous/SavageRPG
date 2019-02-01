@@ -26,6 +26,7 @@ public final class Main extends JavaPlugin {
     public void onEnable() {
         loadConfig();
         loadArmorConfig();
+        loadWeaponConfig();
         getLogger().info(Color.ify("&aSavageEquipment have been loaded/enabled."));
         getServer().getPluginManager().registerEvents(new ArmorChange(), this);
         getServer().getPluginManager().registerEvents(new DamageListener(), this);
@@ -58,6 +59,64 @@ public final class Main extends JavaPlugin {
         }
     }
 
+
+    public Object getWeaponConfig() {
+        if ((new File(this.getDataFolder(), "weapon.yml").exists())) {
+            File file = new File(this.getDataFolder(), "weapon.yml");
+            FileConfiguration armorConfig = YamlConfiguration.loadConfiguration(file);
+            return armorConfig;
+        }
+        return null;
+    }
+
+    public void loadWeaponConfig(){
+        if (!(new File(this.getDataFolder(), "weapon.yml").exists())){
+            File file = new File(this.getDataFolder(), "weapon.yml");
+            YamlConfiguration yaml = new YamlConfiguration();
+            yaml.set("material.WOODEN.max-damage", 0.50);
+            yaml.set("material.WOODEN.min-damage", 0.01);
+            yaml.set("material.WOODEN.max-crit-chance", 3.00);
+            yaml.set("material.WOODEN.min-crit-chance", 1.00);
+            yaml.set("material.WOODEN.max-crit-multiplier", 2.00);
+            yaml.set("material.WOODEN.min-crit-multiplier", 1.50);
+
+            yaml.set("material.STONE.max-damage", 1.00);
+            yaml.set("material.STONE.min-damage", 0.50);
+            yaml.set("material.STONE.max-crit-chance", 2.50);
+            yaml.set("material.STONE.min-crit-chance", 1.00);
+            yaml.set("material.STONE.max-crit-multiplier", 2.00);
+            yaml.set("material.STONE.min-crit-multiplier", 1.50);
+
+            yaml.set("material.GOLDEN.max-damage", 1.50);
+            yaml.set("material.GOLDEN.min-damage", 1.00);
+            yaml.set("material.GOLDEN.max-crit-chance", 2.00);
+            yaml.set("material.GOLDEN.min-crit-chance", 1.00);
+            yaml.set("material.GOLDEN.max-crit-multiplier", 2.00);
+            yaml.set("material.GOLDEN.min-crit-multiplier", 1.50);
+
+            yaml.set("material.IRON.max-damage", 2.00);
+            yaml.set("material.IRON.min-damage", 1.50);
+            yaml.set("material.IRON.max-crit-chance", 1.50);
+            yaml.set("material.IRON.min-crit-chance", 1.00);
+            yaml.set("material.IRON.max-crit-multiplier", 2.00);
+            yaml.set("material.IRON.min-crit-multiplier", 1.50);
+
+            yaml.set("material.DIAMOND.max-damage", 2.00);
+            yaml.set("material.DIAMOND.min-damage", 1.50);
+            yaml.set("material.DIAMOND.max-crit-chance", 1.50);
+            yaml.set("material.DIAMOND.min-crit-chance", 1.00);
+            yaml.set("material.DIAMOND.max-crit-multiplier", 2.00);
+            yaml.set("material.DIAMOND.min-crit-multiplier", 1.50);
+
+            try {
+                yaml.save(file);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            getLogger().info("Default Weapon config loaded.");
+        }
+    }
+
     public Object getArmorConfig() {
         if ((new File(this.getDataFolder(), "armor.yml").exists())) {
             File file = new File(this.getDataFolder(), "armor.yml");
@@ -66,6 +125,7 @@ public final class Main extends JavaPlugin {
         }
         return null;
     }
+
 
     public void loadArmorConfig(){
         if (!(new File(this.getDataFolder(), "armor.yml").exists())){
