@@ -3,17 +3,11 @@ package net.prosavage.savageequipment.commands;
 import net.prosavage.savageequipment.itembuilder.Armor;
 import net.prosavage.savageequipment.itembuilder.Weapon;
 import net.prosavage.savageequipment.utils.Color;
-import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class GiveItem implements CommandExecutor {
 

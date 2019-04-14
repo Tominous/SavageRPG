@@ -21,7 +21,7 @@ public class YAML {
         playerFileLoad.set("username", player.getName());
         playerFileLoad.set("level", 1);
         playerFileLoad.set("exp", 0.00);
-        playerFileLoad.set("max-exp", 999999999.99);
+        playerFileLoad.set("max-exp", 9999999999.99);
         playerFileLoad.set("skill-points", 0);
         try {
             playerFileLoad.save(playerFile);

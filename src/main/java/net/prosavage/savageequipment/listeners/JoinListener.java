@@ -1,6 +1,5 @@
 package net.prosavage.savageequipment.listeners;
 
-import net.prosavage.savageequipment.SEPlayers;
 import net.prosavage.savageequipment.SavageEquipment;
 import net.prosavage.savageequipment.data.YAML;
 import net.prosavage.savageequipment.utils.Formula;
@@ -9,6 +8,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLoginEvent;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
+
+import java.util.List;
 
 public class JoinListener implements Listener {
 
@@ -19,22 +22,28 @@ public class JoinListener implements Listener {
     @EventHandler
     public void playerJoin(PlayerLoginEvent e){
         Player player = e.getPlayer();
+
+        player.setMetadata("SavageEquipments-"+ player.getUniqueId() + "-level", new FixedMetadataValue(SavageEquipment.getInstance(), 1));
+        player.setMetadata("SavageEquipments-"+ player.getUniqueId() + "-skillpoints", new FixedMetadataValue(SavageEquipment.getInstance(), 1));
+        player.setMetadata("SavageEquipments-"+ player.getUniqueId() + "-exp", new FixedMetadataValue(SavageEquipment.getInstance(), 0));
+
         if (!(YAML.fileExist(player))) {
             YAML.createFile(player);
         }
 
-        SEPlayers players = new SEPlayers(player);
 
-        double evaluated = Formula.eval(Placeholder.getPlayerPlaceholders(player, String.valueOf(SavageEquipment.getInstance().getConfig().get("formulas.exp"))));
-        YAML.setMaxExp(player, evaluated);
+        List<MetadataValue> level = player.getMetadata("SavageEquipments-"+ player.getUniqueId() + "-level");
+        if (player.hasMetadata("SavageEquipments-"+ player.getUniqueId() + "-level")) {
+            SavageEquipment.getInstance().sendConsole(level.toString());
+        }
 
-        players.setSELevel(Integer.valueOf(YAML.getData(player, "level")));
-        players.setSEExp(Double.valueOf(YAML.getData(player, "exp")));
-        players.setSEMaxExp(Double.valueOf(YAML.getData(player, "max-exp")));
-        players.setSESkillpoints(Integer.valueOf(YAML.getData(player, "skill-points")));
+        player.sendMessage(SavageEquipment.getInstance().getYAMLValues().get("formulas.exp"));
 
-        SavageEquipment.getInstance().sendConsole(String.valueOf(evaluated));
-        SavageEquipment.getInstance().sendConsole(String.valueOf(YAML.getData(player, "max-exp")));
+        double evaluated = Formula.eval(Placeholder.getPlayerPlaceholders(player, String.valueOf(SavageEquipment.getInstance().getYAMLValues().get("formulas.exp"))));
+
+        player.sendMessage(String.valueOf(evaluated));
+
+        player.setMetadata("SavageEquipments-"+ player.getUniqueId() + "-max_exp", new FixedMetadataValue(SavageEquipment.getInstance(), evaluated));
 
     }
 

@@ -1,10 +1,10 @@
 name: SavageEquipment
 version: ${project.version}
-main: net.prosavage.savageequipment.Main
+main: net.prosavage.savageequipment.SavageEquipment
 authors: [KingAlterIV]
 api-version: 1.13
 commands:
-  giveThing:
+   giveItem:
     description: Give things!
-  romanToIntAndIntToRoman:
-    description: Convert roman to a integer and back!
+   savageequipment:
+    description: Main command for the plugin.

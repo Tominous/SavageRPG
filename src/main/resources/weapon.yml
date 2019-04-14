@@ -1,0 +1,91 @@
+material:
+
+  wooden:
+    min-damage: 0.50
+    max-damage: 0.25
+    min-cooldown: 1.0
+    max-cooldown: 1.10
+    damage-per-second: ({max} + {min} / 2) * {cooldown}
+    max-gem: 3
+    min-gem: 0
+    weapon-type: {weapon-type}
+    weapon-class: {weapon-class}
+    weapon-rarity:
+      - broken 75
+      - damaged 14
+      - clean 7
+      - unqiue 3
+      - artifact 1
+    weapon-level: {weapon-level}
+
+  stone:
+    min-damage: 0.75
+    max-damage: 0.50
+    min-cooldown: 1.10
+    max-cooldown: 1.20
+    damage-per-second: ({max} + {min} / 2) * {cooldown}
+    max-gem: 3
+    min-gem: 0
+    weapon-type: {weapon-type}
+    weapon-class: {weapon-class}
+    weapon-rarity:
+      - broken 75
+      - damaged 14
+      - clean 7
+      - unqiue 3
+      - artifact 1
+    weapon-level: {weapon-level}
+
+  iron:
+    min-damage: 1.00
+    max-damage: 0.75
+    min-cooldown: 1.20
+    max-cooldown: 1.30
+    damage-per-second: ({max} + {min} / 2) * {cooldown}
+    max-gem: 3
+    min-gem: 0
+    weapon-type: {weapon-type}
+    weapon-class: {weapon-class}
+    weapon-rarity:
+      - broken 75
+      - damaged 14
+      - clean 7
+      - unqiue 3
+      - artifact 1
+    weapon-level: {weapon-level}
+
+  golden:
+    min-damage: 1.25
+    max-damage: 1.00
+    min-cooldown: 1.30
+    max-cooldown: 1.40
+    damage-per-second: ({max} + {min} / 2) * {cooldown}
+    max-gem: 3
+    min-gem: 0
+    weapon-type: {weapon-type}
+    weapon-class: {weapon-class}
+    weapon-rarity:
+      - broken 75
+      - damaged 14
+      - clean 7
+      - unqiue 3
+      - artifact 1
+    weapon-level: {weapon-level}
+
+  diamond:
+    min-damage: 1.5
+    max-damage: 1.25
+    min-cooldown: 1.40
+    max-cooldown: 1.50
+    damage-per-second: ({max} + {min} / 2) * {cooldown}
+    max-gem: 3
+    min-gem: 0
+    weapon-type: {weapon-type}
+    weapon-class: {weapon-class}
+    weapon-rarity:
+      - broken 75
+      - damaged 14
+      - clean 7
+      - unqiue 3
+      - artifact 1
+    weapon-level: {weapon-level}

@@ -1,0 +1,96 @@
+material:
+
+  leather:
+    max-health: 10.00
+    min-health: 5.00
+    max-protection: 1.00
+    min-protection: 0.00
+    max-regen: 3.00
+    min-regen: 0.00
+    max-gem: 3
+    min-gem: 3
+    armor-type: {armor-type}
+    armor-class: {armor-class}
+    armor-rarity:
+      - broken 75
+      - damaged 14
+      - clean 7
+      - unqiue 3
+      - artifact 1
+    armor-level: {armor-level}
+
+  golden:
+    max-health: 7.00
+    min-health: 3.00
+    max-protection: 2.00
+    min-protection: 0.00
+    max-regen: 3.00
+    min-regen: 0.00
+    max-gem: 3
+    min-gem: 3
+    armor-type: {armor-type}
+    armor-class: {armor-class}
+    armor-rarity:
+      - broken 75
+      - damaged 14
+      - clean 7
+      - unqiue 3
+      - artifact 1
+    armor-level: {armor-level}
+
+  chainmail:
+    max-health: 5.00
+    min-health: 1.00
+    max-protection: 3.00
+    min-protection: 1.00
+    max-regen: 2.00
+    min-regen: 0.00
+    max-gem: 3
+    min-gem: 3
+    armor-type: {armor-type}
+    armor-class: {armor-class}
+    armor-rarity:
+      - broken 75
+      - damaged 14
+      - clean 7
+      - unqiue 3
+      - artifact 1
+    armor-level: {armor-level}
+
+  iron:
+    max-health: 3.00
+    min-health: 1.00
+    max-protection: 4.00
+    min-protection: 2.00
+    max-regen: 2.00
+    min-regen: 0.00
+    max-gem: 3
+    min-gem: 3
+    armor-type: {armor-type}
+    armor-class: {armor-class}
+    armor-rarity:
+      - broken 75
+      - damaged 14
+      - clean 7
+      - unqiue 3
+      - artifact 1
+    armor-level: {armor-level}
+
+  diamond:
+    max-health: 1.00
+    min-health: -1.00
+    max-protection: 5.00
+    min-protection: 3.00
+    max-regen: 1.00
+    min-regen: 0.00
+    max-gem: 3
+    min-gem: 3
+    armor-type: {armor-type}
+    armor-class: {armor-class}
+    armor-rarity:
+      - broken 75
+      - damaged 14
+      - clean 7
+      - unqiue 3
+      - artifact 1
+    armor-level: {armor-level}

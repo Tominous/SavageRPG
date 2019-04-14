@@ -1,6 +1,5 @@
 package net.prosavage.savageequipment.commands;
 
-import net.prosavage.savageequipment.SEPlayers;
 import net.prosavage.savageequipment.SavageEquipment;
 import net.prosavage.savageequipment.utils.Color;
 import net.prosavage.savageequipment.utils.Formula;
@@ -9,6 +8,9 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.metadata.MetadataValue;
+
+import java.util.List;
 
 public class SavageEquipmentCommand implements CommandExecutor {
 
@@ -38,12 +40,16 @@ public class SavageEquipmentCommand implements CommandExecutor {
             }
             if (args[0].equals("info")){
                 if (player.isOp()){
-                    SEPlayers players = new SEPlayers(player);
-                    players.setSEMaxExp(Formula.eval(Placeholder.getPlayerPlaceholders(player, String.valueOf(SavageEquipment.getInstance().getConfig().get("formulas.exp")))));
-                    player.sendMessage("Level " + String.valueOf(players.getSELevel()));
-                    player.sendMessage("EXP " + String.valueOf(players.getSEExp()));
-                    player.sendMessage("MAX-EXP " + String.valueOf(players.getSEMaxExp()));
-                    player.sendMessage("SKILLPOINTS " + String.valueOf(players.getSESkillpoints()));
+                    List<MetadataValue> level = player.getMetadata("SavageEquipments-"+ player.getUniqueId() + "-level");
+                    List<MetadataValue> exp = player.getMetadata("SavageEquipments-"+ player.getUniqueId() + "-exp");
+                    List<MetadataValue> max_exp = player.getMetadata("SavageEquipments-"+ player.getUniqueId() + "-max_exp");
+                    List<MetadataValue> skillpoints = player.getMetadata("SavageEquipments-"+ player.getUniqueId() + "-skillpoints");
+                    if (!(level.isEmpty())) {
+                        player.sendMessage("Level " + String.valueOf(level.get(level.size() - 1).value()));
+                        player.sendMessage("EXP " + String.valueOf(exp.get(exp.size() - 1).value()));
+                        player.sendMessage("Max EXP " + String.valueOf(max_exp.get(max_exp.size() - 1).value()));
+                        player.sendMessage("Skillpoints " + String.valueOf(skillpoints.get(skillpoints.size() - 1).value()));
+                    }
                 }
             }
         }

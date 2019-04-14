@@ -8,8 +8,6 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.io.File;
-
 public class Spawn {
 
     EntityDestroyPacket EntityDestroy = new EntityDestroyPacket();
@@ -26,10 +24,9 @@ public class Spawn {
         damageHologram.setInvulnerable(true);
         damageHologram.setMarker(true);
         String damage = String.valueOf(Double.valueOf(String.format("%.2f", Double.valueOf(name))));
-        Bukkit.getLogger().info(damage);
-        String nameValue = String.valueOf(SEConfig.get(Color.ify("damage-indicator.name")));
-        Bukkit.getLogger().info(nameValue);
-        damageHologram.setCustomName(damage);
+        String nameValue = String.valueOf(SavageEquipment.getInstance().getYAMLValues().get("damage-indicator.name"));
+        nameValue = nameValue.replace("{player-damage}", damage);
+        damageHologram.setCustomName(Color.ify(nameValue));
         new BukkitRunnable() {
             public void run() {
                 damageHologram.remove();
