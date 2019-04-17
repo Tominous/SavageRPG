@@ -2,8 +2,11 @@ package net.prosavage.savageequipment.utils;
 
 import org.bukkit.ChatColor;
 
-public class Color
-{
+import java.util.ArrayList;
+import java.util.List;
+
+public class Color {
+
     public String ify(String s)
     {
         return ChatColor.translateAlternateColorCodes('&', s);
@@ -13,4 +16,14 @@ public class Color
     {
         return ChatColor.stripColor(s);
     }
+
+    public List<String> ifying(List<String> list){
+        List<String> returnString = new ArrayList<>();
+        for (String string : list){
+            string = ify(string);
+            returnString.add(string);
+        }
+        return returnString;
+    }
+
 }

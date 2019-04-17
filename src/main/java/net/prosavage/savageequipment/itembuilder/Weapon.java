@@ -1,29 +1,28 @@
 package net.prosavage.savageequipment.itembuilder;
 
 import net.prosavage.savageequipment.SavageEquipment;
-import net.prosavage.savageequipment.utils.Color;
+import net.prosavage.savageequipment.utils.*;
 import net.prosavage.savageequipment.utils.Number;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class Weapon {
 
-    Color Color = new Color();
-    Number Number = new Number();
-    FileConfiguration weaponConfig = YamlConfiguration.loadConfiguration(new File(SavageEquipment.getInstance().getDataFolder(), "weapon.yml"));
+    net.prosavage.savageequipment.utils.Color Color = new Color();
+    net.prosavage.savageequipment.utils.Number Number = new Number();
+    net.prosavage.savageequipment.utils.Chance Chance = new Chance();
+    net.prosavage.savageequipment.utils.Formula Formula = new Formula();
+    net.prosavage.savageequipment.utils.Placeholder Placeholder = new Placeholder();
+    FileConfiguration WeaponValues = SavageEquipment.getInstance().getWeaponConfig();
+    FileConfiguration SEConfig = SavageEquipment.getInstance().getConfig();
 
     public ItemStack getNewWeapon(){
         ItemStack Item = null;
-        LinkedList<ItemStack> items = new LinkedList();
+        LinkedList<ItemStack> items = new LinkedList<ItemStack>();
 
         items.add(new ItemStack(Material.WOODEN_SWORD));
         items.add(new ItemStack(Material.STONE_SWORD));
@@ -45,60 +44,81 @@ public class Weapon {
         Double clLowest = 0.0;
         Integer geHighest = 3;
         Integer geLowest = 1;
-        String rarity = "broken";
+        String rarity = "undefined";
+        String itemType = "";
+
+        Integer rarityNumber = 1;
+        Boolean rarityChosen = null;
+        Boolean chanceOf = false;
+
+        List<String> lore = new ArrayList<String>();
 
         ItemMeta meta = item.getItemMeta();
 
-        List<String> itemlist = new ArrayList<String>();
-        itemlist.add(0, "wooden");
-        itemlist.add(1, "stone");
-        itemlist.add(2, "iron");
-        itemlist.add(3, "golden");
-        itemlist.add(4, "diamond");
+        LinkedList<String> itemlist = new LinkedList<String>();
 
-        for (String string : itemlist) {
-            if (item.getType().toString().toLowerCase().contains(string)) {
+        itemlist.addAll(Objects.requireNonNull(SavageEquipment.getInstance().getWeaponConfig().getConfigurationSection("rarity")).getKeys(false));
 
-                dmHighest = (Double) weaponConfig.get("material." + string + ".max-damage");
-                dmLowest = (Double) weaponConfig.get("material." + string + ".min-damage");
+        for (int i = 0; i < 10; i++) {
 
-                clHighest = (Double) weaponConfig.get("material." + string + ".max-cooldown");
-                clLowest = (Double) weaponConfig.get("material." + string + ".min-cooldown");
+            Integer randomNumber = Number.getInteger(0, itemlist.size() - 1);
+            String string = itemlist.get(randomNumber);
+            itemType = string;
 
-                geHighest = (Integer) weaponConfig.get("material." + string + ".max-gem");
-                geLowest = (Integer) weaponConfig.get("material." + string + ".min-gem");
+            dmHighest = Double.valueOf(String.valueOf(WeaponValues.get("rarity." + string + ".max-damage")));
+            dmLowest = Double.valueOf(String.valueOf(WeaponValues.get("rarity." + string + ".min-damage")));
 
+            clHighest = Double.valueOf(String.valueOf(WeaponValues.get("rarity." + string + ".max-cooldown")));
+            clLowest = Double.valueOf(String.valueOf(WeaponValues.get("rarity." + string + ".min-cooldown")));
+
+            geHighest = Integer.valueOf(String.valueOf(WeaponValues.get("rarity." + string + ".max-gem")));
+            geLowest = Integer.valueOf(String.valueOf(WeaponValues.get("rarity." + string + ".min-gem")));
+
+            while (rarityChosen == null) {
+                chanceOf = Chance.ofDouble(Double.parseDouble(String.valueOf(WeaponValues.get("rarity." + itemType + ".chance"))));
+                if (chanceOf.equals(true)) {
+                    rarity = itemType;
+                    rarityChosen = true;
+                }
+            }
+            if (rarityChosen.equals(false)) {
+                rarityChosen = true;
+                rarity = itemType;
             }
         }
 
         String level = String.valueOf(Number.getInteger(1, 100));
 
-        String damageLowest = String.format("%.2f", Number.getDouble(dmLowest, dmHighest));
+        String damageHighest = String.format("%.2f", Number.getDouble(dmLowest, dmHighest));
 
-        String damageHighest = String.format("%.2f", Number.getDouble(dmLowest, Double.valueOf(damageLowest)));
+        String damageLowest = String.format("%.2f", Number.getDouble(dmLowest, Double.valueOf(damageHighest)));
 
         String cooldown = String.format("%.2f", Number.getDouble(clLowest, clHighest));
 
         String gem = String.valueOf(Number.getInteger(geLowest, geHighest));
 
-        List<String> lore = SavageEquipment.getInstance().getConfig().getStringList("weapon.lore");
-
         boolean noGem = false;
 
-        if (Integer.valueOf(gem) == 0){
+        if (Integer.valueOf(gem) == 0) {
             noGem = true;
         }
 
-        for (int i = 0; i < lore.size(); i++){
+        lore = SEConfig.getStringList("weapon.lore");
+
+        double evaluated = Formula.eval(Placeholder.getDamagePerSecondPlaceholders(item, damageHighest, damageLowest, cooldown, String.valueOf(WeaponValues.get("rarity." + itemType + ".damage-per-second"))));
+
+        String itemName = item.getType().toString().replace("_", " ").replace("(?:(?<=^)|(?<=[^\\w]))\\w", "\\U$0\\E");
+
+        for (int i = 0; i < lore.size(); i++) {
             String string = lore.get(i);
-            string = string.replace("{weapon-type}", item.getType().toString());
+            string = string.replace("{weapon-type}", itemName);
             string = string.replace("{weapon-rarity}", rarity);
             string = string.replace("{weapon-class}", "test");
             string = string.replace("{weapon-required-level}", level);
             string = string.replace("{weapon-min-damage}", damageLowest);
             string = string.replace("{weapon-max-damage}", damageHighest);
             string = string.replace("{weapon-cooldown}", cooldown);
-            string = string.replace("{weapon-damage-per-seconds}", String.format("%.2f", (Double.valueOf(damageLowest) + Double.valueOf(damageHighest)) / 2 / Double.valueOf(cooldown)));
+            string = string.replace("{weapon-damage-per-seconds}", String.format("%.2f", evaluated));
 
             if (noGem){
                 string = string.replace("{weapon-gem-sockets}", "");
@@ -122,10 +142,12 @@ public class Weapon {
 
         }
 
+        assert meta != null;
         meta.setLore(lore);
         item.setItemMeta(meta);
 
 
         return item;
+
     }
 }

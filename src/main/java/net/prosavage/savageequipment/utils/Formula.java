@@ -5,7 +5,7 @@ import org.bukkit.entity.Player;
 
 public class Formula {
 
-    Placeholder Placeholder = new Placeholder();
+    net.prosavage.savageequipment.utils.Placeholder Placeholder = new Placeholder();
 
     public double eval(final String str) {
         return new Object() {

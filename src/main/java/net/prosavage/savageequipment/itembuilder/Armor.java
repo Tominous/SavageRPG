@@ -1,6 +1,7 @@
 package net.prosavage.savageequipment.itembuilder;
 
 import net.prosavage.savageequipment.SavageEquipment;
+import net.prosavage.savageequipment.utils.Chance;
 import net.prosavage.savageequipment.utils.Color;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -16,7 +17,8 @@ public class Armor {
 
     Color Color = new Color();
     Number Number = new Number();
-    FileConfiguration armorConfig = YamlConfiguration.loadConfiguration(new File(SavageEquipment.getInstance().getDataFolder(), "armor.yml"));
+    FileConfiguration armorConfig = SavageEquipment.getInstance().getArmorConfig();
+    Chance Chance = new Chance();
 
 
     public ItemStack getNewArmor(){
@@ -66,30 +68,44 @@ public class Armor {
         Integer geLowest = 0;
         String rarity = "broken";
 
+        String itemType = "";
+        Boolean rarityChosen = null;
+        Boolean chanceOf = false;
+
         ItemMeta meta = item.getItemMeta();
 
-        List<String> itemlist = new ArrayList<String>();
-        itemlist.add(0, "leather");
-        itemlist.add(1, "golden");
-        itemlist.add(2, "chainmail");
-        itemlist.add(3, "iron");
-        itemlist.add(4, "diamond");
+        LinkedList<String> itemlist = new LinkedList<String>();
 
-        for (String string : itemlist) {
-            if (item.getType().toString().toLowerCase().contains(string)) {
+        itemlist.addAll(Objects.requireNonNull(SavageEquipment.getInstance().getWeaponConfig().getConfigurationSection("rarity")).getKeys(false));
 
-                prHighest = (Double) armorConfig.get("material." + string + ".max-protection");
-                prLowest = (Double) armorConfig.get("material." + string + ".min-protection");
+        for (int i = 0; i < 10; i++) {
 
-                hpHighest = (Double) armorConfig.get("material." + string + ".max-health");
-                hpLowest = (Double) armorConfig.get("material." + string + ".min-health");
+            Integer randomNumber = Number.getInteger(0, itemlist.size() - 1);
+            String string = itemlist.get(randomNumber);
+            itemType = string;
 
-                reHighest = (Double) armorConfig.get("material." + string + ".max-regen");
-                reLowest = (Double) armorConfig.get("material." + string + ".min-regen");
+            prHighest = Double.valueOf(String.valueOf(armorConfig.get("rarity." + string + ".max-protection")));
+            prLowest = Double.valueOf(String.valueOf(armorConfig.get("rarity." + string + ".min-protection")));
 
-                geHighest = (Integer) armorConfig.get("material." + string + ".max-gem");
-                geLowest = (Integer) armorConfig.get("material." + string + ".min-gem");
+            hpHighest = Double.valueOf(String.valueOf(armorConfig.get("rarity." + string + ".max-health")));
+            hpLowest = Double.valueOf(String.valueOf(armorConfig.get("rarity." + string + ".min-health")));
 
+            reHighest = Double.valueOf(String.valueOf(armorConfig.get("rarity." + string + ".max-regen")));
+            reLowest = Double.valueOf(String.valueOf(armorConfig.get("rarity." + string + ".min-regen")));
+
+            geHighest = Integer.valueOf(String.valueOf(armorConfig.get("rarity." + string + ".max-gem")));
+            geLowest = Integer.valueOf(String.valueOf(armorConfig.get("rarity." + string + ".min-gem")));
+
+            while (rarityChosen == null) {
+                chanceOf = Chance.ofDouble(Double.parseDouble(String.valueOf(armorConfig.get("rarity." + itemType + ".chance"))));
+                if (chanceOf.equals(true)) {
+                    rarity = itemType;
+                    rarityChosen = true;
+                }
+            }
+            if (rarityChosen.equals(false)) {
+                rarityChosen = true;
+                rarity = itemType;
             }
         }
 

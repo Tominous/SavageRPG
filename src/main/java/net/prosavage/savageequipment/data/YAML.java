@@ -1,6 +1,5 @@
 package net.prosavage.savageequipment.data;
 
-import net.prosavage.savageequipment.SavageEquipment;
 import net.prosavage.savageequipment.utils.Formula;
 import net.prosavage.savageequipment.utils.Placeholder;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -55,7 +54,7 @@ public class YAML {
         }
     }
 
-    public void setMaxExp(Player player, Double value){
+    public void setMaxEXP(Player player, Double value){
         File playerFile = new File("plugins\\SavageEquipment\\playerdata\\", player.getUniqueId().toString() + ".yml");
         YamlConfiguration playerFileLoad = YamlConfiguration.loadConfiguration(playerFile);
         playerFileLoad.set("max-exp", value);
@@ -67,5 +66,40 @@ public class YAML {
 
     }
 
+    public void setEXP(Player player, Double value){
+        File playerFile = new File("plugins\\SavageEquipment\\playerdata\\", player.getUniqueId().toString() + ".yml");
+        YamlConfiguration playerFileLoad = YamlConfiguration.loadConfiguration(playerFile);
+        playerFileLoad.set("exp", value);
+        try {
+            playerFileLoad.save(playerFile);
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+
+    }
+
+    public void setLevel(Player player, Integer value){
+        File playerFile = new File("plugins\\SavageEquipment\\playerdata\\", player.getUniqueId().toString() + ".yml");
+        YamlConfiguration playerFileLoad = YamlConfiguration.loadConfiguration(playerFile);
+        playerFileLoad.set("level", value);
+        try {
+            playerFileLoad.save(playerFile);
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+
+    }
+
+    public void setSkillPoints(Player player, Integer value){
+        File playerFile = new File("plugins\\SavageEquipment\\playerdata\\", player.getUniqueId().toString() + ".yml");
+        YamlConfiguration playerFileLoad = YamlConfiguration.loadConfiguration(playerFile);
+        playerFileLoad.set("skill-points", value);
+        try {
+            playerFileLoad.save(playerFile);
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+
+    }
 
 }

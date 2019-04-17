@@ -11,26 +11,33 @@ import org.bukkit.inventory.ItemStack;
 
 public class GiveItem implements CommandExecutor {
 
-    Armor Armor = new Armor();
     Color Color = new Color();
     Weapon Weapon = new Weapon();
+    Armor Armor = new Armor();
 
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if ((sender instanceof Player))
         {
             Player player = (Player) sender;
-            if (args[0].equals("armor")) {
-                ItemStack getItem = Armor.getNewArmor();
-                ItemStack item = Armor.setItem(getItem);
-                player.getInventory().addItem(item);
-                return true;
-            }
-            else if (args[0].equals("weapon")){
+            if (args[0].equals("weapon")){
 
                 ItemStack getItem = Weapon.getNewWeapon();
                 ItemStack item = Weapon.setItem(getItem);
-                player.getInventory().addItem(item);
-                return true;
+                if (item != null) {
+                    player.getInventory().addItem(item);
+                    return true;
+                }
+                return false;
+            }
+            if (args[0].equals("armor")){
+
+                ItemStack getItem = Armor.getNewArmor();
+                ItemStack item = Armor.setItem(getItem);
+                if (item != null) {
+                    player.getInventory().addItem(item);
+                    return true;
+                }
+                return false;
             }
         }
         return false;

@@ -3,8 +3,9 @@ version: ${project.version}
 main: net.prosavage.savageequipment.SavageEquipment
 authors: [KingAlterIV]
 api-version: 1.13
+
 commands:
-   giveItem:
-    description: Give things!
    savageequipment:
     description: Main command for the plugin.
+   giveitem:
+    description: give item!

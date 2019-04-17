@@ -1,14 +1,15 @@
 package net.prosavage.savageequipment.utils;
 
-import net.prosavage.savageequipment.SavageEquipment;
+import net.prosavage.savageequipment.values.Weapons;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.MetadataValue;
 
 import java.util.List;
 
 public class Placeholder {
 
-    Weapons Weapons = new Weapons();
+    net.prosavage.savageequipment.values.Weapons Weapons = new Weapons();
 
     @SuppressWarnings("DEPRECATED")
     public String getPlayerPlaceholders(Player player, String string){
@@ -23,6 +24,14 @@ public class Placeholder {
         string = string.replace("{player-health}", String.valueOf(player.getHealth()));
         string = string.replace("{player-max-health}", String.valueOf(player.getMaxHealth()));
         return string;
+    }
+
+    public String getDamagePerSecondPlaceholders(ItemStack item, String max_damage, String min_damage, String cooldown, String string){
+        string = string.replace("{max}", String.valueOf(max_damage));
+        string = string.replace("{min}", String.valueOf(min_damage));
+        string = string.replace("{cooldown}", String.valueOf(cooldown));
+        return string;
+
     }
 
 

@@ -14,7 +14,7 @@ public class Number {
     public Integer getInteger(Integer min, Integer max)
     {
         Random r = new Random();
-        return Integer.valueOf(r.nextInt(max.intValue() - min.intValue() + 1) + min.intValue());
+        return r.nextInt(max - min + 1) + min;
     }
 
 }

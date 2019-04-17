@@ -1,7 +1,6 @@
 package net.prosavage.savageequipment.utils;
 
 import net.prosavage.savageequipment.SavageEquipment;
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
@@ -10,9 +9,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class Spawn {
 
-    EntityDestroyPacket EntityDestroy = new EntityDestroyPacket();
     FileConfiguration SEConfig = SavageEquipment.getInstance().getConfig();
-    Color Color = new Color();
+    net.prosavage.savageequipment.utils.Color Color = new Color();
 
     public void damageIndicator(Player player, Entity e, String name) {
 
@@ -24,7 +22,7 @@ public class Spawn {
         damageHologram.setInvulnerable(true);
         damageHologram.setMarker(true);
         String damage = String.valueOf(Double.valueOf(String.format("%.2f", Double.valueOf(name))));
-        String nameValue = String.valueOf(SavageEquipment.getInstance().getYAMLValues().get("damage-indicator.name"));
+        String nameValue = String.valueOf(SavageEquipment.getInstance().getConfig().get("damage-indicator.name"));
         nameValue = nameValue.replace("{player-damage}", damage);
         damageHologram.setCustomName(Color.ify(nameValue));
         new BukkitRunnable() {

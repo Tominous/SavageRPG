@@ -21,7 +21,7 @@ prefix: '&7[&eSavageEquipment&7] &7'
 
 damage-indicator:
   name: '&c{player-damage}'
-  client-side: 'true'
+  client-side: true
 
 formulas:
   exp: '{player-level} * 2.5 ^ 2 / 3.1415926535897932384626433832795 * 1.61803398875 * 100'
@@ -32,31 +32,31 @@ formulas:
 gear-score:
   multiplier:
     weapon:
-      damage: '1.5'
-      cooldown: '0.75'
+      damage: 1.5
+      cooldown: 0.75
     armor:
-      protection: '1.5'
-      health: '1.5'
-      regen: '1.5'
+      protection: 1.5
+      health: 1.5
+      regen: 1.5
 
 weapon:
-  lore-amount: '15'
+  lore-amount: 15
   lore:
-  - ''
+  - ' '
   - '&7Info:'
   - '&7» Type: &f{weapon-type}'
   - '&7» Rarity: &f{weapon-rarity}'
   - '&7» Class: &f{weapon-class}'
   - '&7» Required level: &f{weapon-required-level}'
-  - ''
+  - ' '
   - '&7Weapon Stats:'
   - '&7» Damage: &f{weapon-min-damage}&7-&f{weapon-max-damage}'
   - '&7» Cooldown: &f{weapon-cooldown}'
   - '&7» Avg damage per second(s): &f{weapon-damage-per-seconds}'
-  - ''
+  - ' '
   - '&7Gem Sockets:'
   - '&7» &f{weapon-gem-sockets}'
-  - ''
+  - ' '
 
 # These are required to erase the strings in the lore and make sure that they obtain the value that is with the string
   type-clear: '» Type: '
@@ -69,23 +69,23 @@ weapon:
   damage-per-second-clear: '» Avg damage per second(s): '
 
 armor:
-  lore-amount: '15'
+  lore-amount: 15
   lore:
-  - ''
+  - ' '
   - '&7Info:'
   - '&7» Type: &f{armor-type}'
   - '&7» Rarity: &f{armor-rarity}'
   - '&7» Class: &f{armor-class}'
   - '&7» Required level: &f{armor-required-level}'
-  - ''
+  - ' '
   - '&7Weapon Stats:'
   - '&7» Protection: &f{armor-protection}'
   - '&7» Health: &f{armor-health}'
   - '&7» Regen: &f{armor-regen}'
-  - ''
+  - ' '
   - '&7Gem Sockets:'
   - '&7» &f{armor-gem-sockets}'
-  - ''
+  - ' '
 
 # These are required to erase the strings in the lore and make sure that they obtain the value that is with the string
   type-clear: '» Type: '

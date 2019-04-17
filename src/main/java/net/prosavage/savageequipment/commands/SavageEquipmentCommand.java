@@ -7,16 +7,18 @@ import net.prosavage.savageequipment.utils.Placeholder;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.MetadataValue;
 
+import java.io.IOException;
 import java.util.List;
 
 public class SavageEquipmentCommand implements CommandExecutor {
 
-    Color Color = new Color();
-    Formula Formula = new Formula();
-    Placeholder Placeholder = new Placeholder();
+    net.prosavage.savageequipment.utils.Color Color = new Color();
+    net.prosavage.savageequipment.utils.Formula Formula = new Formula();
+    net.prosavage.savageequipment.utils.Placeholder Placeholder = new Placeholder();
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -33,7 +35,7 @@ public class SavageEquipmentCommand implements CommandExecutor {
                 if (player.isOp()) {
                     SavageEquipment.getInstance().sendConsole("&aReloading config...");
                     SavageEquipment.getInstance().reloadConfig();
-                    SavageEquipment.getInstance().saveDefaultConfig();
+                    SavageEquipment.getInstance().reloadFiles();
                     SavageEquipment.getInstance().sendConsole("&aReloading complete");
                     return true;
                 }

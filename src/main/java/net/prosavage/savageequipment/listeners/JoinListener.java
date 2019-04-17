@@ -12,6 +12,7 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 
 import java.util.List;
+import java.util.Map;
 
 public class JoinListener implements Listener {
 
@@ -23,28 +24,22 @@ public class JoinListener implements Listener {
     public void playerJoin(PlayerLoginEvent e){
         Player player = e.getPlayer();
 
-        player.setMetadata("SavageEquipments-"+ player.getUniqueId() + "-level", new FixedMetadataValue(SavageEquipment.getInstance(), 1));
-        player.setMetadata("SavageEquipments-"+ player.getUniqueId() + "-skillpoints", new FixedMetadataValue(SavageEquipment.getInstance(), 1));
-        player.setMetadata("SavageEquipments-"+ player.getUniqueId() + "-exp", new FixedMetadataValue(SavageEquipment.getInstance(), 0));
-
         if (!(YAML.fileExist(player))) {
             YAML.createFile(player);
         }
 
+        player.setMetadata("SavageEquipments-"+ player.getUniqueId() + "-level", new FixedMetadataValue(SavageEquipment.getInstance(), 1));
+        player.setMetadata("SavageEquipments-"+ player.getUniqueId() + "-skillpoints", new FixedMetadataValue(SavageEquipment.getInstance(), 1));
+        player.setMetadata("SavageEquipments-"+ player.getUniqueId() + "-exp", new FixedMetadataValue(SavageEquipment.getInstance(), 0));
 
         List<MetadataValue> level = player.getMetadata("SavageEquipments-"+ player.getUniqueId() + "-level");
-        if (player.hasMetadata("SavageEquipments-"+ player.getUniqueId() + "-level")) {
-            SavageEquipment.getInstance().sendConsole(level.toString());
-        }
 
-        player.sendMessage(SavageEquipment.getInstance().getYAMLValues().get("formulas.exp"));
-
-        double evaluated = Formula.eval(Placeholder.getPlayerPlaceholders(player, String.valueOf(SavageEquipment.getInstance().getYAMLValues().get("formulas.exp"))));
-
-        player.sendMessage(String.valueOf(evaluated));
+        double evaluated = Formula.eval(Placeholder.getPlayerPlaceholders(player, String.valueOf(SavageEquipment.getInstance().getConfig().get("formulas.exp"))));
 
         player.setMetadata("SavageEquipments-"+ player.getUniqueId() + "-max_exp", new FixedMetadataValue(SavageEquipment.getInstance(), evaluated));
+
 
     }
 
 }
+
