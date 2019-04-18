@@ -39,6 +39,10 @@ public class QuitListener implements Listener {
         player.removeMetadata("SavageEquipments-"+ player.getUniqueId() + "-exp", SavageEquipment.getInstance());
         player.removeMetadata("SavageEquipments-"+ player.getUniqueId() + "-max_exp", SavageEquipment.getInstance());
         player.removeMetadata("SavageEquipments-"+ player.getUniqueId() + "-skillpoints", SavageEquipment.getInstance());
+        level.clear();
+        exp.clear();
+        max_exp.clear();
+        skillpoints.clear();
 
     }
 }

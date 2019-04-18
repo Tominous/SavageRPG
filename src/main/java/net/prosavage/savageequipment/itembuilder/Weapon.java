@@ -38,18 +38,16 @@ public class Weapon {
 
     public ItemStack setItem(ItemStack item) {
 
-        Double dmHighest = 0.0;
-        Double dmLowest = 0.0;
-        Double clHighest = 0.0;
-        Double clLowest = 0.0;
-        Integer geHighest = 3;
-        Integer geLowest = 1;
+        double dmHighest = 0.0;
+        double dmLowest = 0.0;
+        double clHighest = 0.0;
+        double clLowest = 0.0;
+        int geHighest = 3;
+        int geLowest = 1;
         String rarity = "undefined";
         String itemType = "";
 
-        Integer rarityNumber = 1;
-        Boolean rarityChosen = null;
-        Boolean chanceOf = false;
+        boolean chanceOf = false;
 
         List<String> lore = new ArrayList<String>();
 
@@ -61,9 +59,11 @@ public class Weapon {
 
         for (int i = 0; i < 10; i++) {
 
-            Integer randomNumber = Number.getInteger(0, itemlist.size() - 1);
+            int randomNumber = Number.getInteger(0, itemlist.size() - 1);
             String string = itemlist.get(randomNumber);
             itemType = string;
+
+            SavageEquipment.getInstance().sendConsole(randomNumber + " " + string);
 
             dmHighest = Double.valueOf(String.valueOf(WeaponValues.get("rarity." + string + ".max-damage")));
             dmLowest = Double.valueOf(String.valueOf(WeaponValues.get("rarity." + string + ".min-damage")));
@@ -74,80 +74,75 @@ public class Weapon {
             geHighest = Integer.valueOf(String.valueOf(WeaponValues.get("rarity." + string + ".max-gem")));
             geLowest = Integer.valueOf(String.valueOf(WeaponValues.get("rarity." + string + ".min-gem")));
 
-            while (rarityChosen == null) {
-                chanceOf = Chance.ofDouble(Double.parseDouble(String.valueOf(WeaponValues.get("rarity." + itemType + ".chance"))));
-                if (chanceOf.equals(true)) {
-                    rarity = itemType;
-                    rarityChosen = true;
-                }
-            }
-            if (rarityChosen.equals(false)) {
-                rarityChosen = true;
+            chanceOf = Chance.ofDouble(Double.parseDouble(String.valueOf(WeaponValues.get("rarity." + itemType + ".chance"))));
+            if (chanceOf) {
                 rarity = itemType;
+                i = 10;
             }
         }
+        if (chanceOf) {
+            String level = String.valueOf(Number.getInteger(1, 100));
 
-        String level = String.valueOf(Number.getInteger(1, 100));
+            String damageHighest = String.format("%.2f", Number.getDouble(dmLowest, dmHighest));
 
-        String damageHighest = String.format("%.2f", Number.getDouble(dmLowest, dmHighest));
+            String damageLowest = String.format("%.2f", Number.getDouble(dmLowest, Double.valueOf(damageHighest)));
 
-        String damageLowest = String.format("%.2f", Number.getDouble(dmLowest, Double.valueOf(damageHighest)));
+            String cooldown = String.format("%.2f", Number.getDouble(clLowest, clHighest));
 
-        String cooldown = String.format("%.2f", Number.getDouble(clLowest, clHighest));
+            String gem = String.valueOf(Number.getInteger(geLowest, geHighest));
 
-        String gem = String.valueOf(Number.getInteger(geLowest, geHighest));
+            boolean noGem = false;
 
-        boolean noGem = false;
-
-        if (Integer.valueOf(gem) == 0) {
-            noGem = true;
-        }
-
-        lore = SEConfig.getStringList("weapon.lore");
-
-        double evaluated = Formula.eval(Placeholder.getDamagePerSecondPlaceholders(item, damageHighest, damageLowest, cooldown, String.valueOf(WeaponValues.get("rarity." + itemType + ".damage-per-second"))));
-
-        String itemName = item.getType().toString().replace("_", " ").replace("(?:(?<=^)|(?<=[^\\w]))\\w", "\\U$0\\E");
-
-        for (int i = 0; i < lore.size(); i++) {
-            String string = lore.get(i);
-            string = string.replace("{weapon-type}", itemName);
-            string = string.replace("{weapon-rarity}", rarity);
-            string = string.replace("{weapon-class}", "test");
-            string = string.replace("{weapon-required-level}", level);
-            string = string.replace("{weapon-min-damage}", damageLowest);
-            string = string.replace("{weapon-max-damage}", damageHighest);
-            string = string.replace("{weapon-cooldown}", cooldown);
-            string = string.replace("{weapon-damage-per-seconds}", String.format("%.2f", evaluated));
-
-            if (noGem){
-                string = string.replace("{weapon-gem-sockets}", "");
+            if (Integer.valueOf(gem) == 0) {
+                noGem = true;
             }
 
-            lore.set(i, Color.ify(string));
+            lore = SEConfig.getStringList("weapon.lore");
 
-            if (!(noGem)) {
-                if (string.contains("{weapon-gem-sockets}")) {
-                    String gemName = lore.get(i);
-                    int gemIndex = lore.indexOf(gemName);
-                    lore.remove(gemName);
-                    lore.remove(gemIndex);
-                    for (int a = 0; a < Integer.valueOf(gem); a++) {
-                        if (Integer.valueOf(gem) != 0) {
-                            lore.add(Color.ify("&7» [ Gems Socket # " + a + " ]"));
+            double evaluated = Formula.eval(Placeholder.getDamagePerSecondPlaceholders(item, damageHighest, damageLowest, cooldown, String.valueOf(WeaponValues.get("rarity." + itemType + ".damage-per-second"))));
+
+            String itemName = item.getType().toString().replace("_", " ").replace("(?:(?<=^)|(?<=[^\\w]))\\w", "\\U$0\\E");
+
+            for (int i = 0; i < lore.size(); i++) {
+                String string = lore.get(i);
+                string = string.replace("{weapon-type}", itemName);
+                string = string.replace("{weapon-rarity}", rarity);
+                string = string.replace("{weapon-class}", "test");
+                string = string.replace("{weapon-required-level}", level);
+                string = string.replace("{weapon-min-damage}", damageLowest);
+                string = string.replace("{weapon-max-damage}", damageHighest);
+                string = string.replace("{weapon-cooldown}", cooldown);
+                string = string.replace("{weapon-damage-per-seconds}", String.format("%.2f", evaluated));
+
+                if (noGem) {
+                    string = string.replace("{weapon-gem-sockets}", "");
+                }
+
+                lore.set(i, Color.ify(string));
+
+                if (!(noGem)) {
+                    if (string.contains("{weapon-gem-sockets}")) {
+                        String gemName = lore.get(i);
+                        int gemIndex = lore.indexOf(gemName);
+                        lore.remove(gemName);
+                        lore.remove(gemIndex);
+                        for (int a = 0; a < Integer.valueOf(gem); a++) {
+                            if (Integer.valueOf(gem) != 0) {
+                                lore.add(Color.ify("&7» [ Gems Socket # " + a + " ]"));
+                            }
                         }
                     }
                 }
+
             }
 
+            assert meta != null;
+            meta.setLore(lore);
+            item.setItemMeta(meta);
+
+
+            return item;
         }
-
-        assert meta != null;
-        meta.setLore(lore);
-        item.setItemMeta(meta);
-
-
-        return item;
-
+        return new ItemStack(Material.AIR);
     }
 }

@@ -97,14 +97,14 @@ public class Armors {
 
     public double getArmorProtection(ItemStack playerHelmet, ItemStack playerChestplate, ItemStack playerLeggings, ItemStack playerBoots){
 
-        Double helmetProtection = getProtectionLore(playerHelmet);
-        Double helmetDefaultProtection = getDefaultProtection(playerHelmet);
-        Double chestplateProtection = getProtectionLore(playerChestplate);
-        Double chestplateDefaultProtection = getDefaultProtection(playerChestplate);
-        Double leggingsProtection = getProtectionLore(playerLeggings);
-        Double leggingsDefaultProtection = getDefaultProtection(playerLeggings);
-        Double bootsProtection = getProtectionLore(playerBoots);
-        Double bootsDefaultProtection = getDefaultProtection(playerBoots);
+        double helmetProtection = getProtectionLore(playerHelmet);
+        double helmetDefaultProtection = getDefaultProtection(playerHelmet);
+        double chestplateProtection = getProtectionLore(playerChestplate);
+        double chestplateDefaultProtection = getDefaultProtection(playerChestplate);
+        double leggingsProtection = getProtectionLore(playerLeggings);
+        double leggingsDefaultProtection = getDefaultProtection(playerLeggings);
+        double bootsProtection = getProtectionLore(playerBoots);
+        double bootsDefaultProtection = getDefaultProtection(playerBoots);
 
         double protectionValue = helmetProtection + chestplateProtection + leggingsProtection + bootsProtection;
         double removeValue = helmetDefaultProtection + chestplateDefaultProtection + leggingsDefaultProtection + bootsDefaultProtection;
@@ -115,10 +115,10 @@ public class Armors {
 
     public double getArmorHealth(ItemStack playerHelmet, ItemStack playerChestplate, ItemStack playerLeggings, ItemStack playerBoots){
 
-        Double helmetHealth = getHealthLore(playerHelmet);
-        Double chestplateHealth = getHealthLore(playerChestplate);
-        Double leggingsHealth = getHealthLore(playerLeggings);
-        Double bootsHealth = getHealthLore(playerBoots);
+        double helmetHealth = getHealthLore(playerHelmet);
+        double chestplateHealth = getHealthLore(playerChestplate);
+        double leggingsHealth = getHealthLore(playerLeggings);
+        double bootsHealth = getHealthLore(playerBoots);
 
         double healthValue = helmetHealth + chestplateHealth + leggingsHealth + bootsHealth;
 

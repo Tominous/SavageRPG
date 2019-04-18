@@ -58,19 +58,18 @@ public class Armor {
 
     public ItemStack setItem(ItemStack item) {
 
-        Double hpHighest = 0.0;
-        Double hpLowest = 0.0;
-        Double prHighest = 0.0;
-        Double prLowest = 0.0;
-        Double reHighest = 0.0;
-        Double reLowest = 0.0;
-        Integer geHighest = 3;
-        Integer geLowest = 0;
+        double hpHighest = 0.0;
+        double hpLowest = 0.0;
+        double prHighest = 0.0;
+        double prLowest = 0.0;
+        double reHighest = 0.0;
+        double reLowest = 0.0;
+        int geHighest = 3;
+        int geLowest = 1;
         String rarity = "broken";
-
         String itemType = "";
-        Boolean rarityChosen = null;
-        Boolean chanceOf = false;
+
+        boolean chanceOf = false;
 
         ItemMeta meta = item.getItemMeta();
 
@@ -96,72 +95,70 @@ public class Armor {
             geHighest = Integer.valueOf(String.valueOf(armorConfig.get("rarity." + string + ".max-gem")));
             geLowest = Integer.valueOf(String.valueOf(armorConfig.get("rarity." + string + ".min-gem")));
 
-            while (rarityChosen == null) {
-                chanceOf = Chance.ofDouble(Double.parseDouble(String.valueOf(armorConfig.get("rarity." + itemType + ".chance"))));
-                if (chanceOf.equals(true)) {
-                    rarity = itemType;
-                    rarityChosen = true;
-                }
-            }
-            if (rarityChosen.equals(false)) {
-                rarityChosen = true;
+            chanceOf = Chance.ofDouble(Double.parseDouble(String.valueOf(armorConfig.get("rarity." + itemType + ".chance"))));
+            if (chanceOf) {
                 rarity = itemType;
+                i = 10;
             }
         }
 
-        String level = String.valueOf(Number.getInteger(1, 100));
+        if (chanceOf) {
+            String level = String.valueOf(Number.getInteger(1, 100));
 
-        String protection = String.format("%.2f", Number.getDouble(prLowest, prHighest));
+            String protection = String.format("%.2f", Number.getDouble(prLowest, prHighest));
 
-        String health = String.format("%.2f", Number.getDouble(hpLowest, hpHighest));
+            String health = String.format("%.2f", Number.getDouble(hpLowest, hpHighest));
 
-        String regen = String.format("%.2f", Number.getDouble(reLowest, reHighest));
+            String regen = String.format("%.2f", Number.getDouble(reLowest, reHighest));
 
-        String gem = String.valueOf(Number.getInteger(geLowest, geHighest));
+            String gem = String.valueOf(Number.getInteger(geLowest, geHighest));
 
-        List<String> lore = SavageEquipment.getInstance().getConfig().getStringList("armor.lore");
+            List<String> lore = SavageEquipment.getInstance().getConfig().getStringList("armor.lore");
 
-        boolean noGem = false;
+            boolean noGem = false;
 
-        if (Integer.valueOf(gem) == 0){
-            noGem = true;
-        }
-
-        for (int i = 0; i < lore.size(); i++){
-            String string = lore.get(i);
-            string = string.replace("{armor-type}", item.getType().toString());
-            string = string.replace("{armor-rarity}", rarity);
-            string = string.replace("{armor-class}", "test");
-            string = string.replace("{armor-required-level}", level);
-            string = string.replace("{armor-protection}", protection);
-            string = string.replace("{armor-health}", health);
-            string = string.replace("{armor-regen}", regen);
-
-            if (noGem){
-                string = string.replace("{armor-gem-sockets}", "");
+            if (Integer.valueOf(gem) == 0) {
+                noGem = true;
             }
 
-            lore.set(i, Color.ify(string));
+            for (int i = 0; i < lore.size(); i++) {
+                String string = lore.get(i);
+                string = string.replace("{armor-type}", item.getType().toString());
+                string = string.replace("{armor-rarity}", rarity);
+                string = string.replace("{armor-class}", "test");
+                string = string.replace("{armor-required-level}", level);
+                string = string.replace("{armor-protection}", protection);
+                string = string.replace("{armor-health}", health);
+                string = string.replace("{armor-regen}", regen);
 
-            if (!(noGem)) {
-                if (string.contains("{armor-gem-sockets}")) {
-                    String gemName = lore.get(i);
-                    int gemIndex = lore.indexOf(gemName);
-                    lore.remove(gemName);
-                    lore.remove(gemIndex);
-                    for (int a = 0; a < Integer.valueOf(gem); a++) {
-                        if (Integer.valueOf(gem) != 0) {
-                            lore.add(Color.ify("&7» [ Gems Socket # " + a + " ]"));
+                if (noGem) {
+                    string = string.replace("{armor-gem-sockets}", "");
+                }
+
+                lore.set(i, Color.ify(string));
+
+                if (!(noGem)) {
+                    if (string.contains("{armor-gem-sockets}")) {
+                        String gemName = lore.get(i);
+                        int gemIndex = lore.indexOf(gemName);
+                        lore.remove(gemName);
+                        lore.remove(gemIndex);
+                        for (int a = 0; a < Integer.valueOf(gem); a++) {
+                            if (Integer.valueOf(gem) != 0) {
+                                lore.add(Color.ify("&7» [ Gems Socket # " + a + " ]"));
+                            }
                         }
                     }
                 }
+
             }
 
+            assert meta != null;
+            meta.setLore(lore);
+            item.setItemMeta(meta);
+
+            return item;
         }
-
-        meta.setLore(lore);
-        item.setItemMeta(meta);
-
-        return item;
+        return new ItemStack(Material.AIR);
     }
 }
