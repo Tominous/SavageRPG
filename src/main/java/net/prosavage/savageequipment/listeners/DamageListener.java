@@ -1,7 +1,6 @@
 package net.prosavage.savageequipment.listeners;
 
 import net.prosavage.savageequipment.SavageEquipment;
-import net.prosavage.savageequipment.packets.ActionBar;
 import net.prosavage.savageequipment.utils.Color;
 import net.prosavage.savageequipment.utils.Cooldowns;
 import net.prosavage.savageequipment.utils.Number;
@@ -22,7 +21,6 @@ public class DamageListener implements Listener {
     Number Number = new Number();
     Weapons Weapons = new Weapons();
     Cooldowns Cooldown = new Cooldowns();
-    ActionBar ActionBar = new ActionBar();
 
     @EventHandler
     public void damageEvent(EntityDamageByEntityEvent e){
@@ -37,7 +35,7 @@ public class DamageListener implements Listener {
                 Spawn.damageIndicator(player, e.getEntity(), String.valueOf(damage));
             }else{
                 e.setCancelled(true);
-                ActionBar.sendActionText(player, "Test, your still on cooldown for " + String.format("%.2f", cooldown - Cooldown.getAttack(player)) + "s");
+                player.sendMessage("Test, your still on cooldown for " + String.format("%.2f", cooldown - Cooldown.getAttack(player)) + "s");
             }
         }
     }
