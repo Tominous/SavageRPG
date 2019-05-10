@@ -1,7 +1,9 @@
 package net.prosavage.savageequipment.listeners;
 
 import net.prosavage.savageequipment.SavageEquipment;
+import net.prosavage.savageequipment.packets.ActionBar;
 import net.prosavage.savageequipment.utils.Color;
+import net.prosavage.savageequipment.utils.Cooldowns;
 import net.prosavage.savageequipment.utils.Number;
 import net.prosavage.savageequipment.utils.Spawn;
 import net.prosavage.savageequipment.values.Weapons;
@@ -19,6 +21,8 @@ public class DamageListener implements Listener {
     Spawn Spawn = new Spawn();
     Number Number = new Number();
     Weapons Weapons = new Weapons();
+    Cooldowns Cooldown = new Cooldowns();
+    ActionBar ActionBar = new ActionBar();
 
     @EventHandler
     public void damageEvent(EntityDamageByEntityEvent e){
@@ -27,8 +31,14 @@ public class DamageListener implements Listener {
             ItemStack item = player.getInventory().getItemInMainHand();
             double cooldown = Weapons.getCooldownLore(item);
             double damage = Weapons.getDamageLore(item);
-            e.setDamage(damage);
-            Spawn.damageIndicator(player, e.getEntity(), String.valueOf(damage));
+            boolean isOnCooldown = Cooldown.isOnCooldown(player, ((long) cooldown));
+            if (!(isOnCooldown)) {
+                e.setDamage(damage);
+                Spawn.damageIndicator(player, e.getEntity(), String.valueOf(damage));
+            }else{
+                e.setCancelled(true);
+                ActionBar.sendActionText(player, "Test, your still on cooldown for " + String.format("%.2f", cooldown - Cooldown.getAttack(player)) + "s");
+            }
         }
     }
 
