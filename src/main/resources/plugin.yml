@@ -1,11 +1,11 @@
-name: SavageEquipment
+name: SavageRPG
 version: ${project.version}
-main: net.prosavage.savageequipment.SavageEquipment
+main: net.prosavage.savagerpg.SavageRPG
 authors: [KingAlterIV]
-api-version: 1.13
+api-version: 1.14
 
 commands:
-   savageequipment:
+   savagerpg:
     description: Main command for the plugin.
    giveitem:
     description: give item!
