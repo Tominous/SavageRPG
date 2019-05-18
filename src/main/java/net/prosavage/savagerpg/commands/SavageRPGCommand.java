@@ -1,6 +1,7 @@
 package net.prosavage.savagerpg.commands;
 
 import net.prosavage.savagerpg.SavageRPG;
+import net.prosavage.savagerpg.itembuilder.Armor;
 import net.prosavage.savagerpg.itembuilder.Weapon;
 import net.prosavage.savagerpg.utils.Color;
 import net.prosavage.savagerpg.utils.Formula;
@@ -10,9 +11,8 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.MetadataValue;
-import org.bukkit.persistence.PersistentDataType;
 
 import java.util.List;
 
@@ -22,6 +22,7 @@ public class SavageRPGCommand implements CommandExecutor {
     Formula Formula = new Formula();
     Placeholder Placeholder = new Placeholder();
     Weapon Weapon = new Weapon();
+    Armor Armor = new Armor();
 
     NamespacedKey NSK_WEAPON_TYPE = new NamespacedKey(SavageRPG.getInstance(), "SavageRPG-Weapon-Type");
     NamespacedKey NSK_WEAPON_RARITY = new NamespacedKey(SavageRPG.getInstance(), "SavageRPG-Weapon-Rarity");
@@ -81,19 +82,18 @@ public class SavageRPGCommand implements CommandExecutor {
             if (args[0].equals("check")){
                 if (player.isOp()){
 
-                    ItemMeta meta = player.getInventory().getItemInMainHand().getItemMeta();
+                    ItemStack item = player.getInventory().getItemInMainHand();
 
-                    assert meta != null;
-                    String itemName = meta.getPersistentDataContainer().get(NSK_WEAPON_TYPE, PersistentDataType.STRING);
-                    String rarity = meta.getPersistentDataContainer().get(NSK_WEAPON_RARITY, PersistentDataType.STRING);
-                    String classType = meta.getPersistentDataContainer().get(NSK_WEAPON_CLASS, PersistentDataType.STRING);
-                    Integer level = meta.getPersistentDataContainer().get(NSK_WEAPON_LEVEL, PersistentDataType.INTEGER);
-                    Double damageLowest = meta.getPersistentDataContainer().get(NSK_WEAPON_DAMAGE_MIN, PersistentDataType.DOUBLE);
-                    Double damageHighest = meta.getPersistentDataContainer().get(NSK_WEAPON_DAMAGE_MAX, PersistentDataType.DOUBLE);
-                    Double cooldown = meta.getPersistentDataContainer().get(NSK_WEAPON_COOLDOWN, PersistentDataType.DOUBLE);
-                    Double damagePerSecond = meta.getPersistentDataContainer().get(NSK_WEAPON_DAMAGE_PER_SECOND, PersistentDataType.DOUBLE);
-                    Integer gem = meta.getPersistentDataContainer().get(NSK_WEAPON_GEM, PersistentDataType.INTEGER);
-                    String noGem = meta.getPersistentDataContainer().get(NSK_WEAPON_HAVE_GEM, PersistentDataType.STRING);
+                    String itemName = Weapon.getItemType(item);
+                    String rarity = Weapon.getRarity(item);
+                    String classType = Weapon.getClass(item);
+                    int level = Weapon.getLevel(item);
+                    double damageLowest = Weapon.getMinDamage(item);
+                    double damageHighest = Weapon.getMaxDamage(item);
+                    double cooldown = Weapon.getCooldown(item);
+                    double damagePerSecond = Weapon.getDamagePerSecond(item);
+                    int gem = Weapon.getGem(item);
+                    boolean noGem = Weapon.haveGem(item);
                     player.sendMessage("");
                     player.sendMessage("Name: " + itemName);
                     player.sendMessage("Rarity: " + rarity);
@@ -106,15 +106,15 @@ public class SavageRPGCommand implements CommandExecutor {
                     player.sendMessage("gem: " + gem);
                     player.sendMessage("noGem: " + noGem);
 
-                    String itemName2 = meta.getPersistentDataContainer().get(NSK_ARMOR_TYPE, PersistentDataType.STRING);
-                    String rarity2 = meta.getPersistentDataContainer().get(NSK_ARMOR_RARITY, PersistentDataType.STRING);
-                    String classType2 = meta.getPersistentDataContainer().get(NSK_ARMOR_CLASS, PersistentDataType.STRING);
-                    Integer level2 = meta.getPersistentDataContainer().get(NSK_ARMOR_LEVEL, PersistentDataType.INTEGER);
-                    Double protection = meta.getPersistentDataContainer().get(NSK_ARMOR_PROTECTION, PersistentDataType.DOUBLE);
-                    Double health = meta.getPersistentDataContainer().get(NSK_ARMOR_HEALTH, PersistentDataType.DOUBLE);
-                    Double regen = meta.getPersistentDataContainer().get(NSK_ARMOR_REGEN, PersistentDataType.DOUBLE);
-                    Integer gem2 = meta.getPersistentDataContainer().get(NSK_ARMOR_GEM, PersistentDataType.INTEGER);
-                    String noGem2 = meta.getPersistentDataContainer().get(NSK_ARMOR_HAVE_GEM, PersistentDataType.STRING);
+                    String itemName2 = Armor.getType(item);
+                    String rarity2 = Armor.getRarity(item);
+                    String classType2 = Armor.getClass(item);
+                    int level2 = Armor.getLevel(item);
+                    double protection = Armor.getProtection(item);
+                    double health = Armor.getHealth(item);
+                    double regen = Armor.getRegen(item);
+                    int gem2 = Armor.getGem(item);
+                    String noGem2 = Armor.getType(item);
 
                     player.sendMessage("");
                     player.sendMessage("Name: " + itemName2);

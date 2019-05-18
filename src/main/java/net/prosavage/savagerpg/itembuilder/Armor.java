@@ -33,7 +33,7 @@ public class Armor {
     NamespacedKey NSK_ARMOR_GEM = new NamespacedKey(SavageRPG.getInstance(), "SavageRPG-Armor-Gem");
     NamespacedKey NSK_ARMOR_HAVE_GEM = new NamespacedKey(SavageRPG.getInstance(), "SavageRPG-Armor-NoGem");
 
-    public ItemStack getNewArmor(){
+    public ItemStack getNewArmor() {
         ItemStack Item = null;
         LinkedList<ItemStack> items = new LinkedList();
 
@@ -203,7 +203,77 @@ public class Armor {
             return item;
         }
         return new ItemStack(Material.AIR);
-
     }
 
+    public String getType(ItemStack item) {
+        if ((item == null) || (!item.hasItemMeta())) return null;
+        ItemMeta meta = item.getItemMeta();
+        if ((Objects.requireNonNull(meta).getPersistentDataContainer().isEmpty())) return null;
+
+        return Objects.requireNonNull(meta.getPersistentDataContainer().get(NSK_ARMOR_TYPE, PersistentDataType.STRING));
+    }
+
+    public String getRarity(ItemStack item) {
+        if ((item == null) || (!item.hasItemMeta())) return null;
+        ItemMeta meta = item.getItemMeta();
+        if ((Objects.requireNonNull(meta).getPersistentDataContainer().isEmpty())) return null;
+
+        return Objects.requireNonNull(meta.getPersistentDataContainer().get(NSK_ARMOR_RARITY, PersistentDataType.STRING));
+    }
+
+    public String getClass(ItemStack item) {
+        if ((item == null) || (!item.hasItemMeta())) return null;
+        ItemMeta meta = item.getItemMeta();
+        if ((Objects.requireNonNull(meta).getPersistentDataContainer().isEmpty())) return null;
+
+        return Objects.requireNonNull(meta.getPersistentDataContainer().get(NSK_ARMOR_CLASS, PersistentDataType.STRING));
+    }
+
+    public int getLevel(ItemStack item) {
+        if ((item == null) || (!item.hasItemMeta())) return 0;
+        ItemMeta meta = item.getItemMeta();
+        if ((Objects.requireNonNull(meta).getPersistentDataContainer().isEmpty())) return 0;
+
+        return Objects.requireNonNull(meta.getPersistentDataContainer().get(NSK_ARMOR_LEVEL, PersistentDataType.INTEGER));
+    }
+
+    public double getProtection(ItemStack item) {
+        if ((item == null) || (!item.hasItemMeta())) return 0.0;
+        ItemMeta meta = item.getItemMeta();
+        if ((Objects.requireNonNull(meta).getPersistentDataContainer().isEmpty())) return 0.0;
+
+        return Objects.requireNonNull(meta.getPersistentDataContainer().get(NSK_ARMOR_PROTECTION, PersistentDataType.DOUBLE));
+    }
+
+    public double getHealth(ItemStack item) {
+        if ((item == null) || (!item.hasItemMeta())) return 0.0;
+        ItemMeta meta = item.getItemMeta();
+        if ((Objects.requireNonNull(meta).getPersistentDataContainer().isEmpty())) return 0.0;
+
+        return Objects.requireNonNull(meta.getPersistentDataContainer().get(NSK_ARMOR_HEALTH, PersistentDataType.DOUBLE));
+    }
+
+    public double getRegen(ItemStack item) {
+        if ((item == null) || (!item.hasItemMeta())) return 0.0;
+        ItemMeta meta = item.getItemMeta();
+        if (!(Objects.requireNonNull(meta).getPersistentDataContainer().isEmpty())) return 0.0;
+
+        return Objects.requireNonNull(meta.getPersistentDataContainer().get(NSK_ARMOR_REGEN, PersistentDataType.DOUBLE));
+    }
+
+    public int getGem(ItemStack item) {
+        if ((item == null) || (!item.hasItemMeta())) return 0;
+        ItemMeta meta = item.getItemMeta();
+        if (!(Objects.requireNonNull(meta).getPersistentDataContainer().isEmpty())) return 0;
+
+        return Objects.requireNonNull(meta.getPersistentDataContainer().get(NSK_ARMOR_GEM, PersistentDataType.INTEGER));
+    }
+
+    public boolean haveGem(ItemStack item) {
+        if ((item == null) || (!item.hasItemMeta())) return false;
+        ItemMeta meta = item.getItemMeta();
+        if (!(Objects.requireNonNull(meta).getPersistentDataContainer().isEmpty())) return false;
+
+        return Boolean.valueOf(Objects.requireNonNull(meta.getPersistentDataContainer().get(NSK_ARMOR_HAVE_GEM, PersistentDataType.STRING)));
+    }
 }

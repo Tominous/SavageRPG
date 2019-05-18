@@ -1,11 +1,11 @@
 package net.prosavage.savagerpg.listeners;
 
 import net.prosavage.savagerpg.SavageRPG;
+import net.prosavage.savagerpg.itembuilder.Weapon;
 import net.prosavage.savagerpg.utils.Color;
 import net.prosavage.savagerpg.utils.Cooldowns;
 import net.prosavage.savagerpg.utils.Number;
 import net.prosavage.savagerpg.utils.Spawn;
-import net.prosavage.savagerpg.values.Weapons;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -19,7 +19,7 @@ public class DamageListener implements Listener {
     Color Color = new Color();
     Spawn Spawn = new Spawn();
     Number Number = new Number();
-    Weapons Weapons = new Weapons();
+    Weapon Weapon = new Weapon();
     Cooldowns Cooldown = new Cooldowns();
 
     @EventHandler
@@ -27,8 +27,11 @@ public class DamageListener implements Listener {
         if (e.getDamager() instanceof Player){
             Player player = (Player) e.getDamager();
             ItemStack item = player.getInventory().getItemInMainHand();
-            double cooldown = Weapons.getCooldownLore(item);
-            double damage = Weapons.getDamageLore(item);
+            double cooldown = Weapon.getCooldown(item);
+            double minDamage = Weapon.getMinDamage(item);
+            double maxDamage = Weapon.getMaxDamage(item);
+            double damage = Number.getDouble(Weapon.getMinDamage(item), Weapon.getMaxDamage(item));
+            player.sendMessage(String.valueOf(damage) + " " + String.valueOf(minDamage) + " " + maxDamage);
             boolean isOnCooldown = Cooldown.isOnCooldown(player, ((long) cooldown));
             if (!(isOnCooldown)) {
                 e.setDamage(damage);

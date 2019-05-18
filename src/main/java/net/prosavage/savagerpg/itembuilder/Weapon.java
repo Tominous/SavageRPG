@@ -1,8 +1,11 @@
 package net.prosavage.savagerpg.itembuilder;
 
 import net.prosavage.savagerpg.SavageRPG;
+import net.prosavage.savagerpg.utils.Chance;
+import net.prosavage.savagerpg.utils.Color;
 import net.prosavage.savagerpg.utils.Number;
-import net.prosavage.savagerpg.utils.*;
+import net.prosavage.savagerpg.utils.Formula;
+import net.prosavage.savagerpg.utils.Placeholder;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -23,7 +26,6 @@ public class Weapon {
     Formula Formula = new Formula();
     Placeholder Placeholder = new Placeholder();
     FileConfiguration WeaponValues = SavageRPG.getInstance().getWeaponConfig();
-    FileConfiguration SRConfig = SavageRPG.getInstance().getConfig();
 
     NamespacedKey NSK_WEAPON_TYPE = new NamespacedKey(SavageRPG.getInstance(), "SavageRPG-Weapon-Type");
     NamespacedKey NSK_WEAPON_RARITY = new NamespacedKey(SavageRPG.getInstance(), "SavageRPG-Weapon-Rarity");
@@ -80,8 +82,6 @@ public class Weapon {
             int randomNumber = Number.getInteger(0, itemlist.size() - 1);
             String string = itemlist.get(randomNumber);
             itemType = string;
-
-            SavageRPG.getInstance().sendConsole(randomNumber + " " + string);
 
             dmHighest = Double.valueOf(String.valueOf(WeaponValues.get("rarity." + string + ".max-damage")));
             dmLowest = Double.valueOf(String.valueOf(WeaponValues.get("rarity." + string + ".min-damage")));
@@ -193,5 +193,84 @@ public class Weapon {
 
     }
 
+    public double getMinDamage(ItemStack item){
+        if ((item == null) || (!item.hasItemMeta())) return 0.0;
+        ItemMeta meta = item.getItemMeta();
+        if ((Objects.requireNonNull(meta).getPersistentDataContainer().isEmpty())) return 0.0;
+
+        return Objects.requireNonNull(meta.getPersistentDataContainer().get(NSK_WEAPON_DAMAGE_MIN, PersistentDataType.DOUBLE));
+    }
+
+    public double getMaxDamage(ItemStack item){
+        if ((item == null) || (!item.hasItemMeta())) return 0.0;
+        ItemMeta meta = item.getItemMeta();
+        if ((Objects.requireNonNull(meta).getPersistentDataContainer().isEmpty())) return 0.0;
+
+        return Objects.requireNonNull(meta.getPersistentDataContainer().get(NSK_WEAPON_DAMAGE_MAX, PersistentDataType.DOUBLE));
+    }
+
+    public double getCooldown(ItemStack item){
+        if ((item == null) || (!item.hasItemMeta())) return 0.0;
+        ItemMeta meta = item.getItemMeta();
+        if ((Objects.requireNonNull(meta).getPersistentDataContainer().isEmpty())) return 0.0;
+
+        return Objects.requireNonNull(meta.getPersistentDataContainer().get(NSK_WEAPON_COOLDOWN, PersistentDataType.DOUBLE));
+    }
+
+    public String getClass(ItemStack item){
+        if ((item == null) || (!item.hasItemMeta())) return null;
+        ItemMeta meta = item.getItemMeta();
+        if ((Objects.requireNonNull(meta).getPersistentDataContainer().isEmpty())) return null;
+
+        return Objects.requireNonNull(meta.getPersistentDataContainer().get(NSK_WEAPON_CLASS, PersistentDataType.STRING));
+    }
+
+    public double getDamagePerSecond(ItemStack item){
+        if ((item == null) || (!item.hasItemMeta())) return 0.0;
+        ItemMeta meta = item.getItemMeta();
+        if ((Objects.requireNonNull(meta).getPersistentDataContainer().isEmpty())) return 0.0;
+
+        return Objects.requireNonNull(meta.getPersistentDataContainer().get(NSK_WEAPON_DAMAGE_PER_SECOND, PersistentDataType.DOUBLE));
+    }
+
+    public int getGem(ItemStack item){
+        if ((item == null) || (!item.hasItemMeta())) return 0;
+        ItemMeta meta = item.getItemMeta();
+        if ((Objects.requireNonNull(meta).getPersistentDataContainer().isEmpty())) return 0;
+
+        return Objects.requireNonNull(meta.getPersistentDataContainer().get(NSK_WEAPON_GEM, PersistentDataType.INTEGER));
+    }
+
+    public boolean haveGem(ItemStack item){
+        if ((item == null) || (!item.hasItemMeta())) return false;
+        ItemMeta meta = item.getItemMeta();
+        if ((Objects.requireNonNull(meta).getPersistentDataContainer().isEmpty())) return false;
+
+        return Boolean.valueOf(Objects.requireNonNull(meta.getPersistentDataContainer().get(NSK_WEAPON_HAVE_GEM, PersistentDataType.STRING)));
+    }
+
+    public int getLevel(ItemStack item){
+        if ((item == null) || (!item.hasItemMeta())) return 0;
+        ItemMeta meta = item.getItemMeta();
+        if ((Objects.requireNonNull(meta).getPersistentDataContainer().isEmpty())) return 0;
+
+        return Objects.requireNonNull(meta.getPersistentDataContainer().get(NSK_WEAPON_LEVEL, PersistentDataType.INTEGER));
+    }
+
+    public String getRarity(ItemStack item){
+        if ((item == null) || (!item.hasItemMeta())) return null;
+        ItemMeta meta = item.getItemMeta();
+        if ((Objects.requireNonNull(meta).getPersistentDataContainer().isEmpty())) return null;
+
+        return Objects.requireNonNull(meta.getPersistentDataContainer().get(NSK_WEAPON_RARITY, PersistentDataType.STRING));
+    }
+
+    public String getItemType(ItemStack item){
+        if ((item == null) || (!item.hasItemMeta())) return null;
+        ItemMeta meta = item.getItemMeta();
+        if ((Objects.requireNonNull(meta).getPersistentDataContainer().isEmpty())) return null;
+
+        return Objects.requireNonNull(meta.getPersistentDataContainer().get(NSK_WEAPON_TYPE, PersistentDataType.STRING));
+    }
 
 }

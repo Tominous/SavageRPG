@@ -1,11 +1,6 @@
 package net.prosavage.savagerpg.utils;
 
-import net.prosavage.savagerpg.SavageRPG;
-import org.bukkit.entity.Player;
-
 public class Formula {
-
-    Placeholder Placeholder = new Placeholder();
 
     public double eval(final String str) {
         return new Object() {
@@ -85,10 +80,6 @@ public class Formula {
                 return x;
             }
         }.parse();
-    }
-
-    public double calculatedExpFor(Player player){
-        return eval(Placeholder.getPlayerPlaceholders(player, String.valueOf(SavageRPG.getInstance().getConfig().get("formulas.exp"))));
     }
 
 }

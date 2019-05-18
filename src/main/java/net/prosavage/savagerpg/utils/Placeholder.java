@@ -1,6 +1,5 @@
 package net.prosavage.savagerpg.utils;
 
-import net.prosavage.savagerpg.values.Weapons;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.MetadataValue;
@@ -8,14 +7,16 @@ import org.bukkit.metadata.MetadataValue;
 import java.util.List;
 
 public class Placeholder {
-
-    Weapons Weapons = new Weapons();
+    // This dumb thing below gives me a fat error and so I disabled it
+    // java.lang.StackOverflowError: null
+    //	at net.prosavage.savagerpg.utils.Placeholder.<init>(Placeholder.java:12) ~[?:?]
+    //	at net.prosavage.savagerpg.utils.Formula.<init>(Formula.java:8) ~[?:?]
+    //	at net.prosavage.savagerpg.itembuilder.Weapon.<init>(Weapon.java:26) ~[?:?]
+    // Weapon Weapon = new Weapon();
 
     @SuppressWarnings("DEPRECATED")
     public String getPlayerPlaceholders(Player player, String string){
         List<MetadataValue> metadata = player.getMetadata("SE_LEVEL");
-        string = string.replace("{player-damage}", String.valueOf(Weapons.getDamageLore(player.getInventory().getItemInMainHand())));
-
         List<MetadataValue> level = player.getMetadata("SavageEquipments-"+ player.getUniqueId() + "-level");
         if (player.hasMetadata("SavageEquipments-"+ player.getUniqueId() + "-level")) {
             string = string.replace("{player-level}", String.valueOf(level.get(level.size() - 1).value()));
