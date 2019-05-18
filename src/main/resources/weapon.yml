@@ -1,0 +1,66 @@
+rarity:
+
+  broken:
+    chance: 75.00
+    min-damage: 0.50
+    max-damage: 0.25
+    min-cooldown: 1.0
+    max-cooldown: 1.10
+    damage-per-second: (({max} + {min}) / 2) / {cooldown}
+    max-gem: 3
+    min-gem: 0
+    weapon-type: {weapon-type}
+    weapon-class: {weapon-class}
+    weapon-level: {weapon-level}
+
+  damaged:
+    chance: 14.00
+    min-damage: 0.75
+    max-damage: 0.50
+    min-cooldown: 1.10
+    max-cooldown: 1.20
+    damage-per-second: (({max} + {min}) / 2) / {cooldown}
+    max-gem: 3
+    min-gem: 0
+    weapon-type: {weapon-type}
+    weapon-class: {weapon-class}
+    weapon-level: {weapon-level}
+
+  clean:
+    chance: 7.00
+    min-damage: 1.00
+    max-damage: 0.75
+    min-cooldown: 1.20
+    max-cooldown: 1.30
+    damage-per-second: (({max} + {min}) / 2) / {cooldown}
+    max-gem: 3
+    min-gem: 0
+    weapon-type: {weapon-type}
+    weapon-class: {weapon-class}
+    weapon-level: {weapon-level}
+
+  unique:
+    chance: 3.00
+    min-damage: 1.25
+    max-damage: 1.00
+    min-cooldown: 1.30
+    max-cooldown: 1.40
+    damage-per-second: (({max} + {min}) / 2) / {cooldown}
+    max-gem: 3
+    min-gem: 0
+    weapon-type: {weapon-type}
+    weapon-class: {weapon-class}
+    weapon-level: {weapon-level}
+
+  artifact:
+    chance: 1.00
+    min-damage: 1.5
+    max-damage: 1.25
+    min-cooldown: 1.40
+    max-cooldown: 1.50
+    damage-per-second: (({max} + {min}) / 2) / {cooldown}
+    max-gem: 3
+    min-gem: 0
+    weapon-type: {weapon-type}
+    weapon-class: {weapon-class}
+    weapon-level: {weapon-level}
