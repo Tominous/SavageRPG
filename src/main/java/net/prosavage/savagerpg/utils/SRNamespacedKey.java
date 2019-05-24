@@ -30,6 +30,9 @@ public class SRNamespacedKey {
     NamespacedKey namespacedKey_player_exp = new NamespacedKey(SavageRPG.getInstance(), "SavageRPG-Player-EXP");
     NamespacedKey namespacedKey_player_max_exp = new NamespacedKey(SavageRPG.getInstance(), "SavageRPG-Player-Max-EXP");
     NamespacedKey namespacedKey_player_skill_points = new NamespacedKey(SavageRPG.getInstance(), "SavageRPG-Player-Skill-Points");
+    NamespacedKey namespacedKey_player_recent_damage = new NamespacedKey(SavageRPG.getInstance(), "SavageRPG-Player-Recent-Damage");
+
+    // WEAPON STUFF
 
     public NamespacedKey getNamespacedKey_weapon_type(){
         return this.namespacedKey_weapon_type;
@@ -71,6 +74,8 @@ public class SRNamespacedKey {
         return this.namespacedKey_weapon_have_gem;
     }
 
+    // ARMOR STUFF
+
     public NamespacedKey getNamespacedKey_armor_type(){
         return this.namespacedKey_armor_type;
     }
@@ -107,6 +112,8 @@ public class SRNamespacedKey {
         return this.namespacedKey_armor_have_gem;
     }
 
+    // PLAYER STUFF
+
     public NamespacedKey getNamespacedKey_player_level(){
         return this.namespacedKey_player_level;
     }
@@ -122,6 +129,11 @@ public class SRNamespacedKey {
     public NamespacedKey getNamespacedKey_player_skill_points(){
         return this.namespacedKey_player_skill_points;
     }
+
+    public NamespacedKey getNamespacedKey_player_recent_damage(){
+        return this.namespacedKey_player_recent_damage;
+    }
+
 
 }
 

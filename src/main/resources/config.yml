@@ -19,6 +19,9 @@
 
 prefix: '&7[&eSavageEquipment&7] &7'
 
+features:
+  cooldown: enabled
+
 damage-indicator:
   name: '&c{player-damage}'
   client-side: true
@@ -58,16 +61,6 @@ weapon:
   - '&7» &f{weapon-gem-sockets}'
   - ' '
 
-# These are required to erase the strings in the lore and make sure that they obtain the value that is with the string
-  type-clear: '» Type: '
-  rarity-clear: '» Rarity: '
-  class-clear: '» Class: '
-  required-level-clear: '» Required level: '
-  damage-clear: '» Damage: '
-  damage-split: '-'
-  cooldown-clear: '» Cooldown: '
-  damage-per-second-clear: '» Avg damage per second(s): '
-
 armor:
   lore-amount: 15
   lore:
@@ -86,12 +79,3 @@ armor:
   - '&7Gem Sockets:'
   - '&7» &f{armor-gem-sockets}'
   - ' '
-
-# These are required to erase the strings in the lore and make sure that they obtain the value that is with the string
-  type-clear: '» Type: '
-  rarity-clear: '» Rarity: '
-  class-clear: '» Class: '
-  required-level-clear: '» Required level: '
-  protection-clear: '» Protection: '
-  health-clear: '» Health: '
-  regen-clear: '» Regen: '
