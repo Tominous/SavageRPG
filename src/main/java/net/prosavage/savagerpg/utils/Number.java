@@ -17,4 +17,43 @@ public class Number {
         return r.nextInt(max - min + 1) + min;
     }
 
+    public boolean isLessThan(int num, int lessThan){
+        return num < lessThan;
+    }
+
+    public boolean isLessOrEqualTo(int num, int lessThanOrEqual){
+        return num <= lessThanOrEqual;
+    }
+
+    public boolean isEqualTo(int num, int equal){
+        return num == equal;
+    }
+
+    public boolean isGreaterOrEqualTo(int num, int greaterOrEqualTo){
+        return num >= greaterOrEqualTo;
+    }
+
+    public boolean isGreaterThan(int num, int greaterThan){
+        return num > greaterThan;
+    }
+
+    public boolean isLessThan(double num, double lessThan){
+        return num < lessThan;
+    }
+
+    public boolean isLessOrEqualTo(double num, double lessThanOrEqual){
+        return num <= lessThanOrEqual;
+    }
+
+    public boolean isEqualTo(double num, double equal){
+        return num == equal;
+    }
+
+    public boolean isGreaterOrEqualTo(double num, double greaterOrEqualTo){
+        return num >= greaterOrEqualTo;
+    }
+
+    public boolean isGreaterThan(double num, double greaterThan){
+        return num > greaterThan;
+    }
 }

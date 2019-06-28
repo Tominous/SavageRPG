@@ -17,7 +17,13 @@
 # {weapon-scroll-sockets}
 # {weapon-gem-sockets}
 
-prefix: '&7[&eSavageEquipment&7] &7'
+format:
+  prefix: '&7[&eSavageEquipment&7] &7'
+  mob-names: '[{mob-level}] {mob-name} {mob-health}/{mob-max-health}'
+
+events:
+  damage: true
+  join: true
 
 features:
   cooldown: enabled
@@ -26,11 +32,18 @@ damage-indicator:
   name: '&c{player-damage}'
   client-side: true
 
+exp-indicator:
+  name: '&a{exp-amount}'
+  client-side: true
+
 formulas:
   exp: '{player-level} * 2.5 ^ 2 / 3.1415926535897932384626433832795 * 1.61803398875 * 100'
-  exp-drop: '{enemy-level} * 3.1415926535897932384626433832795 * 1.61803398875'
-  damage: '{weapon-damage} + (1.25 * {str-attribute})'
-  defense: '{weapon-damage} - (1.25 * {prt-attribute})'
+  exp-drop: '{mob-level} * 3.1415926535897932384626433832795 * 1.61803398875'
+  player-damage: '{weapon-damage} + (1.25 * {player-str})'
+  player-defense: '{weapon-damage} - (1.25 * {player-def})'
+  mob-health: '{mob-level} * ({mob-health}^0.5)'
+  mob-damage: '{mob-level} * {mob-damage} / 3.1415926535897932384626433832795'
+  mob-defense: '{mob-level}^3.1415926535897932384626433832795 / {mob-health} / {mob-level}'
 
 gear-score:
   multiplier:

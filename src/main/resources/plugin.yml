@@ -3,7 +3,8 @@ version: ${project.version}
 main: net.prosavage.savagerpg.SavageRPG
 api-version: 1.14
 authors: [KingAlterIV]
+depend: [ProtocolLib]
 
 commands:
-  getItem:
-    description: get Items!
+  savagerpgdebug:
+    description: The main command of the plugin.

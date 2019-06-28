@@ -5,134 +5,60 @@ import org.bukkit.NamespacedKey;
 
 public class SNamespacedKey {
 
-    NamespacedKey weapon_type = new NamespacedKey(SavageRPG.getInstance(), "SavageRPG-Weapon-Type");
-    NamespacedKey weapon_rarity = new NamespacedKey(SavageRPG.getInstance(), "SavageRPG-Weapon-Rarity");
-    NamespacedKey weapon_class = new NamespacedKey(SavageRPG.getInstance(), "SavageRPG-Weapon-Class");
-    NamespacedKey weapon_level = new NamespacedKey(SavageRPG.getInstance(), "SavageRPG-Weapon-Level");
-    NamespacedKey weapon_min_damage = new NamespacedKey(SavageRPG.getInstance(), "SavageRPG-Weapon-Damage-Min");
-    NamespacedKey weapon_max_damage = new NamespacedKey(SavageRPG.getInstance(), "SavageRPG-Weapon-Damage-Max");
-    NamespacedKey weapon_cooldown = new NamespacedKey(SavageRPG.getInstance(), "SavageRPG-Weapon-Damage-Max");
-    NamespacedKey weapon_damage_per_second = new NamespacedKey(SavageRPG.getInstance(), "SavageRPG-Weapon-Damage-Per-Second");
-    NamespacedKey weapon_gem = new NamespacedKey(SavageRPG.getInstance(), "SavageRPG-Weapon-Gem");
-    NamespacedKey weapon_have_gem = new NamespacedKey(SavageRPG.getInstance(), "SavageRPG-Weapon-NoGem");
+    NamespacedKey playerLevel = new NamespacedKey(SavageRPG.getInstance(), "savagerpg.player.level");
+    NamespacedKey playerEXP = new NamespacedKey(SavageRPG.getInstance(), "savagerpg.player.exp");
+    NamespacedKey playerMaxEXP = new NamespacedKey(SavageRPG.getInstance(), "savagerpg.player.max.exp");
+    NamespacedKey playerAttributePoints = new NamespacedKey(SavageRPG.getInstance(), "savagerpg.player.attribute.points");
+    NamespacedKey playerStrengthAttributes = new NamespacedKey(SavageRPG.getInstance(), "savagerpg.player.strength.attribute");
+    NamespacedKey playerIntelligenceAttributes = new NamespacedKey(SavageRPG.getInstance(), "savagerpg.player.intelligence.attribute");
+    NamespacedKey playerConstitutionAttributes = new NamespacedKey(SavageRPG.getInstance(), "savagerpg.player.constitution.attribute");
+    NamespacedKey playerDexterityAttributes = new NamespacedKey(SavageRPG.getInstance(), "savagerpg.player.dexterity.attribute");
+    NamespacedKey playerCharismaAttributes = new NamespacedKey(SavageRPG.getInstance(), "savagerpg.player.charisma.attribute");
+    NamespacedKey playerWisdomAttributes = new NamespacedKey(SavageRPG.getInstance(), "savagerpg.player.wisdom.attribute");
+    NamespacedKey playerLuckAttributes = new NamespacedKey(SavageRPG.getInstance(), "savagerpg.player.luck.attribute");
 
-    NamespacedKey armor_type = new NamespacedKey(SavageRPG.getInstance(), "SavageRPG-Armor-Type");
-    NamespacedKey armor_rarity = new NamespacedKey(SavageRPG.getInstance(), "SavageRPG-Armor-Rarity");
-    NamespacedKey armor_class = new NamespacedKey(SavageRPG.getInstance(), "SavageRPG-Armor-Class");
-    NamespacedKey armor_level = new NamespacedKey(SavageRPG.getInstance(), "SavageRPG-Armor-Level");
-    NamespacedKey armor_protection = new NamespacedKey(SavageRPG.getInstance(), "SavageRPG-Armor-Protection");
-    NamespacedKey armor_health = new NamespacedKey(SavageRPG.getInstance(), "SavageRPG-Armor-Health");
-    NamespacedKey armor_regen = new NamespacedKey(SavageRPG.getInstance(), "SavageRPG-Armor-Regen");
-    NamespacedKey armor_gem = new NamespacedKey(SavageRPG.getInstance(), "SavageRPG-Armor-Gem");
-    NamespacedKey armor_have_gem = new NamespacedKey(SavageRPG.getInstance(), "SavageRPG-Armor-NoGem");
 
-    NamespacedKey player_level = new NamespacedKey(SavageRPG.getInstance(), "SavageRPG-Player-Level");
-    NamespacedKey player_exp = new NamespacedKey(SavageRPG.getInstance(), "SavageRPG-Player-EXP");
-    NamespacedKey player_max_exp = new NamespacedKey(SavageRPG.getInstance(), "SavageRPG-Player-Max-EXP");
-    NamespacedKey player_skill_points = new NamespacedKey(SavageRPG.getInstance(), "SavageRPG-Player-Skill-Points");
-    NamespacedKey player_recent_damage = new NamespacedKey(SavageRPG.getInstance(), "SavageRPG-Player-Recent-Damage");
-
-    // WEAPON STUFF
-
-    public NamespacedKey getWeaponType(){
-        return this.weapon_type;
+    public NamespacedKey getPlayerLevel() {
+        return playerLevel;
     }
 
-    public NamespacedKey getWeaponRarity(){
-        return this.weapon_rarity;
+    public NamespacedKey getPlayerEXP() {
+        return playerEXP;
     }
 
-    public NamespacedKey getWeaponClass(){
-        return this.weapon_class;
+    public NamespacedKey getPlayerMaxEXP() {
+        return playerMaxEXP;
     }
 
-    public NamespacedKey getWeaponLevel(){
-        return this.weapon_level;
+    public NamespacedKey getPlayerAttributePoints() {
+        return playerAttributePoints;
     }
 
-    public NamespacedKey getWeaponMinDamage(){
-        return this.weapon_min_damage;
+    public NamespacedKey getPlayerStrengthAttributes() {
+        return playerStrengthAttributes;
     }
 
-    public NamespacedKey getWeaponMaxDamage(){
-        return this.weapon_max_damage;
+    public NamespacedKey getPlayerIntelligenceAttributes() {
+        return playerIntelligenceAttributes;
     }
 
-    public NamespacedKey getWeaponCooldown(){
-        return this.weapon_cooldown;
+    public NamespacedKey getPlayerConstitutionAttributes() {
+        return playerConstitutionAttributes;
     }
 
-    public NamespacedKey getWeaponDPS(){
-        return this.weapon_damage_per_second;
+    public NamespacedKey getPlayerDexterityAttributes() {
+        return playerDexterityAttributes;
     }
 
-    public NamespacedKey getWeaponGems(){
-        return this.weapon_gem;
+    public NamespacedKey getPlayerCharismaAttributes() {
+        return playerCharismaAttributes;
     }
 
-    public NamespacedKey getDoesWeaponHaveGems(){
-        return this.weapon_have_gem;
+    public NamespacedKey getPlayerWisdomAttributes() {
+        return playerWisdomAttributes;
     }
 
-    // ARMOR STUFF
-
-    public NamespacedKey getArmorType(){
-        return this.armor_type;
+    public NamespacedKey getPlayerLuckAttributes() {
+        return playerLuckAttributes;
     }
-
-    public NamespacedKey getArmorRarity(){
-        return this.armor_rarity;
-    }
-
-    public NamespacedKey getArmorClass(){
-        return this.armor_class;
-    }
-
-    public NamespacedKey getArmorLevel(){
-        return this.armor_level;
-    }
-
-    public NamespacedKey getArmorProtection(){
-        return this.armor_protection;
-    }
-
-    public NamespacedKey getArmorHealth(){
-        return this.armor_health;
-    }
-
-    public NamespacedKey getArmorRegen(){
-        return this.armor_regen;
-    }
-
-    public NamespacedKey getArmorGem(){
-        return this.armor_gem;
-    }
-
-    public NamespacedKey getDoesArmorHaveGem(){
-        return this.armor_have_gem;
-    }
-
-    // PLAYER STUFF
-
-    public NamespacedKey getPlayerLevel(){
-        return this.player_level;
-    }
-
-    public NamespacedKey getPlayerExp(){
-        return this.player_exp;
-    }
-
-    public NamespacedKey getPlayerMaxExp(){
-        return this.player_max_exp;
-    }
-
-    public NamespacedKey getPlayerSkillpoints(){
-        return this.player_skill_points;
-    }
-
-    public NamespacedKey getPlayerRecentDamage(){
-        return this.player_recent_damage;
-    }
-
-
 }
