@@ -1,0 +1,66 @@
+placeholders:
+
+  #
+  # type: variable name
+
+  damage: '{damage}'
+  damage-formatted: '{damage-formatted}'
+
+  player-name: '{player-name}'
+  player-level: '{player-level}'
+  player-health: '{player-health}'
+  player-health-formatted: '{player-health-formatted}'
+  player-max-health: '{player-max-health}'
+  player-max-health-formatted: '{player-max-health-formatted}'
+  player-exp: '{player-exp}'
+  player-atr: '{player-atr}'
+  player-str: '{player-str}'
+  player-con: '{player-con}'
+  player-int: '{player-int}'
+  player-dex: '{player-dex}'
+  player-cha: '{player-cha}'
+  player-wis: '{player-wis}'
+  player-luk: '{player-luk}'
+  player-recent-damage: '{player-recent-damage}'
+  player-recent-damage-formatted: '{player-recent-damage-formatted}'
+  player-damage: '{player-damage}'
+  player-damage-formatted: '{player-damage-formatted}'
+  player-defense: '{player-defense}'
+  player-defense-formatted: '{player-defense-formatted}'
+
+  mob-level: '{mob-level}'
+  mob-exp: '{mob-exp}'
+  mob-damage: '{mob-damage}'
+  mob-recent-damage: '{mob-recent-damage}'
+  mob-health: '{mob-health}'
+  mob-max-health: '{mob-max-health}'
+  mob-name: '{mob-name}'
+  mob-distance: '{mob-distance}'
+
+  armor-protection: '{armor-protection}'
+  armor-health: '{armor-health}'
+  armor-regen: '{armor-regen}'
+
+  gear-score-value: '{gear-score-value}'
+
+  block-difficulty-increase: '{block-difficulty-increase}'
+
+  player-damage-equation: '{player-damage-equation}'
+  player-health-equation: '{player-health-equation}'
+
+  player-mana-equation: '{player-mana-equation}'
+  player-attribute-chance-equation: '{player-attribute-chance-equation}'
+
+  player-defense-equation: '{player-defense-equation}'
+  player-constitution-health-equation: '{player-constitution-health-equation}'
+
+  player-speed-equation: '{player-speed-equation}'
+  player-evasion-equation: '{player-evasion-equation}'
+
+  player-liking-equation: '{player-liking-equation}'
+  player-lower-price-equation: '{player-lower-price-equation}'
+
+  player-mana-regeneration-equation: '{player-mana-regeneration-equation}'
+  player-ability-cooldown-equation: '{player-ability-cooldown-equation}'
+
+  player-loot-drop-equation: '{player-loot-drop-equation}'
