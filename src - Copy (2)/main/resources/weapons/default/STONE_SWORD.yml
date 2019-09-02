@@ -1,0 +1,11 @@
+item-name: Stone Sword
+materials: Stone
+rarity: Default
+lore:
+  - ''
+min-level: 1
+max-level: 100
+min-damage: 10.00
+max-damage: 20.00
+min-gem: 1
+max-gem: 1
