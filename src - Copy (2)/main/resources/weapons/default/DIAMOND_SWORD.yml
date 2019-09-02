@@ -1,0 +1,11 @@
+item-name: Diamond Sword
+materials: Diamond
+rarity: Default
+lore:
+  - ''
+min-level: 1
+max-level: 100
+min-damage: 40.00
+max-damage: 50.00
+min-gem: 1
+max-gem: 1

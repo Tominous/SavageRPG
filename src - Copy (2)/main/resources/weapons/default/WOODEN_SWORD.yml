@@ -1,0 +1,11 @@
+item-name: Wooden Sword
+materials: Wooden
+rarity: Default
+lore:
+  - ''
+min-level: 1
+max-level: 100
+min-damage: 1.00
+max-damage: 10.00
+min-gem: 1
+max-gem: 1
