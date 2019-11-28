@@ -10,6 +10,7 @@ import org.bukkit.persistence.PersistentDataType;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class IWeapon {
 
@@ -58,8 +59,7 @@ public class IWeapon {
         ItemMeta meta = itemStack.getItemMeta();
         if (meta != null) {
             PersistentDataContainer persistentDataContainer = meta.getPersistentDataContainer();
-            List<String> split = Arrays.asList(persistentDataContainer.get(INamespacedKeys.ITEM_LORE, PersistentDataType.STRING).split("||"));
-            return split;
+            return Arrays.asList(persistentDataContainer.get(INamespacedKeys.ITEM_LORE, PersistentDataType.STRING).split("||"));
         }
         return Collections.singletonList("");
     }
@@ -139,8 +139,7 @@ public class IWeapon {
         ItemMeta meta = itemStack.getItemMeta();
         if (meta != null) {
             PersistentDataContainer persistentDataContainer = meta.getPersistentDataContainer();
-            List<String> split = Arrays.asList(persistentDataContainer.get(INamespacedKeys.ITEM_ABIILTY_DESCRIPTION, PersistentDataType.STRING).split("||"));
-            return split;
+            return Arrays.asList(Objects.requireNonNull(persistentDataContainer.get(INamespacedKeys.ITEM_ABIILTY_DESCRIPTION, PersistentDataType.STRING)).split("||"));
         }
         return Collections.singletonList("");
     }

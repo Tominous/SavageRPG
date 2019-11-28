@@ -19,10 +19,10 @@ import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class WeaponItemEditor {
-    net.prosavage.illyriarpg.utils.Number Number = new Number();
-    net.prosavage.illyriarpg.utils.Color Color = new Color();
+    private net.prosavage.illyriarpg.utils.Number Number = new Number();
+    private net.prosavage.illyriarpg.utils.Color Color = new Color();
 
-    public ButtonElement goToWeaponCreateMenu(ChatMenu menu, Player player, int x, int y, String text, int page){
+    private ButtonElement goToWeaponCreateMenu(ChatMenu menu, Player player, int x, int y, String text, int page){
         return new ButtonElement(x, y, ChatColor.GREEN + text, player1 -> {
             menu.setPauseChat(false);
             menu.close(player);
@@ -41,7 +41,6 @@ public class WeaponItemEditor {
         chatMenu.add(closeDefaultMenu(chatMenu, player));
         chatMenu.add(new TextElement(0, 16, "Give item? "));
         chatMenu.add(giveItem(player));
-        IllyriaRPG.getInstance().sendConsole(String.valueOf(page));
         if (page <= 1) {
             chatMenu.add(new TextElement(0, 10, "Weapon name: "));
             chatMenu.add(new TextElement(0, 12, "Item rarity: "));
@@ -80,7 +79,7 @@ public class WeaponItemEditor {
         chatMenu.openFor(player);
     }
 
-    public ButtonElement closeDefaultMenu(ChatMenu menu, Player player){
+    private ButtonElement closeDefaultMenu(ChatMenu menu, Player player){
         return new ButtonElement(100, 18, ChatColor.RED + "[Close]", player1 -> {
             menu.setPauseChat(false);
             menu.close(player);
@@ -117,7 +116,7 @@ public class WeaponItemEditor {
         });
     }
 
-    public BooleanElement giveItem(Player player) {
+    private BooleanElement giveItem(Player player) {
         BooleanElement weaponGiveItemInput = new BooleanElement(75, 16, false);
         weaponGiveItemInput.value.setChangeCallback(state -> {
             byte byteValue = 0;
@@ -130,7 +129,7 @@ public class WeaponItemEditor {
         return weaponGiveItemInput;
     }
 
-    public InputElement weaponFileNameInput(Player player, String value) {
+    private InputElement weaponFileNameInput(Player player, String value) {
         InputElement weaponFile = new InputElement(100, 10, 100, value);
         weaponFile.value.setChangeCallback(state -> {
             String currentValue = state.getCurrent();
@@ -141,7 +140,7 @@ public class WeaponItemEditor {
         return weaponFile;
     }
 
-    public InputElement weaponMaterialTypeInput(Player player, String value) {
+    private InputElement weaponMaterialTypeInput(Player player, String value) {
         InputElement weaponMaterialInput = new InputElement(100, 12, 100, value);
         weaponMaterialInput.value.setChangeCallback(state -> {
             String currentValue = state.getCurrent();
@@ -152,7 +151,7 @@ public class WeaponItemEditor {
         return weaponMaterialInput;
     }
 
-    public InputElement weaponRarityInput(Player player, String value) {
+    private InputElement weaponRarityInput(Player player, String value) {
         InputElement weaponRarityInput = new InputElement(100, 14, 100, value);
         weaponRarityInput.value.setChangeCallback(state -> {
             String currentValue = state.getCurrent();
@@ -164,7 +163,7 @@ public class WeaponItemEditor {
     }
 
 
-    public InputElement weaponLevelInput(Player player, String value) {
+    private InputElement weaponLevelInput(Player player, String value) {
         InputElement weaponLevelInput = new InputElement(100, 8, 100, value);
         weaponLevelInput.value.setChangeCallback(state -> {
             String currentValue = state.getCurrent();
@@ -176,7 +175,7 @@ public class WeaponItemEditor {
         return weaponLevelInput;
     }
 
-    public InputElement minimumWeaponDamageInput(Player player, String value) {
+    private InputElement minimumWeaponDamageInput(Player player, String value) {
         InputElement weaponDamageInput = new InputElement(100, 10, 100, value);
         weaponDamageInput.value.setChangeCallback(state -> {
             String currentValue = state.getCurrent();
@@ -187,7 +186,7 @@ public class WeaponItemEditor {
         return weaponDamageInput;
     }
 
-    public InputElement maximumWeaponDamageInput(Player player, String value) {
+    private InputElement maximumWeaponDamageInput(Player player, String value) {
         InputElement maximumWeaponDamageInput = new InputElement(100, 12, 100, value);
         maximumWeaponDamageInput.value.setChangeCallback(state -> {
             String currentValue = state.getCurrent();
@@ -198,7 +197,7 @@ public class WeaponItemEditor {
         return maximumWeaponDamageInput;
     }
 
-    public InputElement weaponAttackCooldown(Player player, String value) {
+    private InputElement weaponAttackCooldown(Player player, String value) {
         InputElement weaponAttackCooldownInput = new InputElement(100, 14, 100, value);
         weaponAttackCooldownInput.value.setChangeCallback(state -> {
             String currentValue = state.getCurrent();
@@ -210,7 +209,7 @@ public class WeaponItemEditor {
         return weaponAttackCooldownInput;
     }
 
-    public InputElement scrollAmountInput(Player player, String value) {
+    private InputElement scrollAmountInput(Player player, String value) {
         InputElement scrollAmountInput = new InputElement(100, 14, 100, value);
         scrollAmountInput.value.setChangeCallback(state -> {
             String currentValue = state.getCurrent();
@@ -222,7 +221,7 @@ public class WeaponItemEditor {
         return scrollAmountInput;
     }
 
-    public InputElement gemAmountInput(Player player, String value) {
+    private InputElement gemAmountInput(Player player, String value) {
         InputElement gemAmountInput = new InputElement(100, 16, 100, value);
         gemAmountInput.value.setChangeCallback(state -> {
             String currentValue = state.getCurrent();
@@ -234,7 +233,7 @@ public class WeaponItemEditor {
         return gemAmountInput;
     }
 
-    public InputElement abilityNameInput(Player player, String value) {
+    private InputElement abilityNameInput(Player player, String value) {
         InputElement abilityNameInput = new InputElement(100, 6, 100, value);
         abilityNameInput.value.setChangeCallback(state -> {
             String currentValue = state.getCurrent();
@@ -245,7 +244,7 @@ public class WeaponItemEditor {
         return abilityNameInput;
     }
 
-    public InputElement abilityCastTypeInput(Player player, String value) {
+    private InputElement abilityCastTypeInput(Player player, String value) {
         InputElement abilityCastTypeInput = new InputElement(100, 8, 100, value);
         abilityCastTypeInput.value.setChangeCallback(state -> {
             String currentValue = state.getCurrent();
@@ -256,7 +255,7 @@ public class WeaponItemEditor {
         return abilityCastTypeInput;
     }
 
-    public InputElement abilityActionTypeInput(Player player, String value) {
+    private InputElement abilityActionTypeInput(Player player, String value) {
         InputElement abilityActionTypeInput = new InputElement(100, 10, 100, value);
         abilityActionTypeInput.value.setChangeCallback(state -> {
             String currentValue = state.getCurrent();
@@ -267,7 +266,7 @@ public class WeaponItemEditor {
         return abilityActionTypeInput;
     }
 
-    public InputElement abilityCooldownInput(Player player, String value) {
+    private InputElement abilityCooldownInput(Player player, String value) {
         InputElement abilityCooldownInput = new InputElement(100, 12, 100, value);
         abilityCooldownInput.value.setChangeCallback(state -> {
             String currentValue = state.getCurrent();
@@ -278,7 +277,7 @@ public class WeaponItemEditor {
         return abilityCooldownInput;
     }
 
-    public InputElement abilityManaCostInput(Player player, String value) {
+    private InputElement abilityManaCostInput(Player player, String value) {
         InputElement abilityManaCostInput = new InputElement(100, 14, 100, value);
         abilityManaCostInput.value.setChangeCallback(state -> {
             String currentValue = state.getCurrent();

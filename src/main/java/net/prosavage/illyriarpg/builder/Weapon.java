@@ -11,7 +11,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -19,9 +18,9 @@ import java.util.List;
 
 public class Weapon {
 
-    Number Number = new Number();
-    Chance Chance = new Chance();
-    Color Color = new Color();
+    private Number Number = new Number();
+    private Chance Chance = new Chance();
+    private Color Color = new Color();
 
     private final ItemStack itemStack;
     private final ItemMeta meta;
@@ -176,7 +175,7 @@ public class Weapon {
         return this;
     }
 
-    public String setDefaultMaterial(ItemStack itemStack){
+    private String setDefaultMaterial(ItemStack itemStack){
         String key = String.valueOf(itemStack.getType().getKey()).replace("minecraft:", "");
         String[] split = key.split("_");
         List<String> words = new java.util.ArrayList<>(Collections.singletonList(""));
@@ -187,7 +186,7 @@ public class Weapon {
         return words.get(0);
     }
 
-    public String setDefaultName(ItemStack itemStack){
+    private String setDefaultName(ItemStack itemStack){
         String key = String.valueOf(itemStack.getType().getKey()).replace("minecraft:", "");
         String[] split = key.split("_");
         List<String> words = new java.util.ArrayList<>(Collections.singletonList(""));
@@ -208,7 +207,7 @@ public class Weapon {
         return this;
     }
 
-    public void setPersistentDataContainers(){
+    private void setPersistentDataContainers(){
         String itemLore = null;
         String itemDescription = null;
         if (this.lore != null){
@@ -228,6 +227,7 @@ public class Weapon {
         persistentDataContainer.set(INamespacedKeys.ITEM_MATERIAL,PersistentDataType.STRING,this.material);
         persistentDataContainer.set(INamespacedKeys.ITEM_RARITY,PersistentDataType.STRING,this.rarity);
         persistentDataContainer.set(INamespacedKeys.ITEM_CHANCE,PersistentDataType.DOUBLE,this.chance);
+        assert itemLore != null;
         persistentDataContainer.set(INamespacedKeys.ITEM_LORE,PersistentDataType.STRING, itemLore);
         persistentDataContainer.set(INamespacedKeys.ITEM_LEVEL,PersistentDataType.INTEGER,this.level);
         persistentDataContainer.set(INamespacedKeys.ITEM_MAX_DAMAGE,PersistentDataType.DOUBLE,this.maximumDamage);
@@ -236,6 +236,7 @@ public class Weapon {
         persistentDataContainer.set(INamespacedKeys.ITEM_GEM,PersistentDataType.INTEGER,this.gems);
         persistentDataContainer.set(INamespacedKeys.ITEM_ABIILTY_COOLDOWN,PersistentDataType.DOUBLE,this.abilityCooldown);
         persistentDataContainer.set(INamespacedKeys.ITEM_ABIILTY_NAME,PersistentDataType.STRING,this.name);
+        assert itemDescription != null;
         persistentDataContainer.set(INamespacedKeys.ITEM_ABIILTY_DESCRIPTION,PersistentDataType.STRING,itemDescription);
         persistentDataContainer.set(INamespacedKeys.ITEM_ABIILTY_CAST_TYPE,PersistentDataType.STRING,this.castType);
         persistentDataContainer.set(INamespacedKeys.ITEM_ABIILTY_MANA_COST,PersistentDataType.DOUBLE,this.manaCost);
@@ -326,7 +327,7 @@ public class Weapon {
     }
 
 
-    public List<String> parseBasicLore(List<String> lore, String weaponType, String weaponRarity, int weaponLevel, double weaponMinDamage, double weaponMaxDamage, double weaponAttackCooldown){
+    private List<String> parseBasicLore(List<String> lore, String weaponType, String weaponRarity, int weaponLevel, double weaponMinDamage, double weaponMaxDamage, double weaponAttackCooldown){
         List<String> newLore = new ArrayList<>();
         for (String s : lore) {
             s = s.replace("{weapon-type}", weaponType)
@@ -340,20 +341,20 @@ public class Weapon {
         return newLore;
     }
 
-    public List<String> parseGemLore(List<String> lore, int gem) {
+    private List<String> parseGemLore(List<String> lore, int gem) {
         boolean noGem = false;
-        if (Number.isLessOrEqualTo(gem,0)) {
+        if (gem <= 0) {
             noGem = true;
         }
         List<String> newLore = new ArrayList<>();
         for (String s : lore) {
             newLore.add(Color.ify(s));
-            if (Boolean.parseBoolean(String.valueOf(noGem)) && s.contains("{weapon-gem-sockets}")) {
+            if (noGem && s.contains("{weapon-gem-sockets}")) {
                 newLore.remove(newLore.indexOf(Color.ify(s)) - 1);
                 newLore.remove(newLore.indexOf(Color.ify(s)) - 1);
             }
 
-            if (!(Boolean.parseBoolean(String.valueOf(noGem))) && s.contains("{weapon-gem-sockets}")) {
+            if (!noGem && s.contains("{weapon-gem-sockets}")) {
                 newLore.remove(Color.ify(s));
                 for (int i = 0; i < gem; i++) newLore.add(Color.ify("&7» [ Gem Socket # " + i + " ]"));
             }
@@ -361,28 +362,28 @@ public class Weapon {
         return newLore;
     }
 
-    public List<String> parseScrollLore(List<String> lore, int gem) {
-        boolean noGem = false;
-        if (Number.isLessOrEqualTo(gem,0)) {
-            noGem = true;
+    private List<String> parseScrollLore(List<String> lore, int scroll) {
+        boolean noScroll = false;
+        if (scroll <= 0) {
+            noScroll = true;
         }
         List<String> newLore = new ArrayList<>();
         for (String s : lore) {
             newLore.add(Color.ify(s));
-            if (Boolean.parseBoolean(String.valueOf(noGem)) && s.contains("{weapon-scroll-sockets}")) {
+            if (noScroll && s.contains("{weapon-scroll-sockets}")) {
                 newLore.remove(newLore.indexOf(Color.ify(s)) - 1);
                 newLore.remove(newLore.indexOf(Color.ify(s)) - 1);
             }
 
-            if (!(Boolean.parseBoolean(String.valueOf(noGem))) && s.contains("{weapon-scroll-sockets}")) {
+            if (!(noScroll && s.contains("{weapon-scroll-sockets}"))){
                 newLore.remove(Color.ify(s));
-                for (int i = 0; i < gem; i++) newLore.add(Color.ify("&7» [ Scroll Socket # " + i + " ]"));
+                for (int i = 0; i < scroll; i++) newLore.add(Color.ify("&7» [ Scroll Socket # " + i + " ]"));
             }
         }
         return newLore;
     }
 
-    public List<String> parseAbilityLore(List<String> lore, String abilityName,List<String> abilityDescription,double cooldown, double mana) {
+    private List<String> parseAbilityLore(List<String> lore, String abilityName,List<String> abilityDescription,double cooldown, double mana) {
         boolean hasability = false;
         if (abilityName != null && !abilityName.equals("null")) {
             hasability = true;
@@ -395,22 +396,10 @@ public class Weapon {
                         .replace("{weapon-ability-mana}",String.valueOf(mana));
             }
             newLore.add(Color.ify(s));
-            if (!(Boolean.parseBoolean(String.valueOf(hasability))) && s.contains("Weapon Ability")) {
+            if (!hasability && (s.contains("Weapon Ability") || s.contains("{weapon-ability-name}") || s.contains("{weapon-ability-cooldown}") || s.contains("{weapon-ability-mana}") || s.contains("{weapon-ability-description}"))) {
                 newLore.remove(Color.ify(s));
             }
-            if (!(Boolean.parseBoolean(String.valueOf(hasability))) && s.contains("{weapon-ability-name}")) {
-                newLore.remove(Color.ify(s));
-            }
-            if (!(Boolean.parseBoolean(String.valueOf(hasability))) && s.contains("{weapon-ability-cooldown}")) {
-                newLore.remove(Color.ify(s));
-            }
-            if (!(Boolean.parseBoolean(String.valueOf(hasability))) && s.contains("{weapon-ability-mana}")) {
-                newLore.remove(Color.ify(s));
-            }
-            if (!(Boolean.parseBoolean(String.valueOf(hasability))) && s.contains("{weapon-ability-description}")) {
-                newLore.remove(Color.ify(s));
-            }
-            if ((Boolean.parseBoolean(String.valueOf(hasability))) && s.contains("{weapon-ability-description}")) {
+            if (hasability && s.contains("{weapon-ability-description}")) {
                 newLore.remove(Color.ify(s));
                 for (String e : abilityDescription) {
                     newLore.add(Color.ify("&7» &f" + e));
@@ -419,6 +408,5 @@ public class Weapon {
         }
         return newLore;
     }
-
 
 }

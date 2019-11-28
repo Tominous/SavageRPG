@@ -4,7 +4,6 @@ import net.prosavage.illyriarpg.IllyriaRPG;
 import net.prosavage.illyriarpg.utils.Color;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
@@ -13,10 +12,9 @@ public class IWeaponFiles {
 
     Color Color = new Color();
 
-    public File[] getRarityFolders() {
+    private File[] getRarityFolders() {
         File dir = new File(IllyriaRPG.getInstance().getWeaponFolder());
-        File[] files = dir.listFiles();
-        return files;
+        return dir.listFiles();
     }
 
     public YamlConfiguration getWeaponConfig(){
@@ -35,10 +33,10 @@ public class IWeaponFiles {
         if (dir.list() == null){
             return Collections.singletonList("null");
         }
-        return Arrays.asList(dir.list());
+        return Arrays.asList(Objects.requireNonNull(dir.list()));
     }
 
-    public File[] getRarityWeaponFiles(String string) {
+    private File[] getRarityWeaponFiles(String string) {
         File[] dir = getRarityFolders();
         for (File file : dir) {
             if (file.getName().equals(string)) {
@@ -67,7 +65,7 @@ public class IWeaponFiles {
         return amount;
     }
 
-    public String getStat(String rarity, String weaponName, String stat_node){
+    private String getStat(String rarity, String weaponName, String stat_node){
         File[] dir = getRarityWeaponFiles(rarity);
         File selectedFile = null;
         assert dir != null;
@@ -83,7 +81,7 @@ public class IWeaponFiles {
         return null;
     }
 
-    public List<String> getFileLore(String rarity, String weaponName){
+    private List<String> getFileLore(String rarity, String weaponName){
         File[] dir = getRarityWeaponFiles(rarity);
         File selectedFile = null;
         assert dir != null;
@@ -109,7 +107,7 @@ public class IWeaponFiles {
         return WeaponFiles.getStringList("ability-description");
     }
 
-    public YamlConfiguration getWeaponYAMLConfiguration(String rarity, String weaponName){
+    private YamlConfiguration getWeaponYAMLConfiguration(String rarity, String weaponName){
         File[] dir = getRarityWeaponFiles(rarity);
         File selectedFile = null;
         assert dir != null;
@@ -118,11 +116,10 @@ public class IWeaponFiles {
                 selectedFile = file;
             }
         }
-        YamlConfiguration WeaponFiles = YamlConfiguration.loadConfiguration(Objects.requireNonNull(selectedFile));
-        return WeaponFiles;
+        return YamlConfiguration.loadConfiguration(Objects.requireNonNull(selectedFile));
     }
 
-    public File getWeaponYAMLFileString(String rarity, String weaponName){
+    private File getWeaponYAMLFileString(String rarity, String weaponName){
         File[] dir = getRarityWeaponFiles(rarity);
         File selectedFile = null;
         assert dir != null;
@@ -135,7 +132,7 @@ public class IWeaponFiles {
     }
 
 
-    public List<String> getList(String rarity, String weaponName, String node){
+    private List<String> getList(String rarity, String weaponName, String node){
         File[] dir = getRarityWeaponFiles(rarity);
         File selectedFile = null;
         assert dir != null;
@@ -161,7 +158,7 @@ public class IWeaponFiles {
     }
 
     public double getCooldown(String rarity, String weaponName){
-        return Double.parseDouble(getStat(rarity, weaponName, "attack-cooldown"));
+        return Double.parseDouble(Objects.requireNonNull(getStat(rarity, weaponName, "attack-cooldown")));
     }
 
     public List<String> getLore(String rarity, String weaponName){
@@ -169,35 +166,35 @@ public class IWeaponFiles {
     }
 
     public int getMinimumLevel(String rarity, String weaponName){
-        return Integer.parseInt(getStat(rarity, weaponName, "minimum-level"));
+        return Integer.parseInt(Objects.requireNonNull(getStat(rarity, weaponName, "minimum-level")));
     }
 
     public int getMaximumLevel(String rarity, String weaponName){
-        return Integer.parseInt(getStat(rarity, weaponName, "maximum-level"));
+        return Integer.parseInt(Objects.requireNonNull(getStat(rarity, weaponName, "maximum-level")));
     }
 
     public double getMinimumDamage(String rarity, String weaponName){
-        return Double.parseDouble(getStat(rarity, weaponName, "minimum-damage"));
+        return Double.parseDouble(Objects.requireNonNull(getStat(rarity, weaponName, "minimum-damage")));
     }
 
     public double getMaximumDamage(String rarity, String weaponName){
-        return Double.parseDouble(getStat(rarity, weaponName, "maximum-damage"));
+        return Double.parseDouble(Objects.requireNonNull(getStat(rarity, weaponName, "maximum-damage")));
     }
 
     public int getMinimumGem(String rarity, String weaponName){
-        return Integer.parseInt(getStat(rarity, weaponName, "minimum-gem"));
+        return Integer.parseInt(Objects.requireNonNull(getStat(rarity, weaponName, "minimum-gem")));
     }
 
     public int getMaximumGem(String rarity, String weaponName){
-        return Integer.parseInt(getStat(rarity, weaponName, "maximum-gem"));
+        return Integer.parseInt(Objects.requireNonNull(getStat(rarity, weaponName, "maximum-gem")));
     }
 
     public int getMinimumScroll(String rarity, String weaponName){
-        return Integer.parseInt(getStat(rarity, weaponName, "minimum-scroll"));
+        return Integer.parseInt(Objects.requireNonNull(getStat(rarity, weaponName, "minimum-scroll")));
     }
 
     public int getMaximumScroll(String rarity, String weaponName){
-        return Integer.parseInt(getStat(rarity, weaponName, "maximum-scroll"));
+        return Integer.parseInt(Objects.requireNonNull(getStat(rarity, weaponName, "maximum-scroll")));
     }
 
     public String getAbility(String rarity, String weaponName){
@@ -217,11 +214,11 @@ public class IWeaponFiles {
     }
 
     public double getAbilityCooldown(String rarity, String weaponName){
-        return Double.parseDouble(getStat(rarity, weaponName, "ability-cooldown"));
+        return Double.parseDouble(Objects.requireNonNull(getStat(rarity, weaponName, "ability-cooldown")));
     }
 
     public double getAbilityManaCost(String rarity, String weaponName){
-        return Double.parseDouble(getStat(rarity, weaponName, "ability-mana-cost"));
+        return Double.parseDouble(Objects.requireNonNull(getStat(rarity, weaponName, "ability-mana-cost")));
     }
 
     public void setAttackCooldown(String rarity, String weaponName, double value){

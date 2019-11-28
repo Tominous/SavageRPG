@@ -4,8 +4,6 @@ main: net.prosavage.illyriarpg.IllyriaRPG
 api-version: 1.14
 authors: [KingAlterIV]
 description: An RPG core.
-depend:
-  - ChatMenuAPI
 
 commands:
   weapon:
