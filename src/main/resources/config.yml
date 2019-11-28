@@ -1,3 +1,6 @@
+server-startup:
+  big-fat-bloody-message-enabled: false
+
 weapon:
   lore:
     - ' '

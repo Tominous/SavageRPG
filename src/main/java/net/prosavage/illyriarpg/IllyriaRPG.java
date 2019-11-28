@@ -1,5 +1,6 @@
 package net.prosavage.illyriarpg;
 
+import net.prosavage.illyriarpg.api.files.IWeaponFiles;
 import net.prosavage.illyriarpg.commands.WeaponCommand;
 import net.prosavage.illyriarpg.utils.Color;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -13,6 +14,7 @@ public final class IllyriaRPG extends JavaPlugin {
     private String weaponFolder = getDataFolder() + "\\weapons";
     private File rarityFile = new File(getDataFolder(), "rarity.yml");
     private File configFile = new File(getDataFolder(), "config.yml");
+    private IWeaponFiles IWeaponFiles = new IWeaponFiles();
 
     public IllyriaRPG() {
         instance = this;
@@ -27,6 +29,22 @@ public final class IllyriaRPG extends JavaPlugin {
         if (!configFile.exists()) {
             saveDefaultConfig();
         }
+        if (getConfig().getBoolean("server-startup.big-fat-bloody-message-enabled")) {
+            sendConsole("");
+            sendConsole("\n\n&c" +
+                    "██▓ ██▓     ██▓   ▓██   ██▓ ██▀███   ██▓ ▄▄▄       ██▀███   ██▓███    ▄████ \n" +
+                    "▓██▒▓██▒    ▓██▒    ▒██  ██▒▓██ ▒ ██▒▓██▒▒████▄    ▓██ ▒ ██▒▓██░  ██▒ ██▒ ▀█▒\n" +
+                    "▒██▒▒██░    ▒██░     ▒██ ██░▓██ ░▄█ ▒▒██▒▒██  ▀█▄  ▓██ ░▄█ ▒▓██░ ██▓▒▒██░▄▄▄░\n" +
+                    "░██░▒██░    ▒██░     ░ ▐██▓░▒██▀▀█▄  ░██░░██▄▄▄▄██ ▒██▀▀█▄  ▒██▄█▓▒ ▒░▓█  ██▓\n" +
+                    "░██░░██████▒░██████▒ ░ ██▒▓░░██▓ ▒██▒░██░ ▓█   ▓██▒░██▓ ▒██▒▒██▒ ░  ░░▒▓███▀▒\n" +
+                    "░▓  ░ ▒░▓  ░░ ▒░▓  ░  ██▒▒▒ ░ ▒▓ ░▒▓░░▓   ▒▒   ▓▒█░░ ▒▓ ░▒▓░▒▓▒░ ░  ░ ░▒   ▒ \n" +
+                    " ▒ ░░ ░ ▒  ░░ ░ ▒  ░▓██ ░▒░   ░▒ ░ ▒░ ▒ ░  ▒   ▒▒ ░  ░▒ ░ ▒░░▒ ░       ░   ░ \n" +
+                    " ▒ ░  ░ ░     ░ ░   ▒ ▒ ░░    ░░   ░  ▒ ░  ░   ▒     ░░   ░ ░░       ░ ░   ░ \n" +
+                    " ░      ░  ░    ░  ░░ ░        ░      ░        ░  ░   ░                    ░ \n");
+        }
+        sendConsole("");
+        sendConsole("&aTotal (YAML) weapons loaded: &e" + IWeaponFiles.getWeaponAmount());
+        sendConsole("");
         Objects.requireNonNull(this.getCommand("weapon")).setExecutor(new WeaponCommand());
     }
 
