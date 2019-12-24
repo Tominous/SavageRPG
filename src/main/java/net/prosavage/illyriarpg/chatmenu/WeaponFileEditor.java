@@ -84,7 +84,8 @@ public class WeaponFileEditor {
         });
     }
 
-    private ButtonElement basicRequirement(ChatMenu menu, Player player, int x, int y, String text, String rarity, String name, int slotNumber, int page, int pageForThisMenu) {
+    private ButtonElement basicRequirement(ChatMenu menu, Player player, int x, int y, String text, String rarity,
+                                           String name, int slotNumber, int page, int pageForThisMenu) {
         return new ButtonElement(x, y, ChatColor.GREEN + text, player1 -> {
             new BukkitRunnable(){
                 @Override

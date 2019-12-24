@@ -10,7 +10,8 @@ public class NullValues {
     }
 
     public boolean checkForNullValues(Object object) {
-        return object == null || object.equals("null") || object.equals(-1) || object.equals(-1.0) || object.equals("") || object.equals(" ");
+        return object == null || object.equals("null") || object.equals(-1) || object.equals(-1.0)
+                || object.equals("") || object.equals(" ");
     }
 
 }
