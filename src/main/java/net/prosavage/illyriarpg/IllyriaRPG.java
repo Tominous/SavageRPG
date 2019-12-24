@@ -1,21 +1,20 @@
 package net.prosavage.illyriarpg;
 
+import net.prosavage.illyriarpg.api.files.IWeaponFiles;
 import net.prosavage.illyriarpg.commands.WeaponCommand;
 import net.prosavage.illyriarpg.utils.Color;
-import org.bukkit.configuration.InvalidConfigurationException;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
-
 import java.io.File;
-import java.io.IOException;
+import java.util.Objects;
 
 public final class IllyriaRPG extends JavaPlugin {
 
     private static IllyriaRPG instance;
-    Color Color = new Color();
-    String weaponFolder = getDataFolder() + "\\weapons";
-    File rarityFile = new File(getDataFolder(), "rarity.yml");
-    File configFile = new File(getDataFolder(), "config.yml");
+    private Color Color = new Color();
+    private String weaponFolder = getDataFolder() + "\\weapons";
+    private File weaponRarityFile = new File(getDataFolder(), "weapon-rarity.yml");
+    private File configFile = new File(getDataFolder(), "config.yml");
+    private IWeaponFiles IWeaponFiles = new IWeaponFiles();
 
     public IllyriaRPG() {
         instance = this;
@@ -29,9 +28,25 @@ public final class IllyriaRPG extends JavaPlugin {
     public void onEnable() {
         if (!configFile.exists()) {
             saveDefaultConfig();
-            saveResource("formulas.yml", false);
         }
-        this.getCommand("weapon").setExecutor(new WeaponCommand());
+        if (getConfig().getBoolean("server-startup.big-fat-bloody-message-enabled")) {
+            sendConsole("");
+            sendConsole("\n\n&c" +
+                    " ██▓ ██▓     ██▓   ▓██   ██▓ ██▀███   ██▓ ▄▄▄       ██▀███   ██▓███    ▄████ \n" +
+                    "▓██▒▓██▒    ▓██▒    ▒██  ██▒▓██ ▒ ██▒▓██▒▒████▄    ▓██ ▒ ██▒▓██░  ██▒ ██▒ ▀█▒\n" +
+                    "▒██▒▒██░    ▒██░     ▒██ ██░▓██ ░▄█ ▒▒██▒▒██  ▀█▄  ▓██ ░▄█ ▒▓██░ ██▓▒▒██░▄▄▄░\n" +
+                    "░██░▒██░    ▒██░     ░ ▐██▓░▒██▀▀█▄  ░██░░██▄▄▄▄██ ▒██▀▀█▄  ▒██▄█▓▒ ▒░▓█  ██▓\n" +
+                    "░██░░██████▒░██████▒ ░ ██▒▓░░██▓ ▒██▒░██░ ▓█   ▓██▒░██▓ ▒██▒▒██▒ ░  ░░▒▓███▀▒\n" +
+                    "░▓  ░ ▒░▓  ░░ ▒░▓  ░  ██▒▒▒ ░ ▒▓ ░▒▓░░▓   ▒▒   ▓▒█░░ ▒▓ ░▒▓░▒▓▒░ ░  ░ ░▒   ▒ \n" +
+                    " ▒ ░░ ░ ▒  ░░ ░ ▒  ░▓██ ░▒░   ░▒ ░ ▒░ ▒ ░  ▒   ▒▒ ░  ░▒ ░ ▒░░▒ ░       ░   ░ \n" +
+                    " ▒ ░  ░ ░     ░ ░   ▒ ▒ ░░    ░░   ░  ▒ ░  ░   ▒     ░░   ░ ░░       ░ ░   ░ \n" +
+                    " ░      ░  ░    ░  ░░ ░        ░      ░        ░  ░   ░                    ░ \n" +
+                    "                    ░ ░                                                      ");
+        }
+        sendConsole("");
+        sendConsole("&aTotal (YAML) weapons loaded: &e" + IWeaponFiles.getWeaponAmount());
+        sendConsole("");
+        Objects.requireNonNull(this.getCommand("weapon")).setExecutor(new WeaponCommand());
     }
 
     @Override
@@ -39,16 +54,16 @@ public final class IllyriaRPG extends JavaPlugin {
         // Plugin shutdown logic
     }
 
-    public File getRarityFile() {
-        return rarityFile;
+    public File getWeaponRarityFile() {
+        return weaponRarityFile;
     }
 
     public String getWeaponFolder() {
         return weaponFolder;
     }
 
-    public void sendConsole(String string){
-        getLogger().info(Color.ify(string));
+    public void sendConsole(Object object){
+        System.out.println(Color.ify(String.valueOf(object)));
     }
 
 }

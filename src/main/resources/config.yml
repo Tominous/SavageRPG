@@ -1,3 +1,6 @@
+server-startup:
+  big-fat-bloody-message-enabled: false
+
 weapon:
   lore:
     - ' '
@@ -21,4 +24,7 @@ weapon:
     - '&7» Cooldown: &f{weapon-ability-cooldown}'
     - '&7» Cost: &f{weapon-ability-mana}'
     - '&7» &f{weapon-ability-description}'
+    - ' '
+    - '&7Weapon Background Lore'
+    - '&7» &f{weapon-background-lore}'
     - ' '

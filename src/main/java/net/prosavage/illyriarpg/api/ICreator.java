@@ -1,78 +1,15 @@
 package net.prosavage.illyriarpg.api;
 
-import net.prosavage.illyriarpg.IllyriaRPG;
-import net.prosavage.illyriarpg.api.files.IWeaponFiles;
 import net.prosavage.illyriarpg.api.keys.INamespacedKeys;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataType;
 
-import java.util.Optional;
-
 public class ICreator {
 
-    IWeaponFiles IWeaponFiles = new IWeaponFiles();
+    private Player player;
 
-    Player player;
-    String fileName;
-    String rarityName;
-    String materialType;
-    String levelInput;
-    String damageInput;
-    String weaponCooldown;
-    Boolean grabValues;
-
-    public ICreator(Player player, boolean grabValues){
+    public ICreator(Player player){
         this.player = player;
-        this.grabValues = grabValues;
-    }
-
-    public String getYAMLFileName() {
-        if (grabValues) {
-            return IWeaponFiles.getName(getPersistentRarityName(), getPersistentFileName());
-        }
-        return "";
-    }
-
-    public String getYAMLRarityName() {
-        if (grabValues) {
-            return IWeaponFiles.getRarity(getPersistentRarityName(), getPersistentFileName());
-        }
-        return "";
-    }
-
-//    public String getYAMLMaterialType() {
-//        return IWeaponFiles.
-//    }
-
-    public String getYAMLMaterialLoreType() {
-        if (grabValues) {
-            return IWeaponFiles.getMaterial(getPersistentRarityName(), getPersistentFileName());
-        }
-        return "";
-    }
-
-    public String getYAMLLevelInput() {
-        if (grabValues){
-            return "" + IWeaponFiles.getMinimumLevel(getPersistentRarityName(), getPersistentFileName());
-        }
-        return "";
-    }
-
-    public String getYAMLDamageInput() {
-        if (grabValues) {
-            double minimumDamage = IWeaponFiles.getMinimumDamage(getPersistentRarityName(), getPersistentFileName());
-            double maximumDamage = IWeaponFiles.getMaximumDamage(getPersistentRarityName(), getPersistentFileName());
-            IllyriaRPG.getInstance().sendConsole(minimumDamage + " " + maximumDamage);
-            return minimumDamage + "-" + maximumDamage;
-        }
-        return "";
-    }
-
-    public String getYAMLWeaponCooldown() {
-        if (grabValues) {
-            return "" + IWeaponFiles.getCooldown(getPersistentRarityName(), getPersistentFileName());
-        }
-        return "";
     }
 
     public String getPersistentFileName() {
@@ -80,19 +17,19 @@ public class ICreator {
     }
 
     public String getPersistentRarityName() {
-        return this.player.getPersistentDataContainer().getOrDefault(INamespacedKeys.CREATOR_ITEM_RARITY, PersistentDataType.STRING, "Common");
+        return this.player.getPersistentDataContainer().getOrDefault(INamespacedKeys.CREATOR_ITEM_RARITY, PersistentDataType.STRING, "null");
     }
 
     public String getPersistentMaterialType(){
-        return this.player.getPersistentDataContainer().getOrDefault(INamespacedKeys.CREATOR_ITEM_MATERIAL_TYPE, PersistentDataType.STRING, "WOODEN_SWORD");
+        return this.player.getPersistentDataContainer().getOrDefault(INamespacedKeys.CREATOR_ITEM_MATERIAL_TYPE, PersistentDataType.STRING, "AIR");
     }
 
-    public String getPersistentMaterialLoreType() {
-        return this.player.getPersistentDataContainer().getOrDefault(INamespacedKeys.CREATOR_ITEM_MATERIAL_LORE_TYPE, PersistentDataType.STRING, "null");
+    public String getPersistentBackgroundMaterialType() {
+        return this.player.getPersistentDataContainer().getOrDefault(INamespacedKeys.CREATOR_ITEM_BACKGROUND_MATERIAL_TYPE, PersistentDataType.STRING, "null");
     }
 
     public Integer getPersistentLevelInput(){
-        return this.player.getPersistentDataContainer().getOrDefault(INamespacedKeys.CREATOR_ITEM_LEVEL, PersistentDataType.INTEGER, 1);
+        return this.player.getPersistentDataContainer().getOrDefault(INamespacedKeys.CREATOR_ITEM_LEVEL, PersistentDataType.INTEGER, -1);
     }
 
     public Double getPersistentMinimumDamageInput(){
@@ -108,11 +45,11 @@ public class ICreator {
     }
 
     public Integer getPersistentScrollAmountInput(){
-        return this.player.getPersistentDataContainer().getOrDefault(INamespacedKeys.CREATOR_ITEM_SCROLL_AMOUNT, PersistentDataType.INTEGER, 0);
+        return this.player.getPersistentDataContainer().getOrDefault(INamespacedKeys.CREATOR_ITEM_SCROLL_AMOUNT, PersistentDataType.INTEGER, -1);
     }
 
     public Integer getPersistentGemAmountInput(){
-        return this.player.getPersistentDataContainer().getOrDefault(INamespacedKeys.CREATOR_ITEM_GEM_AMOUNT, PersistentDataType.INTEGER, 0);
+        return this.player.getPersistentDataContainer().getOrDefault(INamespacedKeys.CREATOR_ITEM_GEM_AMOUNT, PersistentDataType.INTEGER, -1);
     }
 
     public String getPersistentAbilityNameInput(){
@@ -135,8 +72,56 @@ public class ICreator {
         return this.player.getPersistentDataContainer().getOrDefault(INamespacedKeys.CREATOR_ITEM_ABILITY_MANA_COST, PersistentDataType.DOUBLE, -1.0);
     }
 
+    public String getPersistentAbilityDescriptionInput(){
+        return this.player.getPersistentDataContainer().getOrDefault(INamespacedKeys.CREATOR_ITEM_ABILITY_DESCRIPTION, PersistentDataType.STRING, "null");
+    }
+
+    public String getPersistentAbilityDescriptionOneInput(){
+        return this.player.getPersistentDataContainer().getOrDefault(INamespacedKeys.CREATOR_ITEM_ABILITY_DESCRIPTION_1, PersistentDataType.STRING, "null");
+    }
+
+    public String getPersistentAbilityDescriptionTwoInput(){
+        return this.player.getPersistentDataContainer().getOrDefault(INamespacedKeys.CREATOR_ITEM_ABILITY_DESCRIPTION_2, PersistentDataType.STRING, "null");
+    }
+
+    public String getPersistentAbilityDescriptionThreeInput(){
+        return this.player.getPersistentDataContainer().getOrDefault(INamespacedKeys.CREATOR_ITEM_ABILITY_DESCRIPTION_3, PersistentDataType.STRING, "null");
+    }
+
+    public String getPersistentAbilityDescriptionFourInput(){
+        return this.player.getPersistentDataContainer().getOrDefault(INamespacedKeys.CREATOR_ITEM_ABILITY_DESCRIPTION_4, PersistentDataType.STRING, "null");
+    }
+
+    public String getPersistentAbilityDescriptionFiveInput(){
+        return this.player.getPersistentDataContainer().getOrDefault(INamespacedKeys.CREATOR_ITEM_ABILITY_DESCRIPTION_5, PersistentDataType.STRING, "null");
+    }
+
+    public String getPersistentBackgroundLoreOneInput(){
+        return this.player.getPersistentDataContainer().getOrDefault(INamespacedKeys.CREATOR_ITEM_BACKGROUND_LORE_1, PersistentDataType.STRING, "null");
+    }
+
+    public String getPersistentBackgroundLoreTwoInput(){
+        return this.player.getPersistentDataContainer().getOrDefault(INamespacedKeys.CREATOR_ITEM_BACKGROUND_LORE_2, PersistentDataType.STRING, "null");
+    }
+
+    public String getPersistentBackgroundLoreThreeInput(){
+        return this.player.getPersistentDataContainer().getOrDefault(INamespacedKeys.CREATOR_ITEM_BACKGROUND_LORE_3, PersistentDataType.STRING, "null");
+    }
+
+    public String getPersistentBackgroundLoreFourInput(){
+        return this.player.getPersistentDataContainer().getOrDefault(INamespacedKeys.CREATOR_ITEM_BACKGROUND_LORE_4, PersistentDataType.STRING, "null");
+    }
+
+    public String getPersistentBackgroundLoreFiveInput(){
+        return this.player.getPersistentDataContainer().getOrDefault(INamespacedKeys.CREATOR_ITEM_BACKGROUND_LORE_5, PersistentDataType.STRING, "null");
+    }
+
     public Byte getPersistentGiveItem(){
         return this.player.getPersistentDataContainer().getOrDefault(INamespacedKeys.CREATOR_ITEM_GIVE_ITEM, PersistentDataType.BYTE, (byte)0);
+    }
+
+    public String getPersistentPlayerUUID(){
+        return this.player.getPersistentDataContainer().getOrDefault(INamespacedKeys.CREATOR_ITEM_PLAYER, PersistentDataType.STRING, "null");
     }
 
 }

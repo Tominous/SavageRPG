@@ -2,26 +2,25 @@ package net.prosavage.illyriarpg.builder;
 
 import net.prosavage.illyriarpg.IllyriaRPG;
 import net.prosavage.illyriarpg.api.keys.INamespacedKeys;
-import net.prosavage.illyriarpg.utils.Chance;
 import net.prosavage.illyriarpg.utils.Color;
-import net.prosavage.illyriarpg.utils.Number;
+import net.prosavage.illyriarpg.utils.NullValues;
 import org.apache.commons.lang.WordUtils;
+import org.bukkit.Bukkit;
+import org.bukkit.NamespacedKey;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class Weapon {
 
-    Number Number = new Number();
-    Chance Chance = new Chance();
-    Color Color = new Color();
+    private Color Color = new Color();
+    private NullValues NullValues = new NullValues();
 
     private final ItemStack itemStack;
     private final ItemMeta meta;
@@ -29,7 +28,7 @@ public class Weapon {
     private String material;
     private String rarity;
     private double chance;
-    private List<String> lore = Collections.singletonList("");
+    private List<String> backgroundLore = Collections.singletonList("");
     private int level;
     private double maximumDamage;
     private double minimumDamage;
@@ -37,12 +36,13 @@ public class Weapon {
     private int scrolls = 0;
     private int gems = 0;
     private String ability = "null";
-    private List<String> description = Collections.singletonList("");
+    private List<String> abilityDescription = Collections.singletonList("");
     private String castType = "null";
     private double manaCost = -1.0;
     private String actionType = "null";
     private double abilityCooldown = -1;
-
+    private byte spawnedIn;
+    private String itemCreator;
     private boolean unbreakable = true;
 
     public Weapon(ItemStack itemStack){
@@ -50,15 +50,15 @@ public class Weapon {
         this.meta = this.itemStack.getItemMeta();
     }
 
-
-    public Weapon(ItemStack itemStack,String name,String material,String rarity,double chance,List<String> lore,int level,double maximumDamage,double minimumDamage,int gem, int scroll) {
+    public Weapon(ItemStack itemStack,String name,String material,String rarity,double chance,
+                  List<String> backgroundLore,int level,double maximumDamage,double minimumDamage,int gem, int scroll) {
         this.itemStack = itemStack;
         this.meta = this.itemStack.getItemMeta();
         this.name = name;
         this.material = material;
         this.rarity = rarity;
         this.chance = chance;
-        this.lore = lore;
+        this.backgroundLore = backgroundLore;
         this.level = level;
         this.maximumDamage = maximumDamage;
         this.minimumDamage = minimumDamage;
@@ -66,14 +66,17 @@ public class Weapon {
         this.scrolls = scroll;
     }
 
-    public Weapon(ItemStack itemStack,String name,String material,String rarity,double chance,List<String> lore,int level,double maximumDamage,double minimumDamage,int gem, int scroll,String abilityName,List<String> abilityDescription,String castType,double mana, double abilityCooldown) {
+    public Weapon(ItemStack itemStack,String name,String material,String rarity,double chance,
+                  List<String> backgroundLore,int level,double maximumDamage,double minimumDamage,
+                  int gem, int scroll,String abilityName,List<String> abilityDescription,String castType,
+                  double mana, double abilityCooldown) {
         this.itemStack = itemStack;
         this.meta = this.itemStack.getItemMeta();
         this.name = name;
         this.material = material;
         this.rarity = rarity;
         this.chance = chance;
-        this.lore = lore;
+        this.backgroundLore = backgroundLore;
         this.level = level;
         this.maximumDamage = maximumDamage;
         this.minimumDamage = minimumDamage;
@@ -81,7 +84,7 @@ public class Weapon {
         this.scrolls = scroll;
         this.abilityCooldown = abilityCooldown;
         this.ability = abilityName;
-        this.description = abilityDescription;
+        this.abilityDescription = abilityDescription;
         this.castType = castType;
         this.manaCost = mana;
     }
@@ -106,13 +109,13 @@ public class Weapon {
         return this;
     }
 
-    public Weapon setLore(String string) {
-        this.lore = Arrays.asList(string.split("\\|\\|"));
+    public Weapon setBackgroundLore(String string) {
+        this.backgroundLore = Arrays.asList(string.split("\\|\\|"));
         return this;
     }
 
-    public Weapon setLore(List<String> string) {
-        this.lore = string;
+    public Weapon setBackgroundLore(List<String> string) {
+        this.backgroundLore = string;
         return this;
     }
 
@@ -156,8 +159,8 @@ public class Weapon {
         return this;
     }
 
-    public Weapon setAbilityDescription(List<String> description) {
-        this.description = description;
+    public Weapon setAbilityDescription(String description) {
+        this.abilityDescription = Arrays.asList(description.split("\\|\\|"));
         return this;
     }
 
@@ -176,7 +179,7 @@ public class Weapon {
         return this;
     }
 
-    public String setDefaultMaterial(ItemStack itemStack){
+    private String setDefaultMaterial(ItemStack itemStack){
         String key = String.valueOf(itemStack.getType().getKey()).replace("minecraft:", "");
         String[] split = key.split("_");
         List<String> words = new java.util.ArrayList<>(Collections.singletonList(""));
@@ -187,7 +190,7 @@ public class Weapon {
         return words.get(0);
     }
 
-    public String setDefaultName(ItemStack itemStack){
+    private String setDefaultName(ItemStack itemStack){
         String key = String.valueOf(itemStack.getType().getKey()).replace("minecraft:", "");
         String[] split = key.split("_");
         List<String> words = new java.util.ArrayList<>(Collections.singletonList(""));
@@ -208,38 +211,75 @@ public class Weapon {
         return this;
     }
 
-    public void setPersistentDataContainers(){
-        String itemLore = null;
-        String itemDescription = null;
-        if (this.lore != null){
-            itemLore = String.join("||", this.lore);
+    private void setPersistentDataContainers(){
+        String backgroundLore = null;
+        String abilityDescriptionLore = null;
+        if (this.backgroundLore != null){
+            backgroundLore = String.join("||", this.backgroundLore);
         }
-        if (this.description != null){
-            itemDescription = String.join("||", this.description);
+        if (this.abilityDescription != null){
+            int a = 0;
+            for (String s : this.abilityDescription){
+                if (s.equals("   ")){
+                    a = a + 1;
+                }
+            }
+            if (a < 1) {
+                abilityDescriptionLore = String.join("||", this.abilityDescription);
+            }
         }
-        if (this.name == null){
+        if (this.backgroundLore != null) {
+            int a = 0;
+            for (String s : this.backgroundLore) {
+                if (s.equals("   ")) {
+                    a = a + 1;
+                }
+            }
+            if (a < 1) {
+                backgroundLore = String.join("||", this.backgroundLore);
+            }
+        }
+            if (this.name == null){
             this.name = setDefaultName(this.itemStack);
         }
         if (this.material == null){
             this.material = setDefaultMaterial(this.itemStack);
         }
-        PersistentDataContainer persistentDataContainer = meta.getPersistentDataContainer();
-        persistentDataContainer.set(INamespacedKeys.ITEM_NAME, PersistentDataType.STRING,this.name);
-        persistentDataContainer.set(INamespacedKeys.ITEM_MATERIAL,PersistentDataType.STRING,this.material);
-        persistentDataContainer.set(INamespacedKeys.ITEM_RARITY,PersistentDataType.STRING,this.rarity);
-        persistentDataContainer.set(INamespacedKeys.ITEM_CHANCE,PersistentDataType.DOUBLE,this.chance);
-        persistentDataContainer.set(INamespacedKeys.ITEM_LORE,PersistentDataType.STRING, itemLore);
-        persistentDataContainer.set(INamespacedKeys.ITEM_LEVEL,PersistentDataType.INTEGER,this.level);
-        persistentDataContainer.set(INamespacedKeys.ITEM_MAX_DAMAGE,PersistentDataType.DOUBLE,this.maximumDamage);
-        persistentDataContainer.set(INamespacedKeys.ITEM_MIN_DAMAGE,PersistentDataType.DOUBLE,this.minimumDamage);
-        persistentDataContainer.set(INamespacedKeys.ITEM_SCROLL,PersistentDataType.INTEGER,this.scrolls);
-        persistentDataContainer.set(INamespacedKeys.ITEM_GEM,PersistentDataType.INTEGER,this.gems);
-        persistentDataContainer.set(INamespacedKeys.ITEM_ABIILTY_COOLDOWN,PersistentDataType.DOUBLE,this.abilityCooldown);
-        persistentDataContainer.set(INamespacedKeys.ITEM_ABIILTY_NAME,PersistentDataType.STRING,this.name);
-        persistentDataContainer.set(INamespacedKeys.ITEM_ABIILTY_DESCRIPTION,PersistentDataType.STRING,itemDescription);
-        persistentDataContainer.set(INamespacedKeys.ITEM_ABIILTY_CAST_TYPE,PersistentDataType.STRING,this.castType);
-        persistentDataContainer.set(INamespacedKeys.ITEM_ABIILTY_MANA_COST,PersistentDataType.DOUBLE,this.manaCost);
-        persistentDataContainer.set(INamespacedKeys.ITEM_ABIILTY_ACTION_TYPE,PersistentDataType.STRING,this.actionType);
+        if ((meta != null)) {
+            PersistentDataContainer persistentDataContainer = meta.getPersistentDataContainer();
+            persistentDataContainer.set(INamespacedKeys.ITEM_NAME, PersistentDataType.STRING, this.name);
+            persistentDataContainer.set(INamespacedKeys.ITEM_MATERIAL, PersistentDataType.STRING, this.material);
+            persistentDataContainer.set(INamespacedKeys.ITEM_RARITY, PersistentDataType.STRING, this.rarity);
+            persistentDataContainer.set(INamespacedKeys.ITEM_CHANCE, PersistentDataType.DOUBLE, this.chance);
+            if (backgroundLore != null && (!backgroundLore.equals("null"))) {
+                persistentDataContainer.set(INamespacedKeys.ITEM_BACKGROUND_LORE, PersistentDataType.STRING, backgroundLore);
+            }
+            persistentDataContainer.set(INamespacedKeys.ITEM_LEVEL, PersistentDataType.INTEGER, this.level);
+            persistentDataContainer.set(INamespacedKeys.ITEM_MAXIMUM_DAMAGE, PersistentDataType.DOUBLE, this.maximumDamage);
+            persistentDataContainer.set(INamespacedKeys.ITEM_MINIMUM_DAMAGE, PersistentDataType.DOUBLE, this.minimumDamage);
+            persistentDataContainer.set(INamespacedKeys.ITEM_SCROLL, PersistentDataType.INTEGER, this.scrolls);
+            persistentDataContainer.set(INamespacedKeys.ITEM_GEM, PersistentDataType.INTEGER, this.gems);
+            persistentDataContainer.set(INamespacedKeys.ITEM_ABIILTY_COOLDOWN, PersistentDataType.DOUBLE, this.abilityCooldown);
+            persistentDataContainer.set(INamespacedKeys.ITEM_ABIILTY_NAME, PersistentDataType.STRING, this.ability);
+            if (abilityDescriptionLore != null && (!abilityDescriptionLore.equals("null"))) {
+                persistentDataContainer.set(INamespacedKeys.ITEM_ABIILTY_DESCRIPTION, PersistentDataType.STRING, abilityDescriptionLore);
+            }
+            persistentDataContainer.set(INamespacedKeys.ITEM_ABIILTY_CAST_TYPE, PersistentDataType.STRING, this.castType);
+            persistentDataContainer.set(INamespacedKeys.ITEM_ABIILTY_MANA_COST, PersistentDataType.DOUBLE, this.manaCost);
+            persistentDataContainer.set(INamespacedKeys.ITEM_ABIILTY_ACTION_TYPE, PersistentDataType.STRING, this.actionType);
+            persistentDataContainer.set(INamespacedKeys.ITEM_IS_SPAWNED_IN, PersistentDataType.BYTE, this.spawnedIn);
+            persistentDataContainer.set(INamespacedKeys.CREATOR_ITEM_PLAYER, PersistentDataType.STRING, this.itemCreator);
+        }
+    }
+
+    public Weapon setSpawnedIn(Boolean spawnedIn){
+        this.spawnedIn = (byte) (spawnedIn ? 1 : 0);
+        return this;
+    }
+
+    public Weapon setItemCreator(Player itemCreator){
+        this.itemCreator = itemCreator.getUniqueId().toString();
+        return this;
     }
 
     public String getName() {
@@ -258,8 +298,8 @@ public class Weapon {
         return this.chance;
     }
 
-    public List<String> getLore() {
-        return this.lore;
+    public List<String> getBackgroundLore() {
+        return this.backgroundLore;
     }
 
     public int getLevel() {
@@ -295,7 +335,7 @@ public class Weapon {
     }
 
     public List<String> getAbilityDescription() {
-        return this.description;
+        return this.abilityDescription;
     }
 
     public String getAbilityCastType() {
@@ -310,23 +350,35 @@ public class Weapon {
         return this.actionType;
     }
 
+    public boolean isSpawnedIn() {
+        return this.spawnedIn != 0;
+    }
+
+    public OfflinePlayer getNameOfItemCreator(){
+        return Bukkit.getOfflinePlayer(UUID.fromString(this.itemCreator));
+    }
+
     public ItemStack build() {
         setPersistentDataContainers();
-        meta.setDisplayName(this.name);
-        List<String> itemLore = IllyriaRPG.getInstance().getConfig().getStringList("weapon.lore");
-        itemLore = parseBasicLore(itemLore, this.material, this.rarity, this.level, this.minimumDamage, this.maximumDamage, this.weaponAttackCooldown);
-        itemLore = parseGemLore(itemLore, this.gems);
-        itemLore = parseScrollLore(itemLore, this.scrolls);
-        itemLore = parseAbilityLore(itemLore, this.ability, this.description, this.abilityCooldown, this.manaCost);
-        meta.setUnbreakable(this.unbreakable);
-        meta.setLore(itemLore);
-        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_UNBREAKABLE);
-        itemStack.setItemMeta(meta);
+        if (meta != null) {
+            meta.setDisplayName(this.name);
+            removeUnusedNamespacedKeys();
+            List<String> itemLore = IllyriaRPG.getInstance().getConfig().getStringList("weapon.lore");
+            itemLore = parseBasicLore(itemLore, this.material, this.rarity, this.level, this.minimumDamage, this.maximumDamage, this.weaponAttackCooldown);
+            itemLore = parseGemLore(itemLore, this.gems);
+            itemLore = parseScrollLore(itemLore, this.scrolls);
+            itemLore = parseAbilityLore(itemLore, this.ability, this.abilityDescription, this.abilityCooldown, this.manaCost);
+            itemLore = parseBackgroundLore(itemLore, this.backgroundLore);
+            meta.setUnbreakable(this.unbreakable);
+            meta.setLore(itemLore);
+            meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_UNBREAKABLE);
+            itemStack.setItemMeta(meta);
+        }
         return itemStack;
     }
 
-
-    public List<String> parseBasicLore(List<String> lore, String weaponType, String weaponRarity, int weaponLevel, double weaponMinDamage, double weaponMaxDamage, double weaponAttackCooldown){
+    private List<String> parseBasicLore(List<String> lore, String weaponType, String weaponRarity, int weaponLevel,
+                                        double weaponMinDamage, double weaponMaxDamage, double weaponAttackCooldown){
         List<String> newLore = new ArrayList<>();
         for (String s : lore) {
             s = s.replace("{weapon-type}", weaponType)
@@ -340,20 +392,22 @@ public class Weapon {
         return newLore;
     }
 
-    public List<String> parseGemLore(List<String> lore, int gem) {
+    private List<String> parseGemLore(List<String> lore, int gem) {
         boolean noGem = false;
-        if (Number.isLessOrEqualTo(gem,0)) {
+        if (gem <= 0) {
             noGem = true;
         }
         List<String> newLore = new ArrayList<>();
         for (String s : lore) {
             newLore.add(Color.ify(s));
-            if (Boolean.parseBoolean(String.valueOf(noGem)) && s.contains("{weapon-gem-sockets}")) {
+            if (noGem && s.contains("{weapon-gem-sockets}")) {
                 newLore.remove(newLore.indexOf(Color.ify(s)) - 1);
                 newLore.remove(newLore.indexOf(Color.ify(s)) - 1);
+                newLore.remove(Color.ify(s));
+                newLore.remove(Color.ify(s));
             }
 
-            if (!(Boolean.parseBoolean(String.valueOf(noGem))) && s.contains("{weapon-gem-sockets}")) {
+            if (!noGem && s.contains("{weapon-gem-sockets}")) {
                 newLore.remove(Color.ify(s));
                 for (int i = 0; i < gem; i++) newLore.add(Color.ify("&7» [ Gem Socket # " + i + " ]"));
             }
@@ -361,28 +415,29 @@ public class Weapon {
         return newLore;
     }
 
-    public List<String> parseScrollLore(List<String> lore, int gem) {
-        boolean noGem = false;
-        if (Number.isLessOrEqualTo(gem,0)) {
-            noGem = true;
+    private List<String> parseScrollLore(List<String> lore, int scroll) {
+        boolean noScroll = false;
+        if (scroll <= 0) {
+            noScroll = true;
         }
         List<String> newLore = new ArrayList<>();
         for (String s : lore) {
             newLore.add(Color.ify(s));
-            if (Boolean.parseBoolean(String.valueOf(noGem)) && s.contains("{weapon-scroll-sockets}")) {
+            if (noScroll && s.contains("{weapon-scroll-sockets}")) {
                 newLore.remove(newLore.indexOf(Color.ify(s)) - 1);
                 newLore.remove(newLore.indexOf(Color.ify(s)) - 1);
+                newLore.remove(Color.ify(s));
             }
 
-            if (!(Boolean.parseBoolean(String.valueOf(noGem))) && s.contains("{weapon-scroll-sockets}")) {
+            if (!noScroll && s.contains("{weapon-scroll-sockets}")) {
                 newLore.remove(Color.ify(s));
-                for (int i = 0; i < gem; i++) newLore.add(Color.ify("&7» [ Scroll Socket # " + i + " ]"));
+                for (int i = 0; i < scroll; i++) newLore.add(Color.ify("&7» [ Scroll Socket # " + i + " ]"));
             }
         }
         return newLore;
     }
 
-    public List<String> parseAbilityLore(List<String> lore, String abilityName,List<String> abilityDescription,double cooldown, double mana) {
+    private List<String> parseAbilityLore(List<String> lore, String abilityName,List<String> abilityDescription,double cooldown, double mana) {
         boolean hasability = false;
         if (abilityName != null && !abilityName.equals("null")) {
             hasability = true;
@@ -395,30 +450,64 @@ public class Weapon {
                         .replace("{weapon-ability-mana}",String.valueOf(mana));
             }
             newLore.add(Color.ify(s));
-            if (!(Boolean.parseBoolean(String.valueOf(hasability))) && s.contains("Weapon Ability")) {
+            if (!hasability && (s.contains("Weapon Ability"))){
+                newLore.remove(newLore.indexOf(Color.ify(s)) - 1);
                 newLore.remove(Color.ify(s));
             }
-            if (!(Boolean.parseBoolean(String.valueOf(hasability))) && s.contains("{weapon-ability-name}")) {
+            if (!hasability && s.contains("{weapon-ability-name}") || s.contains("{weapon-ability-cooldown}") ||
+                    s.contains("{weapon-ability-mana}") || s.contains("{weapon-ability-description}")) {
                 newLore.remove(Color.ify(s));
             }
-            if (!(Boolean.parseBoolean(String.valueOf(hasability))) && s.contains("{weapon-ability-cooldown}")) {
+            if (hasability && s.contains("{weapon-ability-description}")) {
                 newLore.remove(Color.ify(s));
-            }
-            if (!(Boolean.parseBoolean(String.valueOf(hasability))) && s.contains("{weapon-ability-mana}")) {
-                newLore.remove(Color.ify(s));
-            }
-            if (!(Boolean.parseBoolean(String.valueOf(hasability))) && s.contains("{weapon-ability-description}")) {
-                newLore.remove(Color.ify(s));
-            }
-            if ((Boolean.parseBoolean(String.valueOf(hasability))) && s.contains("{weapon-ability-description}")) {
-                newLore.remove(Color.ify(s));
+                newLore.add(Color.ify(s).replace("{weapon-ability-description}", "").replace(":", ""));
                 for (String e : abilityDescription) {
-                    newLore.add(Color.ify("&7» &f" + e));
+                    newLore.add(Color.ify("&f" + e));
                 }
             }
         }
         return newLore;
     }
 
+    private List<String> parseBackgroundLore(List<String> lore, List<String> backgroundLore) {
+        boolean hasBackgroundLore = false;
+        IllyriaRPG.getInstance().sendConsole(backgroundLore);
+        if (backgroundLore != null && !(backgroundLore.equals(Collections.singletonList("null")) || !(backgroundLore.equals(Collections.singletonList("[]"))))) {
+            hasBackgroundLore = true;
+        }
+        List<String> newLore = new ArrayList<>();
+        for (String s : lore) {
+            newLore.add(Color.ify(s));
+            if (!hasBackgroundLore && (s.contains("Weapon Background Lore") && s.contains("{weapon-background-lore}"))){
+                newLore.remove(newLore.indexOf(Color.ify(s)) - 1);
+                newLore.remove(Color.ify(s));
+            }
+            if (hasBackgroundLore && s.contains("{weapon-background-lore}")) {
+                newLore.remove(Color.ify(s));
+                newLore.add(Color.ify(s).replace("{weapon-background-lore}", "").replace(":", ""));
+                for (String e : backgroundLore) {
+                    newLore.add(Color.ify("&f" + e));
+                }
+            }
+        }
+        return newLore;
+    }
+
+    public Weapon removeUnusedNamespacedKeys() {
+        PersistentDataContainer persistentDataContainer = meta.getPersistentDataContainer();
+        PersistentDataType[] namespacedKeyDataType = INamespacedKeys.getAllItemDataType();
+        NamespacedKey[] namespacedKeys = INamespacedKeys.getAllItemNamespacedKeys();
+        int i = 0;
+        for (NamespacedKey key : namespacedKeys) {
+            PersistentDataType a = namespacedKeyDataType[i];
+            if (persistentDataContainer.has(key, a)){
+                if (NullValues.checkForNullValues(persistentDataContainer.get(key, a))) {
+                    persistentDataContainer.remove(key);
+                }
+            }
+            i = i + 1;
+        }
+        return this;
+    }
 
 }

@@ -6,67 +6,67 @@ import me.tom.sparse.spigot.chat.menu.element.InputElement;
 import me.tom.sparse.spigot.chat.menu.element.TextElement;
 import net.prosavage.illyriarpg.IllyriaRPG;
 import net.prosavage.illyriarpg.api.files.IWeaponFiles;
-import net.prosavage.illyriarpg.utils.Color;
-import net.prosavage.illyriarpg.utils.Number;
+import net.prosavage.illyriarpg.utils.INumber;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 public class WeaponFileEditor {
 
-    net.prosavage.illyriarpg.utils.Number Number = new Number();
-    net.prosavage.illyriarpg.api.files.IWeaponFiles IWeaponFiles = new IWeaponFiles();
-    net.prosavage.illyriarpg.utils.Color Color = new Color();
+    private INumber INumber = new INumber();
+    private net.prosavage.illyriarpg.api.files.IWeaponFiles IWeaponFiles = new IWeaponFiles();
 
     public void getWeaponCreateMenu(Player player, int page) {
         ChatMenu chatMenu = new ChatMenu();
         int i = 1;
-        int maxNumber = page * 10;
-        int minNumber = page * 10 - 11;
-        ArrayList<String> weaponNames = new ArrayList<>();
-        for (String r : IWeaponFiles.getRarityNames()){
-            for (String a : IWeaponFiles.getRarityWeaponNames(r)){
-                weaponNames.add("[" + i + "] [" + r + "] [" + a.replace(".yml", "") + "]");
-                i = i + 1;
-            }
-        }
-        IllyriaRPG.getInstance().sendConsole(String.valueOf(weaponNames));
-        int maxPage = (int) Math.floor(Math.floor(i) / 10);
         int minPage = 0;
-        i = 0;
-        for (int ab = 0; ab < minNumber + 11 ; ab++) {
-            if ((minNumber < maxNumber) && (ab > minNumber)) {
-                if ((ab < weaponNames.size() - 1) && (weaponNames.size() < 11)) {
-                    i = i + 1;
-                    String[] split = weaponNames.get(ab).split("] \\[");
-                    int rankNumb = Integer.parseInt(split[0].replace("[", "").replace("]", ""));
-                    String rarity = split[1].replace("[", "").replace("]", "");
-                    String name = split[2].replace("[", "").replace("]", "");
-                    chatMenu.add(basicRequirement(chatMenu, player, 0, 5 + i, weaponNames.get(ab), rarity, name, i, page, 1));
-                }else if (weaponNames.size() > 10) {
-                    i = i + 1;
-                    String[] split = weaponNames.get(ab).split("] \\[");
-                    int rankNumb = Integer.parseInt(split[0].replace("[", "").replace("]", ""));
-                    String rarity = split[1].replace("[", "").replace("]", "");
-                    String name = split[2].replace("[", "").replace("]", "");
-                    chatMenu.add(basicRequirement(chatMenu, player, 0, 5 + i, weaponNames.get(ab), rarity, name, i, page, 1));
+        List<String> weaponList = new ArrayList<>();
+        int c = 0;
+        int startingNumber = (page * 10) - 11;
+        IllyriaRPG.getInstance().sendConsole("PAGE " + page);
+        IllyriaRPG.getInstance().sendConsole("SN " + startingNumber);
+        IllyriaRPG.getInstance().sendConsole("C " + c);
+        IllyriaRPG.getInstance().sendConsole("I " + i);
+        for (String r : IWeaponFiles.getRarityNames()) {
+            for (String a : IWeaponFiles.getRarityWeaponNames(r)) {
+                weaponList.add(c + "|" + r + "|" + a);
+                c++;
+                if (c % 10 == 0){
+                    i++;
                 }
             }
         }
-        chatMenu.add(getCloseMenu(chatMenu, player));
-        if (page < maxPage) {
-            chatMenu.add(forwardToMenuButton(chatMenu, player, page));
+        IllyriaRPG.getInstance().sendConsole(weaponList);
+        int d = 0;
+        for (String s : weaponList){
+            String[] split = s.split("\\|");
+            if (startingNumber >= (page * 10) - 11 && startingNumber < (page * 10)){
+                if ((Integer.parseInt(split[0]) >= (page * 10) - 11) && (Integer.parseInt(split[0]) < (page * 10))) {
+                    chatMenu.add(basicRequirement(chatMenu, player, 0, 5 + d, "[" + (Integer.parseInt(split[0]) + 1) + "] " +
+                                    split[1] + " " + split[2], split[1], split[2].replace(".yml", ""), i, page,
+                            1));
+                    startingNumber++;
+                    d++;
+                }
+            }
         }
         if (page - 1 > minPage) {
             chatMenu.add(backToMenuButton(chatMenu, player, page));
         }
+        if (page < i) {
+            chatMenu.add(forwardToMenuButton(chatMenu, player, page));
+        }
+        IllyriaRPG.getInstance().sendConsole(chatMenu.getElements());
+        chatMenu.add(getCloseMenu(chatMenu, player));
         chatMenu.setPauseChat(true);
         chatMenu.openFor(player);
     }
 
-    public ButtonElement getCloseMenu(ChatMenu menu, Player player){
+    private ButtonElement getCloseMenu(ChatMenu menu, Player player){
         return new ButtonElement(100, 18, ChatColor.RED + "[Close]", player1 -> {
             menu.setPauseChat(false);
             menu.close(player);
@@ -76,7 +76,7 @@ public class WeaponFileEditor {
         });
     }
 
-    public ButtonElement goBackToWeaponFileList(ChatMenu menu, Player player, int page){
+    private ButtonElement goBackToWeaponFileList(ChatMenu menu, Player player, int page){
         return new ButtonElement(100, 18, ChatColor.GREEN + "[File menu]", player1 -> {
             menu.setPauseChat(false);
             menu.close(player);
@@ -84,7 +84,7 @@ public class WeaponFileEditor {
         });
     }
 
-    public ButtonElement basicRequirement(ChatMenu menu, Player player, int x, int y, String text, String rarity, String name, int slotNumber, int page, int pageForThisMenu) {
+    private ButtonElement basicRequirement(ChatMenu menu, Player player, int x, int y, String text, String rarity, String name, int slotNumber, int page, int pageForThisMenu) {
         return new ButtonElement(x, y, ChatColor.GREEN + text, player1 -> {
             new BukkitRunnable(){
                 @Override
@@ -95,7 +95,7 @@ public class WeaponFileEditor {
         });
     }
 
-    public void goToBasicRequirementMenu(ChatMenu menu, Player player, int pageForThisMenu, String text, String rarity, String name, int slotNumber, int page) {
+    private void goToBasicRequirementMenu(ChatMenu menu, Player player, int pageForThisMenu, String text, String rarity, String name, int slotNumber, int page) {
         menu.setPauseChat(false);
         menu.close(player);
         ChatMenu menu2 = new ChatMenu();
@@ -147,11 +147,11 @@ public class WeaponFileEditor {
         }.runTaskLater(IllyriaRPG.getInstance(), 1L);
     }
 
-    public ButtonElement backToMenuButton(ChatMenu menu, Player player, int page) {
+    private ButtonElement backToMenuButton(ChatMenu menu, Player player, int page) {
         return new ButtonElement(0, 18, ChatColor.RED + "«", player1 -> {
             menu.setPauseChat(false);
             menu.close(player);
-            new BukkitRunnable() {
+            new BukkitRunnable(){
                 @Override
                 public void run() {
                     getWeaponCreateMenu(player, page - 1);
@@ -160,11 +160,11 @@ public class WeaponFileEditor {
         });
     }
 
-    public ButtonElement forwardToMenuButton(ChatMenu menu, Player player, int page) {
+    private ButtonElement forwardToMenuButton(ChatMenu menu, Player player, int page) {
         return new ButtonElement(200, 18, ChatColor.RED + "»", player1 -> {
             menu.setPauseChat(false);
             menu.close(player);
-            new BukkitRunnable() {
+            new BukkitRunnable(){
                 @Override
                 public void run() {
                     getWeaponCreateMenu(player, page + 1);
@@ -173,109 +173,101 @@ public class WeaponFileEditor {
         });
     }
 
-    public InputElement weaponLevelInput(String value, String rarityName, String fileName) {
+    private InputElement weaponLevelInput(String value, String rarityName, String fileName) {
         InputElement weaponLevelInput = new InputElement(100, 10, 100, value);
         weaponLevelInput.value.setChangeCallback(state -> {
             String currentValue = state.getCurrent();
-            if ((currentValue != null) && Number.isParsableAsInt(currentValue)) {
+            if ((currentValue != null) && INumber.isParsableAsInt(currentValue)) {
                 int currentValueInt = Integer.parseInt(currentValue);
                 IWeaponFiles.setMinimumLevel(rarityName, fileName, currentValueInt);
             }
-            System.out.println("Input Element changed! " + state.getPrevious() + " -> " + state.getCurrent());
         });
         return weaponLevelInput;
     }
 
-    public InputElement minimumWeaponDamageInput(String value, String rarityName, String fileName) {
+    private InputElement minimumWeaponDamageInput(String value, String rarityName, String fileName) {
         InputElement weaponDamageInput = new InputElement(100, 12, 100, value);
         weaponDamageInput.value.setChangeCallback(state -> {
-            double currentValueDouble = Double.parseDouble(state.getCurrent());
+            double currentValueDouble = Double.parseDouble(Objects.requireNonNull(state.getCurrent()));
             if (currentValueDouble > -1) {
                 IWeaponFiles.setMinimumDamage(rarityName, fileName, currentValueDouble);
             }
-            System.out.println("Input Element changed! " + state.getPrevious() + " -> " + state.getCurrent());
         });
         return weaponDamageInput;
     }
 
-    public InputElement maximumWeaponDamageInput(String value, String rarityName, String fileName) {
+    private InputElement maximumWeaponDamageInput(String value, String rarityName, String fileName) {
         InputElement weaponDamageInput = new InputElement(100, 14, 100, value);
         weaponDamageInput.value.setChangeCallback(state -> {
-            double currentValueDouble = Double.parseDouble(state.getCurrent());
+            double currentValueDouble = Double.parseDouble(Objects.requireNonNull(state.getCurrent()));
             if (currentValueDouble > -1) {
                 IWeaponFiles.setMaximumDamage(rarityName, fileName, currentValueDouble);
             }
-            System.out.println("Input Element changed! " + state.getPrevious() + " -> " + state.getCurrent());
         });
         return weaponDamageInput;
     }
 
-    public InputElement weaponAttackCooldown(String value, String rarityName, String fileName) {
+    private InputElement weaponAttackCooldown(String value, String rarityName, String fileName) {
         InputElement weaponAttackCooldownInput = new InputElement(100, 16, 100, value);
         weaponAttackCooldownInput.value.setChangeCallback(state -> {
             String currentValue = state.getCurrent();
-            if ((currentValue != null) && Number.isParsableAsDouble(currentValue)) {
+            if ((currentValue != null) && INumber.isParsableAsDouble(currentValue)) {
                 double currentValueDouble = Double.parseDouble(currentValue);
                 IWeaponFiles.setAttackCooldown(rarityName, fileName, currentValueDouble);
             }
-            System.out.println("Input Element changed! " + state.getPrevious() + " -> " + state.getCurrent());
         });
         return weaponAttackCooldownInput;
     }
 
-    public InputElement minimumScrollAmountInput(String value, String rarityName, String fileName) {
+    private InputElement minimumScrollAmountInput(String value, String rarityName, String fileName) {
         InputElement scrollAmountInput = new InputElement(100, 10, 100, value);
         scrollAmountInput.value.setChangeCallback(state -> {
             String currentValue = state.getCurrent();
-            if ((currentValue != null) && Number.isParsableAsInt(currentValue)) {
+            if ((currentValue != null) && INumber.isParsableAsInt(currentValue)) {
                 int currentValueInt = Integer.parseInt(currentValue);
                 IWeaponFiles.setMinimumScroll(rarityName, fileName, currentValueInt);
             }
-            System.out.println("Input Element changed! " + state.getPrevious() + " -> " + state.getCurrent());
         });
         return scrollAmountInput;
     }
 
-    public InputElement maximumScrollAmountInput(String value, String rarityName, String fileName) {
+    private InputElement maximumScrollAmountInput(String value, String rarityName, String fileName) {
         InputElement scrollAmountInput = new InputElement(100, 12, 100, value);
         scrollAmountInput.value.setChangeCallback(state -> {
             String currentValue = state.getCurrent();
-            if ((currentValue != null) && Number.isParsableAsInt(currentValue)) {
+            if ((currentValue != null) && INumber.isParsableAsInt(currentValue)) {
                 int currentValueInt = Integer.parseInt(currentValue);
                 IWeaponFiles.setMaximumScroll(rarityName, fileName, currentValueInt);
             }
-            System.out.println("Input Element changed! " + state.getPrevious() + " -> " + state.getCurrent());
         });
         return scrollAmountInput;
     }
 
-    public InputElement minimumGemAmountInput(String value, String rarityName, String fileName) {
+    private InputElement minimumGemAmountInput(String value, String rarityName, String fileName) {
         InputElement gemAmountInput = new InputElement(100, 14, 100, value);
         gemAmountInput.value.setChangeCallback(state -> {
             String currentValue = state.getCurrent();
-            if ((currentValue != null) && Number.isParsableAsInt(currentValue)) {
+            if ((currentValue != null) && INumber.isParsableAsInt(currentValue)) {
                 int currentValueInt = Integer.parseInt(currentValue);
                 IWeaponFiles.setMinimumGem(rarityName, fileName, currentValueInt);
             }
-            System.out.println("Input Element changed! " + state.getPrevious() + " -> " + state.getCurrent());
         });
         return gemAmountInput;
     }
 
-    public InputElement maximumGemAmountInput(String value, String rarityName, String fileName) {
+    private InputElement maximumGemAmountInput(String value, String rarityName, String fileName) {
         InputElement gemAmountInput = new InputElement(100, 16, 100, value);
         gemAmountInput.value.setChangeCallback(state -> {
             String currentValue = state.getCurrent();
-            if ((currentValue != null) && Number.isParsableAsInt(currentValue)) {
+            if ((currentValue != null) && INumber.isParsableAsInt(currentValue)) {
                 int currentValueInt = Integer.parseInt(currentValue);
                 IWeaponFiles.setMaximumGem(rarityName, fileName, currentValueInt);
             }
-            System.out.println("Input Element changed! " + state.getPrevious() + " -> " + state.getCurrent());
         });
         return gemAmountInput;
     }
 
-    public InputElement abilityNameInput(String value, String rarityName, String fileName) {
+    private InputElement abilityNameInput(String value, String rarityName, String fileName) {
         InputElement abilityNameInput = new InputElement(100, 6, 100, value);
         abilityNameInput.value.setChangeCallback(state -> {
             String currentValue = state.getCurrent();
@@ -286,7 +278,7 @@ public class WeaponFileEditor {
         return abilityNameInput;
     }
 
-    public InputElement abilityCastTypeInput(String value, String rarityName, String fileName) {
+    private InputElement abilityCastTypeInput(String value, String rarityName, String fileName) {
         InputElement abilityCastTypeInput = new InputElement(100, 8, 100, value);
         abilityCastTypeInput.value.setChangeCallback(state -> {
             String currentValue = state.getCurrent();
@@ -297,7 +289,7 @@ public class WeaponFileEditor {
         return abilityCastTypeInput;
     }
 
-    public InputElement abilityActionTypeInput(String value, String rarityName, String fileName) {
+    private InputElement abilityActionTypeInput(String value, String rarityName, String fileName) {
         InputElement abilityActionTypeInput = new InputElement(100, 10, 100, value);
         abilityActionTypeInput.value.setChangeCallback(state -> {
             String currentValue = state.getCurrent();
@@ -308,11 +300,11 @@ public class WeaponFileEditor {
         return abilityActionTypeInput;
     }
 
-    public InputElement abilityCooldownInput(String value, String rarityName, String fileName) {
+    private InputElement abilityCooldownInput(String value, String rarityName, String fileName) {
         InputElement abilityCooldownInput = new InputElement(100, 12, 100, value);
         abilityCooldownInput.value.setChangeCallback(state -> {
             String currentValue = state.getCurrent();
-            if ((currentValue != null) && Number.isParsableAsInt(currentValue)) {
+            if ((currentValue != null) && INumber.isParsableAsInt(currentValue)) {
                 int currentValueInt = Integer.parseInt(currentValue);
                 IWeaponFiles.setAbilityCooldown(rarityName, fileName, String.valueOf(currentValueInt));
             }
@@ -320,17 +312,16 @@ public class WeaponFileEditor {
         return abilityCooldownInput;
     }
 
-    public InputElement abilityManaCostInput(String value, String rarityName, String fileName) {
+    private InputElement abilityManaCostInput(String value, String rarityName, String fileName) {
         InputElement abilityManaCostInput = new InputElement(100, 14, 100, value);
         abilityManaCostInput.value.setChangeCallback(state -> {
             String currentValue = state.getCurrent();
-            if ((currentValue != null) && Number.isParsableAsInt(currentValue)) {
+            if ((currentValue != null) && INumber.isParsableAsInt(currentValue)) {
                 double currentValueDouble = Double.parseDouble(currentValue);
                 IWeaponFiles.setAbilityCooldown(rarityName, fileName, String.valueOf(currentValueDouble));
             }
         });
         return abilityManaCostInput;
     }
-
 
 }
