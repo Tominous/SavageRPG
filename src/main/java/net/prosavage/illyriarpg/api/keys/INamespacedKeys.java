@@ -21,8 +21,9 @@ public final class INamespacedKeys {
     public static final NamespacedKey ITEM_ABIILTY_COOLDOWN = create("item_ability_cooldown");
     public static final NamespacedKey ITEM_ABIILTY_NAME = create("item_ability_name");
     public static final NamespacedKey ITEM_ABIILTY_DESCRIPTION = create("item_ability_description");
-    public static final NamespacedKey ITEM_ABIILTY_CAST_TYPE = create("item_ability_cast_type");
-    public static final NamespacedKey ITEM_ABIILTY_ACTION_TYPE = create("item_ability_action_type");
+    public static final NamespacedKey ITEM_ABIILTY_IS_LEFT_ACTION = create("item_ability_is_left_action");
+    public static final NamespacedKey ITEM_ABIILTY_IS_RIGHT_ACTION = create("item_ability_is_right_action");
+    public static final NamespacedKey ITEM_ABIILTY_IS_DROP_ACTION = create("item_ability_is_droppable_action");
     public static final NamespacedKey ITEM_ABIILTY_MANA_COST = create("item_ability_mana_cost");
     public static final NamespacedKey ITEM_IS_SPAWNED_IN = create("item_is_spawned_in");
 
@@ -59,15 +60,14 @@ public final class INamespacedKeys {
     public static final NamespacedKey[] ALL_ITEM_NAME_SPACED_KEYS = {INamespacedKeys.ITEM_NAME, INamespacedKeys.ITEM_MATERIAL,
             INamespacedKeys.ITEM_RARITY, INamespacedKeys.ITEM_CHANCE, INamespacedKeys.ITEM_BACKGROUND_LORE, INamespacedKeys.ITEM_LEVEL,
             INamespacedKeys.ITEM_MAXIMUM_DAMAGE, INamespacedKeys.ITEM_MINIMUM_DAMAGE, INamespacedKeys.ITEM_SCROLL, INamespacedKeys.ITEM_GEM,
-            INamespacedKeys.ITEM_ABIILTY_COOLDOWN, INamespacedKeys.ITEM_ABIILTY_NAME, INamespacedKeys.ITEM_ABIILTY_DESCRIPTION,
-            INamespacedKeys.ITEM_ABIILTY_CAST_TYPE, INamespacedKeys.ITEM_ABIILTY_MANA_COST, INamespacedKeys.ITEM_ABIILTY_ACTION_TYPE,
-            INamespacedKeys.ITEM_IS_SPAWNED_IN, INamespacedKeys.CREATOR_ITEM_PLAYER};
+            INamespacedKeys.ITEM_ABIILTY_COOLDOWN, INamespacedKeys.ITEM_ABIILTY_NAME, INamespacedKeys.ITEM_ABIILTY_DESCRIPTION, INamespacedKeys.ITEM_ABIILTY_IS_LEFT_ACTION,
+            INamespacedKeys.ITEM_ABIILTY_IS_RIGHT_ACTION, INamespacedKeys.ITEM_ABIILTY_IS_DROP_ACTION, INamespacedKeys.ITEM_ABIILTY_MANA_COST, INamespacedKeys.ITEM_IS_SPAWNED_IN, INamespacedKeys.CREATOR_ITEM_PLAYER};
 
     public static final PersistentDataType[] ALL_ITEM_DATA_TYPE = {PersistentDataType.STRING, PersistentDataType.STRING,
             PersistentDataType.STRING, PersistentDataType.DOUBLE, PersistentDataType.STRING, PersistentDataType.INTEGER,
             PersistentDataType.DOUBLE, PersistentDataType.DOUBLE, PersistentDataType.INTEGER, PersistentDataType.INTEGER,
-            PersistentDataType.DOUBLE, PersistentDataType.STRING, PersistentDataType.STRING, PersistentDataType.STRING,
-            PersistentDataType.DOUBLE, PersistentDataType.STRING, PersistentDataType.BYTE, PersistentDataType.STRING};
+            PersistentDataType.DOUBLE, PersistentDataType.STRING, PersistentDataType.STRING, PersistentDataType.BYTE,
+            PersistentDataType.BYTE, PersistentDataType.BYTE, PersistentDataType.DOUBLE, PersistentDataType.BYTE, PersistentDataType.STRING};
 
     private INamespacedKeys() { }
 

@@ -6,10 +6,10 @@
 
     <groupId>net.prosavage</groupId>
     <artifactId>IllyriaRPG</artifactId>
-    <version>19w48a</version>
+    <version>0.1.5b</version>
     <packaging>jar</packaging>
 
-    <name>IllyriaRPG</name>
+    <name>IllyriaRPG - ${project.version}</name>
 
     <description>An RPG core</description>
     <properties>
@@ -65,17 +65,19 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.14.4-R0.1-SNAPSHOT</version>
+            <version>1.15-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
+
         <dependency>
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
             <version>16.0.3</version>
-            <scope>compile</scope>
+            <scope>provided</scope>
         </dependency>
 
         <!-- These must be locally installed! -->
+
         <dependency>
             <groupId>me.tom.sparse.spigot.chat.menu</groupId>
             <artifactId>ChatMenuAPI</artifactId>
@@ -84,6 +86,7 @@
             <systemPath>${pom.basedir}\libs\ChatMenuAPI.jar</systemPath>
             <optional>true</optional>
         </dependency>
+
     </dependencies>
 
 </project>

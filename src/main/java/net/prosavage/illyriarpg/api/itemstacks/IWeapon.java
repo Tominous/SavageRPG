@@ -146,16 +146,6 @@ public class IWeapon {
         return Collections.singletonList("");
     }
 
-    public String getAbilityCastType(ItemStack itemStack) {
-        if (itemStack.getType() == Material.AIR){ return null; }
-        ItemMeta meta = itemStack.getItemMeta();
-        if (meta != null) {
-            PersistentDataContainer persistentDataContainer = meta.getPersistentDataContainer();
-            return persistentDataContainer.get(INamespacedKeys.ITEM_ABIILTY_CAST_TYPE, PersistentDataType.STRING);
-        }
-        return null;
-    }
-
     public double getAbilityManaCost(ItemStack itemStack) {
         if (itemStack.getType() == Material.AIR){ return -1.0; }
         ItemMeta meta = itemStack.getItemMeta();
@@ -164,16 +154,6 @@ public class IWeapon {
             return persistentDataContainer.get(INamespacedKeys.ITEM_ABIILTY_MANA_COST, PersistentDataType.DOUBLE);
         }
         return 0.0;
-    }
-
-    public String getAbilityActionType(ItemStack itemStack) {
-        if (itemStack.getType() == Material.AIR){ return null; }
-        ItemMeta meta = itemStack.getItemMeta();
-        if (meta != null) {
-            PersistentDataContainer persistentDataContainer = meta.getPersistentDataContainer();
-            return persistentDataContainer.get(INamespacedKeys.ITEM_ABIILTY_ACTION_TYPE, PersistentDataType.STRING);
-        }
-        return null;
     }
 
     public boolean isSpawnedIn(ItemStack itemStack) {

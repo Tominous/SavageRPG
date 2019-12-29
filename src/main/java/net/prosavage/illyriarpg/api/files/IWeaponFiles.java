@@ -25,13 +25,12 @@ public class IWeaponFiles {
             e.printStackTrace();
         }
         return weaponConfig;
-
     }
 
     public List<String> getRarityNames(){
         File dir = new File(IllyriaRPG.getInstance().getWeaponFolder());
         if (dir.list() == null){
-            return Collections.singletonList("null");
+            return null;
         }
         return Arrays.asList(Objects.requireNonNull(dir.list()));
     }
@@ -92,19 +91,6 @@ public class IWeaponFiles {
         }
         YamlConfiguration WeaponFiles = YamlConfiguration.loadConfiguration(Objects.requireNonNull(selectedFile));
         return WeaponFiles.getStringList("background-lore");
-    }
-
-    public List<String> getWeaponAbilityDescription(String rarity, String weaponName){
-        File[] dir = getRarityWeaponFiles(rarity);
-        File selectedFile = null;
-        assert dir != null;
-        for (File file : dir){
-            if(file.getName().equals(weaponName + ".yml")){
-                selectedFile = file;
-            }
-        }
-        YamlConfiguration WeaponFiles = YamlConfiguration.loadConfiguration(Objects.requireNonNull(selectedFile));
-        return WeaponFiles.getStringList("ability-description");
     }
 
     private YamlConfiguration getWeaponYAMLConfiguration(String rarity, String weaponName){
@@ -197,26 +183,6 @@ public class IWeaponFiles {
         return getStat(rarity, weaponName, "ability-name");
     }
 
-    public List<String> getAbilityDescription(String rarity, String weaponName){
-        return getList(rarity, weaponName, "ability-description");
-    }
-
-    public String getAbilityCastType(String rarity, String weaponName){
-        return getStat(rarity, weaponName, "ability-cast-type");
-    }
-
-    public String getAbilityActionType(String rarity, String weaponName){
-        return getStat(rarity, weaponName, "ability-action-type");
-    }
-
-    public double getAbilityCooldown(String rarity, String weaponName){
-        return Double.parseDouble(Objects.requireNonNull(getStat(rarity, weaponName, "ability-cooldown")));
-    }
-
-    public double getAbilityManaCost(String rarity, String weaponName){
-        return Double.parseDouble(Objects.requireNonNull(getStat(rarity, weaponName, "ability-mana-cost")));
-    }
-
     public void setAttackCooldown(String rarity, String weaponName, double value){
         YamlConfiguration weaponYAML = getWeaponYAMLConfiguration(rarity, weaponName);
         weaponYAML.set("attack-cooldown", value);
@@ -307,7 +273,7 @@ public class IWeaponFiles {
         }
     }
 
-    public void setAbility(String rarity, String weaponName, String value){
+    public void setAbilityName(String rarity, String weaponName, String value){
         YamlConfiguration weaponYAML = getWeaponYAMLConfiguration(rarity, weaponName);
         weaponYAML.set("ability-name", value);
         try {
@@ -317,53 +283,4 @@ public class IWeaponFiles {
         }
     }
 
-    public void setAbilityDescription(String rarity, String weaponName, List<String> value){
-        YamlConfiguration weaponYAML = getWeaponYAMLConfiguration(rarity, weaponName);
-        weaponYAML.set("ability-description", value);
-        try {
-            weaponYAML.save(getWeaponYAMLFileString(rarity, weaponName));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void setAbilityCastType(String rarity, String weaponName, String value){
-        YamlConfiguration weaponYAML = getWeaponYAMLConfiguration(rarity, weaponName);
-        weaponYAML.set("ability-cast-type", value);
-        try {
-            weaponYAML.save(getWeaponYAMLFileString(rarity, weaponName));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void setAbilityActionType(String rarity, String weaponName, String value){
-        YamlConfiguration weaponYAML = getWeaponYAMLConfiguration(rarity, weaponName);
-        weaponYAML.set("ability-action-type", value);
-        try {
-            weaponYAML.save(getWeaponYAMLFileString(rarity, weaponName));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void setAbilityCooldown(String rarity, String weaponName, String value){
-        YamlConfiguration weaponYAML = getWeaponYAMLConfiguration(rarity, weaponName);
-        weaponYAML.set("ability-cooldown", value);
-        try {
-            weaponYAML.save(getWeaponYAMLFileString(rarity, weaponName));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void setAbilityManaCost(String rarity, String weaponName, String value){
-        YamlConfiguration weaponYAML = getWeaponYAMLConfiguration(rarity, weaponName);
-        weaponYAML.set("ability-mana-cost", value);
-        try {
-            weaponYAML.save(getWeaponYAMLFileString(rarity, weaponName));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 }

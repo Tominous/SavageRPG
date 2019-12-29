@@ -1,25 +1,20 @@
 package net.prosavage.illyriarpg.commands;
 
 import net.prosavage.illyriarpg.api.files.IWeaponFiles;
-import net.prosavage.illyriarpg.chatmenu.WeaponFileEditor;
 import net.prosavage.illyriarpg.chatmenu.WeaponItemEditor;
 import net.prosavage.illyriarpg.utils.Color;
-import net.prosavage.illyriarpg.utils.INumber;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
 
 public class WeaponCommand implements CommandExecutor {
 
-    INumber INumber = new INumber();
     IWeaponFiles IWeaponFiles = new IWeaponFiles();
     Color Color = new Color();
     WeaponItemEditor WeaponItemEditor = new WeaponItemEditor();
-    WeaponFileEditor WeaponFileEditor = new WeaponFileEditor();
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -40,9 +35,6 @@ public class WeaponCommand implements CommandExecutor {
             if (args.length >= 1) {
                 if (args[0].equals("edit")) {
                     WeaponItemEditor.getWeaponCreateMenu(player, 1);
-                }
-                if (args[0].equals("file")) {
-                    WeaponFileEditor.getWeaponCreateMenu(player, 1);
                 }
                 return true;
             }

@@ -7,6 +7,7 @@ import me.tom.sparse.spigot.chat.menu.element.InputElement;
 import me.tom.sparse.spigot.chat.menu.element.TextElement;
 import net.prosavage.illyriarpg.IllyriaRPG;
 import net.prosavage.illyriarpg.api.ICreator;
+import net.prosavage.illyriarpg.api.files.IAbilityFiles;
 import net.prosavage.illyriarpg.api.keys.INamespacedKeys;
 import net.prosavage.illyriarpg.builder.Weapon;
 import net.prosavage.illyriarpg.utils.NullValues;
@@ -24,6 +25,7 @@ public class WeaponItemEditor {
     private INumber INumber = new INumber();
     private net.prosavage.illyriarpg.utils.Color Color = new Color();
     private NullValues NullValues = new NullValues();
+    private IAbilityFiles IAbilityFiles = new IAbilityFiles();
 
     private ButtonElement goToWeaponCreateMenu(ChatMenu menu, Player player, int x, int y, String text, int page){
         return new ButtonElement(x, y, ChatColor.GREEN + text, player1 -> {
@@ -68,39 +70,16 @@ public class WeaponItemEditor {
             chatMenu.add(goToWeaponCreateMenu(chatMenu, player, 0, 18, "«", page - 1));
         }
         if (page == 3){
-            chatMenu.add(new TextElement(0, 12, "Gem(s): "));
-            chatMenu.add(new TextElement(0, 14, "Scroll(s): "));
+            chatMenu.add(new TextElement(0, 10, "Gem(s): "));
+            chatMenu.add(new TextElement(0, 12, "Scroll(s): "));
+            chatMenu.add(new TextElement(0, 14, "Ability name: "));
+            chatMenu.add(abilityNameInput(player, (String) NullValues.replaceNullValues(iCreator.getPersistentAbilityNameInput())));
             chatMenu.add(gemAmountInput(player, String.valueOf(NullValues.replaceNullValues(iCreator.getPersistentGemAmountInput()))));
             chatMenu.add(scrollAmountInput(player, String.valueOf(NullValues.replaceNullValues(iCreator.getPersistentScrollAmountInput()))));
             chatMenu.add(goToWeaponCreateMenu(chatMenu, player, 200, 18, "»", page + 1));
             chatMenu.add(goToWeaponCreateMenu(chatMenu, player, 0, 18, "«", page - 1));
         }
         if (page == 4){
-            chatMenu.add(new TextElement(0, 6, "Ability name: "));
-            chatMenu.add(new TextElement(0, 8, "Ability cast-type: "));
-            chatMenu.add(new TextElement(0, 10, "Ability action type: "));
-            chatMenu.add(new TextElement(0, 12, "Ability cooldown: "));
-            chatMenu.add(new TextElement(0, 14, "Ability mana cost: "));
-            chatMenu.add(abilityNameInput(player, (String) NullValues.replaceNullValues(iCreator.getPersistentAbilityNameInput())));
-            chatMenu.add(abilityCastTypeInput(player, (String) NullValues.replaceNullValues(iCreator.getPersistentAbilityCastTypeInput())));
-            chatMenu.add(abilityActionTypeInput(player, (String) NullValues.replaceNullValues(iCreator.getPersistentAbilityActionTypeInput())));
-            chatMenu.add(abilityCooldownInput(player, "" + NullValues.replaceNullValues(iCreator.getPersistentAbilityCooldownInput())));
-            chatMenu.add(abilityManaCostInput(player, "" + NullValues.replaceNullValues(iCreator.getPersistentAbilityManaCostInput())));
-            chatMenu.add(goToWeaponCreateMenu(chatMenu, player, 200, 18, "»", page + 1));
-            chatMenu.add(goToWeaponCreateMenu(chatMenu, player, 0, 18, "«", page - 1));
-        }
-        if (page == 5){
-            chatMenu.add(new TextElement(0, 2, "Ability description"));
-            chatMenu.add(new TextElement(0, 4, "Use || to for new lines i.e. a||b"));
-            chatMenu.add(itemAbilityDescriptionOne(player, (String) NullValues.replaceNullValues(iCreator.getPersistentAbilityDescriptionOneInput())));
-            chatMenu.add(itemAbilityDescriptionTwo(player, (String) NullValues.replaceNullValues(iCreator.getPersistentAbilityDescriptionTwoInput())));
-            chatMenu.add(itemAbilityDescriptionThree(player, (String) NullValues.replaceNullValues(iCreator.getPersistentAbilityDescriptionThreeInput())));
-            chatMenu.add(itemAbilityDescriptionFour(player, (String) NullValues.replaceNullValues(iCreator.getPersistentAbilityDescriptionFourInput())));
-            chatMenu.add(itemAbilityDescriptionFive(player, (String) NullValues.replaceNullValues(iCreator.getPersistentAbilityDescriptionFiveInput())));
-            chatMenu.add(goToWeaponCreateMenu(chatMenu, player, 200, 18, "»", page + 1));
-            chatMenu.add(goToWeaponCreateMenu(chatMenu, player, 0, 18, "«", page - 1));
-        }
-        if (page == 6){
             chatMenu.add(new TextElement(0, 2, "Lore description"));
             chatMenu.add(new TextElement(0, 4, "Use || to for new lines i.e. a||b"));
             chatMenu.add(itemBackgroundLoreOne(player, (String) NullValues.replaceNullValues(iCreator.getPersistentBackgroundLoreOneInput())));
@@ -135,23 +114,11 @@ public class WeaponItemEditor {
                 if (iCreator.getPersistentGemAmountInput() > 0){
                     weapon.setGems(iCreator.getPersistentGemAmountInput());
                 }
-                if (!(NullValues.checkForNullValues(iCreator.getPersistentAbilityNameInput()) &&
-                        NullValues.checkForNullValues(iCreator.getPersistentAbilityCastTypeInput()) &&
-                        NullValues.checkForNullValues(iCreator.getPersistentAbilityActionTypeInput()) &&
-                        NullValues.checkForNullValues(iCreator.getPersistentAbilityCooldownInput()) &&
-                        NullValues.checkForNullValues(iCreator.getPersistentAbilityManaCostInput()))){
-                    String lineOne = (String) NullValues.replaceNullValues(iCreator.getPersistentAbilityDescriptionOneInput());
-                    String lineTwo = (String) NullValues.replaceNullValues(iCreator.getPersistentAbilityDescriptionTwoInput());
-                    String lineThree = (String) NullValues.replaceNullValues(iCreator.getPersistentAbilityDescriptionThreeInput());
-                    String lineFour = (String) NullValues.replaceNullValues(iCreator.getPersistentAbilityDescriptionFourInput());
-                    String lineFive = (String) NullValues.replaceNullValues(iCreator.getPersistentAbilityDescriptionFiveInput());
-                    String description = (lineOne + "||" + lineTwo + "||" + lineThree + "||" + lineFour + "||" + lineFive).replaceAll("\\|\\| \\|\\|", "");
-                    weapon.setAbility(iCreator.getPersistentAbilityNameInput())
-                            .setAbilityCastType(iCreator.getPersistentAbilityCastTypeInput())
-                            .setAbilityActionType(iCreator.getPersistentAbilityActionTypeInput())
-                            .setAbilityCooldown(iCreator.getPersistentAbilityCooldownInput())
-                            .setAbilityManaCost(iCreator.getPersistentAbilityManaCostInput())
-                            .setAbilityDescription(description);
+                if (!NullValues.checkForNullValues(iCreator.getPersistentAbilityNameInput())){
+                    String abilityName = IAbilityFiles.getAbilityName(iCreator.getPersistentAbilityNameInput());
+                    if (abilityName != null) {
+                        weapon.setAbility(abilityName);
+                    }
                 }
                 if (!(NullValues.checkForNullValues(iCreator.getPersistentBackgroundLoreOneInput())
                         || NullValues.checkForNullValues(iCreator.getPersistentBackgroundLoreTwoInput())
@@ -281,20 +248,8 @@ public class WeaponItemEditor {
         return weaponAttackCooldownInput;
     }
 
-    private InputElement scrollAmountInput(Player player, String value) {
-        InputElement scrollAmountInput = new InputElement(100, 14, 100, value);
-        scrollAmountInput.value.setChangeCallback(state -> {
-            String currentValue = state.getCurrent();
-            if ((currentValue != null) && INumber.isParsableAsInt(currentValue)) {
-                int currentValueInt = Integer.parseInt(currentValue);
-                player.getPersistentDataContainer().set(INamespacedKeys.CREATOR_ITEM_SCROLL_AMOUNT, PersistentDataType.INTEGER, currentValueInt);
-            }
-        });
-        return scrollAmountInput;
-    }
-
     private InputElement gemAmountInput(Player player, String value) {
-        InputElement gemAmountInput = new InputElement(100, 12, 100, value);
+        InputElement gemAmountInput = new InputElement(100, 10, 100, value);
         gemAmountInput.value.setChangeCallback(state -> {
             String currentValue = state.getCurrent();
             if ((currentValue != null) && INumber.isParsableAsInt(currentValue)) {
@@ -305,8 +260,20 @@ public class WeaponItemEditor {
         return gemAmountInput;
     }
 
+    private InputElement scrollAmountInput(Player player, String value) {
+        InputElement scrollAmountInput = new InputElement(100, 12, 100, value);
+        scrollAmountInput.value.setChangeCallback(state -> {
+            String currentValue = state.getCurrent();
+            if ((currentValue != null) && INumber.isParsableAsInt(currentValue)) {
+                int currentValueInt = Integer.parseInt(currentValue);
+                player.getPersistentDataContainer().set(INamespacedKeys.CREATOR_ITEM_SCROLL_AMOUNT, PersistentDataType.INTEGER, currentValueInt);
+            }
+        });
+        return scrollAmountInput;
+    }
+
     private InputElement abilityNameInput(Player player, String value) {
-        InputElement abilityNameInput = new InputElement(100, 6, 100, value);
+        InputElement abilityNameInput = new InputElement(100, 14, 100, value);
         abilityNameInput.value.setChangeCallback(state -> {
             String currentValue = state.getCurrent();
             if (currentValue != null) {
@@ -314,106 +281,6 @@ public class WeaponItemEditor {
             }
         });
         return abilityNameInput;
-    }
-
-    private InputElement abilityCastTypeInput(Player player, String value) {
-        InputElement abilityCastTypeInput = new InputElement(100, 8, 100, value);
-        abilityCastTypeInput.value.setChangeCallback(state -> {
-            String currentValue = state.getCurrent();
-            if (currentValue != null) {
-                player.getPersistentDataContainer().set(INamespacedKeys.CREATOR_ITEM_ABILITY_CAST_TYPE, PersistentDataType.STRING, currentValue);
-            }
-        });
-        return abilityCastTypeInput;
-    }
-
-    private InputElement abilityActionTypeInput(Player player, String value) {
-        InputElement abilityActionTypeInput = new InputElement(100, 10, 100, value);
-        abilityActionTypeInput.value.setChangeCallback(state -> {
-            String currentValue = state.getCurrent();
-            if (currentValue != null) {
-                player.getPersistentDataContainer().set(INamespacedKeys.CREATOR_ITEM_ABILITY_ACTION_TYPE, PersistentDataType.STRING, currentValue);
-            }
-        });
-        return abilityActionTypeInput;
-    }
-
-    private InputElement abilityCooldownInput(Player player, String value) {
-        InputElement abilityCooldownInput = new InputElement(100, 12, 100, value);
-        abilityCooldownInput.value.setChangeCallback(state -> {
-            String currentValue = state.getCurrent();
-            if (currentValue != null) {
-                player.getPersistentDataContainer().set(INamespacedKeys.CREATOR_ITEM_ABILITY_COOLDOWN, PersistentDataType.DOUBLE, Double.parseDouble(currentValue));
-            }
-        });
-        return abilityCooldownInput;
-    }
-
-    private InputElement abilityManaCostInput(Player player, String value) {
-        InputElement abilityManaCostInput = new InputElement(100, 14, 100, value);
-        abilityManaCostInput.value.setChangeCallback(state -> {
-            String currentValue = state.getCurrent();
-            if (currentValue != null) {
-                player.getPersistentDataContainer().set(INamespacedKeys.CREATOR_ITEM_ABILITY_MANA_COST, PersistentDataType.DOUBLE, Double.parseDouble(currentValue));
-            }
-        });
-        return abilityManaCostInput;
-    }
-
-    private InputElement itemAbilityDescriptionOne(Player player, String value) {
-        InputElement abilityDescriptionOneInput = new InputElement(0, 6, 250, value);
-        abilityDescriptionOneInput.value.setChangeCallback(state -> {
-            String currentValue = state.getCurrent();
-            if (currentValue != null) {
-                player.getPersistentDataContainer().set(INamespacedKeys.CREATOR_ITEM_ABILITY_DESCRIPTION_1, PersistentDataType.STRING, currentValue);
-            }
-        });
-        return abilityDescriptionOneInput;
-    }
-
-    private InputElement itemAbilityDescriptionTwo(Player player, String value) {
-        InputElement abilityDescriptionTwoInput = new InputElement(0, 8, 250, value);
-        abilityDescriptionTwoInput.value.setChangeCallback(state -> {
-            String currentValue = state.getCurrent();
-            if (currentValue != null) {
-                player.getPersistentDataContainer().set(INamespacedKeys.CREATOR_ITEM_ABILITY_DESCRIPTION_2, PersistentDataType.STRING, currentValue);
-            }
-        });
-        return abilityDescriptionTwoInput;
-    }
-
-    private InputElement itemAbilityDescriptionThree(Player player, String value) {
-        InputElement abilityDescriptionThreeInput = new InputElement(0, 10, 250, value);
-        abilityDescriptionThreeInput.value.setChangeCallback(state -> {
-            String currentValue = state.getCurrent();
-            if (currentValue != null) {
-                player.getPersistentDataContainer().set(INamespacedKeys.CREATOR_ITEM_ABILITY_DESCRIPTION_3, PersistentDataType.STRING, currentValue);
-            }
-        });
-        return abilityDescriptionThreeInput;
-    }
-
-
-    private InputElement itemAbilityDescriptionFour(Player player, String value) {
-        InputElement abilityDescriptionFourInput = new InputElement(0, 12, 250, value);
-        abilityDescriptionFourInput.value.setChangeCallback(state -> {
-            String currentValue = state.getCurrent();
-            if (currentValue != null) {
-                player.getPersistentDataContainer().set(INamespacedKeys.CREATOR_ITEM_ABILITY_DESCRIPTION_4, PersistentDataType.STRING, currentValue);
-            }
-        });
-        return abilityDescriptionFourInput;
-    }
-
-    private InputElement itemAbilityDescriptionFive(Player player, String value) {
-        InputElement abilityDescriptionFiveInput = new InputElement(0, 14, 250, value);
-        abilityDescriptionFiveInput.value.setChangeCallback(state -> {
-            String currentValue = state.getCurrent();
-            if (currentValue != null) {
-                player.getPersistentDataContainer().set(INamespacedKeys.CREATOR_ITEM_ABILITY_DESCRIPTION_5, PersistentDataType.STRING, currentValue);
-            }
-        });
-        return abilityDescriptionFiveInput;
     }
 
     private InputElement itemBackgroundLoreOne(Player player, String value) {

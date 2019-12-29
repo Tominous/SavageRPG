@@ -1,3 +1,12 @@
+database:
+  mysql:
+    enabled: false
+    host: ''
+    port: ''
+    database: ''
+    user: ''
+    password: ''
+
 server-startup:
   big-fat-bloody-message-enabled: false
 
@@ -20,11 +29,8 @@ weapon:
     - '&7» &f{weapon-gem-sockets}'
     - ' '
     - '&7Weapon Ability'
-    - '&7» &f{weapon-ability-name}'
+    - '&7» Name: &f{weapon-ability-name}'
     - '&7» Cooldown: &f{weapon-ability-cooldown}'
     - '&7» Cost: &f{weapon-ability-mana}'
-    - '&7» &f{weapon-ability-description}'
-    - ' '
-    - '&7Weapon Background Lore'
-    - '&7» &f{weapon-background-lore}'
+    - '&7» Description: &f{weapon-ability-description}'
     - ' '
