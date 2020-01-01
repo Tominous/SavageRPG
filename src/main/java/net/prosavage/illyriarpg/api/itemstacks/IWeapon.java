@@ -19,7 +19,7 @@ public class IWeapon {
         ItemMeta meta = itemStack.getItemMeta();
         if (meta != null) {
             PersistentDataContainer persistentDataContainer = meta.getPersistentDataContainer();
-            return persistentDataContainer.get(INamespacedKeys.ITEM_NAME, PersistentDataType.STRING);
+            return persistentDataContainer.get(INamespacedKeys.WEAPON_NAME, PersistentDataType.STRING);
         }
         return null;
     }
@@ -29,7 +29,7 @@ public class IWeapon {
         ItemMeta meta = itemStack.getItemMeta();
         if (meta != null) {
             PersistentDataContainer persistentDataContainer = meta.getPersistentDataContainer();
-            return persistentDataContainer.get(INamespacedKeys.ITEM_MATERIAL, PersistentDataType.STRING);
+            return persistentDataContainer.get(INamespacedKeys.WEAPON_MATERIAL, PersistentDataType.STRING);
         }
         return null;
     }
@@ -39,7 +39,7 @@ public class IWeapon {
         ItemMeta meta = itemStack.getItemMeta();
         if (meta != null) {
             PersistentDataContainer persistentDataContainer = meta.getPersistentDataContainer();
-            return persistentDataContainer.get(INamespacedKeys.ITEM_RARITY, PersistentDataType.STRING);
+            return persistentDataContainer.get(INamespacedKeys.WEAPON_RARITY, PersistentDataType.STRING);
         }
         return null;
     }
@@ -49,8 +49,8 @@ public class IWeapon {
         ItemMeta meta = itemStack.getItemMeta();
         if (meta != null) {
             PersistentDataContainer persistentDataContainer = meta.getPersistentDataContainer();
-            if (persistentDataContainer.has(INamespacedKeys.ITEM_CHANCE, PersistentDataType.DOUBLE)) {
-                return persistentDataContainer.get(INamespacedKeys.ITEM_CHANCE, PersistentDataType.DOUBLE);
+            if (persistentDataContainer.has(INamespacedKeys.WEAPON_CHANCE, PersistentDataType.DOUBLE)) {
+                return persistentDataContainer.get(INamespacedKeys.WEAPON_CHANCE, PersistentDataType.DOUBLE);
             }
         }
         return 0.0;
@@ -61,7 +61,7 @@ public class IWeapon {
         ItemMeta meta = itemStack.getItemMeta();
         if (meta != null) {
             PersistentDataContainer persistentDataContainer = meta.getPersistentDataContainer();
-            return Arrays.asList(persistentDataContainer.get(INamespacedKeys.ITEM_BACKGROUND_LORE, PersistentDataType.STRING).split("\\|\\|"));
+            return Arrays.asList(persistentDataContainer.get(INamespacedKeys.WEAPON_BACKGROUND_LORE, PersistentDataType.STRING).split("\\|\\|"));
         }
         return Collections.singletonList("");
     }
@@ -71,7 +71,7 @@ public class IWeapon {
         ItemMeta meta = itemStack.getItemMeta();
         if (meta != null) {
             PersistentDataContainer persistentDataContainer = meta.getPersistentDataContainer();
-            return persistentDataContainer.get(INamespacedKeys.ITEM_LEVEL, PersistentDataType.INTEGER);
+            return persistentDataContainer.get(INamespacedKeys.WEAPON_LEVEL, PersistentDataType.INTEGER);
         }
         return 0;
     }
@@ -81,7 +81,7 @@ public class IWeapon {
         ItemMeta meta = itemStack.getItemMeta();
         if (meta != null) {
             PersistentDataContainer persistentDataContainer = meta.getPersistentDataContainer();
-            return persistentDataContainer.get(INamespacedKeys.ITEM_MAXIMUM_DAMAGE, PersistentDataType.DOUBLE);
+            return persistentDataContainer.get(INamespacedKeys.WEAPON_MAXIMUM_DAMAGE, PersistentDataType.DOUBLE);
         }
         return 0.0;
     }
@@ -91,7 +91,7 @@ public class IWeapon {
         ItemMeta meta = itemStack.getItemMeta();
         if (meta != null) {
             PersistentDataContainer persistentDataContainer = meta.getPersistentDataContainer();
-            return persistentDataContainer.get(INamespacedKeys.ITEM_MINIMUM_DAMAGE, PersistentDataType.DOUBLE);
+            return persistentDataContainer.get(INamespacedKeys.WEAPON_MINIMUM_DAMAGE, PersistentDataType.DOUBLE);
         }
         return 0.0;
     }
@@ -101,7 +101,7 @@ public class IWeapon {
         ItemMeta meta = itemStack.getItemMeta();
         if (meta != null) {
             PersistentDataContainer persistentDataContainer = meta.getPersistentDataContainer();
-            return persistentDataContainer.get(INamespacedKeys.ITEM_GEM, PersistentDataType.INTEGER);
+            return persistentDataContainer.get(INamespacedKeys.WEAPON_GEM, PersistentDataType.INTEGER);
         }
         return 0;
     }
@@ -111,7 +111,7 @@ public class IWeapon {
         ItemMeta meta = itemStack.getItemMeta();
         if (meta != null) {
             PersistentDataContainer persistentDataContainer = meta.getPersistentDataContainer();
-            return persistentDataContainer.get(INamespacedKeys.ITEM_SCROLL, PersistentDataType.INTEGER);
+            return persistentDataContainer.get(INamespacedKeys.WEAPON_SCROLL, PersistentDataType.INTEGER);
         }
         return 0;
     }
@@ -121,7 +121,7 @@ public class IWeapon {
         ItemMeta meta = itemStack.getItemMeta();
         if (meta != null) {
             PersistentDataContainer persistentDataContainer = meta.getPersistentDataContainer();
-            return persistentDataContainer.get(INamespacedKeys.ITEM_ABIILTY_COOLDOWN, PersistentDataType.DOUBLE);
+            return persistentDataContainer.get(INamespacedKeys.WEAPON_ABIILTY_COOLDOWN, PersistentDataType.DOUBLE);
         }
         return 0.0;
     }
@@ -131,7 +131,7 @@ public class IWeapon {
         ItemMeta meta = itemStack.getItemMeta();
         if (meta != null) {
             PersistentDataContainer persistentDataContainer = meta.getPersistentDataContainer();
-            return persistentDataContainer.get(INamespacedKeys.ITEM_ABIILTY_NAME, PersistentDataType.STRING);
+            return persistentDataContainer.get(INamespacedKeys.WEAPON_ABIILTY_NAME, PersistentDataType.STRING);
         }
         return null;
     }
@@ -141,7 +141,7 @@ public class IWeapon {
         ItemMeta meta = itemStack.getItemMeta();
         if (meta != null) {
             PersistentDataContainer persistentDataContainer = meta.getPersistentDataContainer();
-            return Arrays.asList(Objects.requireNonNull(persistentDataContainer.get(INamespacedKeys.ITEM_ABIILTY_DESCRIPTION, PersistentDataType.STRING)).split("\\|\\|"));
+            return Arrays.asList(Objects.requireNonNull(persistentDataContainer.get(INamespacedKeys.WEAPON_ABIILTY_DESCRIPTION, PersistentDataType.STRING)).split("\\|\\|"));
         }
         return Collections.singletonList("");
     }
@@ -151,7 +151,7 @@ public class IWeapon {
         ItemMeta meta = itemStack.getItemMeta();
         if (meta != null) {
             PersistentDataContainer persistentDataContainer = meta.getPersistentDataContainer();
-            return persistentDataContainer.get(INamespacedKeys.ITEM_ABIILTY_MANA_COST, PersistentDataType.DOUBLE);
+            return persistentDataContainer.get(INamespacedKeys.WEAPON_ABIILTY_MANA_COST, PersistentDataType.DOUBLE);
         }
         return 0.0;
     }
@@ -162,7 +162,7 @@ public class IWeapon {
         ItemMeta meta = itemStack.getItemMeta();
         if (meta != null) {
             PersistentDataContainer persistentDataContainer = meta.getPersistentDataContainer();
-            isSpawnedIn = persistentDataContainer.get(INamespacedKeys.ITEM_IS_SPAWNED_IN, PersistentDataType.BYTE);
+            isSpawnedIn = persistentDataContainer.get(INamespacedKeys.WEAPON_IS_SPAWNED_IN, PersistentDataType.BYTE);
         }
         return isSpawnedIn != 0;
     }

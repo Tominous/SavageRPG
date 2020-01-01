@@ -11,3 +11,6 @@ commands:
   weapon:
     description: Weapon command!
     aliases: weapons
+  armor:
+    description: Armor command!
+    aliases: armors

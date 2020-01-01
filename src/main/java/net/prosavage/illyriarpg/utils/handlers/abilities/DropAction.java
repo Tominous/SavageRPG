@@ -23,10 +23,10 @@ public class DropAction implements Listener {
                 if (meta != null) {
                     if (!meta.getPersistentDataContainer().isEmpty()) {
                         PersistentDataContainer persistentDataContainer = meta.getPersistentDataContainer();
-                        if (persistentDataContainer.has(INamespacedKeys.ITEM_ABIILTY_NAME, PersistentDataType.STRING)) {
-                            String testSkill = persistentDataContainer.get(INamespacedKeys.ITEM_ABIILTY_NAME, PersistentDataType.STRING);
-                            if (persistentDataContainer.has(INamespacedKeys.ITEM_ABIILTY_IS_DROP_ACTION, PersistentDataType.BYTE)) {
-                                byte isDroppable = persistentDataContainer.get(INamespacedKeys.ITEM_ABIILTY_IS_DROP_ACTION, PersistentDataType.BYTE);
+                        if (persistentDataContainer.has(INamespacedKeys.WEAPON_ABIILTY_NAME, PersistentDataType.STRING)) {
+                            String testSkill = persistentDataContainer.get(INamespacedKeys.WEAPON_ABIILTY_NAME, PersistentDataType.STRING);
+                            if (persistentDataContainer.has(INamespacedKeys.WEAPON_ABIILTY_IS_DROP_ACTION, PersistentDataType.BYTE)) {
+                                byte isDroppable = persistentDataContainer.get(INamespacedKeys.WEAPON_ABIILTY_IS_DROP_ACTION, PersistentDataType.BYTE);
                                 if (isDroppable == (byte) 1) {
                                     Consumer<PlayerDropItemEvent> playerDropItemEventConsumer = IllyriaRPG.getInstance().getItemDropInteractions().get(testSkill);
                                     if (playerDropItemEventConsumer != null) {

@@ -1,12 +1,3 @@
-database:
-  mysql:
-    enabled: false
-    host: ''
-    port: ''
-    database: ''
-    user: ''
-    password: ''
-
 server-startup:
   big-fat-bloody-message-enabled: false
 
@@ -33,4 +24,26 @@ weapon:
     - '&7» Cooldown: &f{weapon-ability-cooldown}'
     - '&7» Cost: &f{weapon-ability-mana}'
     - '&7» Description: &f{weapon-ability-description}'
+    - ' '
+
+armor:
+  lore:
+    - ' '
+    - '&7Info'
+    - '&7» Type: &f{armor-type}'
+    - '&7» Rarity: &f{armor-rarity}'
+    - '&7» Required level: &f{armor-required-level}'
+    - ' '
+    - '&7Armor Stats'
+    - '&7» Protection: &f{armor-protection}'
+    - '&7» Health: &f{armor-health}'
+    - '&7» Regen: &f{armor-regen}'
+    - ' '
+    - '&7Scroll Sockets'
+    - '&7» &f{armor-scroll-sockets}'
+    - ' '
+    - '&7Gem Sockets'
+    - '&7» &f{armor-gem-sockets}'
+    - ' '
+    - '&7Armor Background Lore: &f{armor-background-lore}'
     - ' '

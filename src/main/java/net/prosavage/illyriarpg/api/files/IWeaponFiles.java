@@ -17,16 +17,6 @@ public class IWeaponFiles {
         return dir.listFiles();
     }
 
-    public YamlConfiguration getWeaponConfig(){
-        YamlConfiguration weaponConfig = new YamlConfiguration();
-        try {
-            weaponConfig.load(IllyriaRPG.getInstance().getWeaponRarityFile());
-        } catch (IOException | InvalidConfigurationException e) {
-            e.printStackTrace();
-        }
-        return weaponConfig;
-    }
-
     public List<String> getRarityNames(){
         File dir = new File(IllyriaRPG.getInstance().getWeaponFolder());
         if (dir.list() == null){
@@ -151,10 +141,6 @@ public class IWeaponFiles {
         return Integer.parseInt(Objects.requireNonNull(getStat(rarity, weaponName, "minimum-level")));
     }
 
-    public int getMaximumLevel(String rarity, String weaponName){
-        return Integer.parseInt(Objects.requireNonNull(getStat(rarity, weaponName, "maximum-level")));
-    }
-
     public double getMinimumDamage(String rarity, String weaponName){
         return Double.parseDouble(Objects.requireNonNull(getStat(rarity, weaponName, "minimum-damage")));
     }
@@ -196,16 +182,6 @@ public class IWeaponFiles {
     public void setMinimumLevel(String rarity, String weaponName, int value){
         YamlConfiguration weaponYAML = getWeaponYAMLConfiguration(rarity, weaponName);
         weaponYAML.set("minimum-level", value);
-        try {
-            weaponYAML.save(getWeaponYAMLFileString(rarity, weaponName));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void setMaximumLevel(String rarity, String weaponName, int value){
-        YamlConfiguration weaponYAML = getWeaponYAMLConfiguration(rarity, weaponName);
-        weaponYAML.set("maximum-level", value);
         try {
             weaponYAML.save(getWeaponYAMLFileString(rarity, weaponName));
         } catch (IOException e) {

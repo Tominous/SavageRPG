@@ -27,10 +27,10 @@ public class LeftAndRightAction implements Listener {
                 if (meta != null){
                     if (!meta.getPersistentDataContainer().isEmpty()) {
                         PersistentDataContainer persistentDataContainer = meta.getPersistentDataContainer();
-                        if (persistentDataContainer.has(INamespacedKeys.ITEM_ABIILTY_NAME, PersistentDataType.STRING)) {
-                            String testSkill = persistentDataContainer.get(INamespacedKeys.ITEM_ABIILTY_NAME, PersistentDataType.STRING);
-                            if (persistentDataContainer.has(INamespacedKeys.ITEM_ABIILTY_IS_LEFT_ACTION, PersistentDataType.BYTE)) {
-                                byte isLeft = persistentDataContainer.get(INamespacedKeys.ITEM_ABIILTY_IS_LEFT_ACTION, PersistentDataType.BYTE);
+                        if (persistentDataContainer.has(INamespacedKeys.WEAPON_ABIILTY_NAME, PersistentDataType.STRING)) {
+                            String testSkill = persistentDataContainer.get(INamespacedKeys.WEAPON_ABIILTY_NAME, PersistentDataType.STRING);
+                            if (persistentDataContainer.has(INamespacedKeys.WEAPON_ABIILTY_IS_LEFT_ACTION, PersistentDataType.BYTE)) {
+                                byte isLeft = persistentDataContainer.get(INamespacedKeys.WEAPON_ABIILTY_IS_LEFT_ACTION, PersistentDataType.BYTE);
                                 if (isLeft == (byte) 1) {
                                     if (event.getAction().equals(Action.LEFT_CLICK_AIR) || event.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
                                         Consumer<PlayerInteractEvent> playerInteractEventConsumer = IllyriaRPG.getInstance().getLeftClickInteractions().get(testSkill);
@@ -40,8 +40,8 @@ public class LeftAndRightAction implements Listener {
                                     }
                                 }
                             }
-                            if (persistentDataContainer.has(INamespacedKeys.ITEM_ABIILTY_IS_RIGHT_ACTION, PersistentDataType.BYTE)) {
-                                byte isRight = persistentDataContainer.get(INamespacedKeys.ITEM_ABIILTY_IS_RIGHT_ACTION, PersistentDataType.BYTE);
+                            if (persistentDataContainer.has(INamespacedKeys.WEAPON_ABIILTY_IS_RIGHT_ACTION, PersistentDataType.BYTE)) {
+                                byte isRight = persistentDataContainer.get(INamespacedKeys.WEAPON_ABIILTY_IS_RIGHT_ACTION, PersistentDataType.BYTE);
                                 if (isRight == (byte) 1) {
                                     if (event.getAction().equals(Action.RIGHT_CLICK_AIR) || event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
                                         if (event.getHand() == EquipmentSlot.OFF_HAND) return;

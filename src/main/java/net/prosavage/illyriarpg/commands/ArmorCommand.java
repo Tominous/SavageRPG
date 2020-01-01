@@ -1,26 +1,19 @@
 package net.prosavage.illyriarpg.commands;
 
-import net.prosavage.illyriarpg.IllyriaRPG;
-import net.prosavage.illyriarpg.api.files.IWeaponFiles;
-import net.prosavage.illyriarpg.builder.Weapon;
-import net.prosavage.illyriarpg.chatmenu.WeaponItemEditor;
+import net.prosavage.illyriarpg.api.files.IArmorFiles;
+import net.prosavage.illyriarpg.chatmenu.ArmorItemEditor;
 import net.prosavage.illyriarpg.utils.Color;
-import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
+public class ArmorCommand implements CommandExecutor {
 
-
-public class WeaponCommand implements CommandExecutor {
-
-    IWeaponFiles IWeaponFiles = new IWeaponFiles();
     Color Color = new Color();
-    WeaponItemEditor WeaponItemEditor = new WeaponItemEditor();
+    ArmorItemEditor ArmorItemEditor = new ArmorItemEditor();
+    IArmorFiles IArmorFiles = new IArmorFiles();
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -30,22 +23,20 @@ public class WeaponCommand implements CommandExecutor {
                 player.sendMessage(Color.ify(""));
                 player.sendMessage(Color.ify("------------------------------------------------"));
                 player.sendMessage(Color.ify(""));
-                player.sendMessage(Color.ify("&dTotal (yaml) weapons loaded: " + IWeaponFiles.getWeaponAmount()));
+                player.sendMessage(Color.ify("&dTotal (yaml) armor loaded: " + IArmorFiles.getArmorAmount()));
                 player.sendMessage(Color.ify(""));
-                player.sendMessage(Color.ify("&d/weapon edit (allows you to create an ingame item)"));
+                player.sendMessage(Color.ify("&d/armor edit (allows you to create an ingame item)"));
                 player.sendMessage(Color.ify(""));
                 player.sendMessage(Color.ify("------------------------------------------------"));
                 player.sendMessage(Color.ify(""));
             }
             if (args.length >= 1) {
                 if (args[0].equals("edit")) {
-                    WeaponItemEditor.getWeaponCreateMenu(player, 1);
+                    ArmorItemEditor.getArmorCreateMenu(player, 1);
                 }
                 return true;
             }
-
         }
         return false;
     }
-
 }

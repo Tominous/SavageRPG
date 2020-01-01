@@ -1,7 +1,9 @@
 package net.prosavage.illyriarpg;
 
 import net.prosavage.illyriarpg.api.files.IAbilityFiles;
+import net.prosavage.illyriarpg.api.files.IArmorFiles;
 import net.prosavage.illyriarpg.api.files.IWeaponFiles;
+import net.prosavage.illyriarpg.commands.ArmorCommand;
 import net.prosavage.illyriarpg.commands.WeaponCommand;
 import net.prosavage.illyriarpg.utils.Color;
 import net.prosavage.illyriarpg.utils.handlers.abilities.DropAction;
@@ -11,7 +13,6 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
-
 import java.io.File;
 import java.util.HashMap;
 import java.util.Objects;
@@ -22,10 +23,12 @@ public final class IllyriaRPG extends JavaPlugin {
     private static IllyriaRPG instance;
     private Color Color = new Color();
     private String weaponFolder = getDataFolder() + "\\weapons";
+    private String armorFolder = getDataFolder() + "\\armors";
     private String abilityFolder = getDataFolder() + "\\abilities";
-    private File weaponRarityFile = new File(getDataFolder(), "weapon-rarity.yml");
     private File configFile = new File(getDataFolder(), "config.yml");
+
     private IWeaponFiles IWeaponFiles = new IWeaponFiles();
+    private IArmorFiles IArmorFiles = new IArmorFiles();
     private IAbilityFiles IAbilityFiles = new IAbilityFiles();
 
     private HashMap<String, Consumer<PlayerInteractEvent>> leftClickInteractions = new HashMap<>();
@@ -60,13 +63,15 @@ public final class IllyriaRPG extends JavaPlugin {
                     "                    ░ ░                                                      ");
         }
         Objects.requireNonNull(this.getCommand("weapon")).setExecutor(new WeaponCommand());
+        Objects.requireNonNull(this.getCommand("armor")).setExecutor(new ArmorCommand());
         Bukkit.getPluginManager().registerEvents(new LeftAndRightAction(), this);
         Bukkit.getPluginManager().registerEvents(new DropAction(), this);
         new BukkitRunnable(){
             @Override
             public void run() {
                 sendConsole("");
-                sendConsole("&aTotal (YAML) weapons loaded: &e" + IWeaponFiles.getWeaponAmount());
+                sendConsole("&aTotal (YAML) weapon(s) loaded: &e" + IWeaponFiles.getWeaponAmount());
+                sendConsole("&aTotal (YAML) armor(s) loaded: &e" + IArmorFiles.getArmorAmount());
                 sendConsole("&aTotal abilities loaded: &e" + IAbilityFiles.getAbilities().size());
                 sendConsole("");
             }
@@ -78,16 +83,20 @@ public final class IllyriaRPG extends JavaPlugin {
         IAbilityFiles.removeAllFiles();
     }
 
-    public File getWeaponRarityFile() {
-        return weaponRarityFile;
+    public void sendConsole(Object object){
+        System.out.println(Color.ify(String.valueOf(object)));
     }
 
     public String getWeaponFolder() {
         return weaponFolder;
     }
 
-    public void sendConsole(Object object){
-        System.out.println(Color.ify(String.valueOf(object)));
+    public String getArmorFolder() {
+        return armorFolder;
+    }
+
+    public String getAbilityFolder() {
+        return abilityFolder;
     }
 
     public HashMap<String, Consumer<PlayerInteractEvent>> getLeftClickInteractions(){
@@ -98,11 +107,8 @@ public final class IllyriaRPG extends JavaPlugin {
         return rightClickInteractions;
     }
 
-    public String getAbilityFolder() {
-        return abilityFolder;
-    }
-
     public HashMap<String, Consumer<PlayerDropItemEvent>> getItemDropInteractions() {
         return itemDropInteractions;
     }
+
 }
